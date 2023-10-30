@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'PTSCore'`, () => {
+  it(`should have as title 'PromoTourismSystem'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('PTSCore');
+    expect(app.title).toEqual('PromoTourismSystem');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('PTSCore app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('PromoTourismSystem app is running!');
   });
 });

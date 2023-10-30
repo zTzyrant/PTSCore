@@ -1,0 +1,43 @@
+<div class="xl:max-w-[1200px] 2xl:max-w-[1240px] mx-auto px-8 lg:px-20 xl:px-8">
+  <div class="flex items-center justify-between">
+    <div
+      class="text-neutral font-inter text-xl sm:text-2xl font-medium mt-1 pr-10"
+    >
+      Top Tourism Activities and Interest
+    </div>
+  </div>
+  <div
+    class="relative mt-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+  >
+    <a
+      routerLink="/"
+      class="rounded-xl w-full overflow-hidden"
+      *ngFor="let data of datas"
+    >
+      <div class="flex items-center w-full h-28">
+        <div class="rounded-l-xl overflow-hidden">
+          <img
+            class="w-28 h-28 object-cover object-center"
+            [src]="data.image_product[0].url"
+            alt=""
+          />
+        </div>
+        <div
+          class="flex-1 flex flex-col justify-center border border-l-0 px-4 h-full rounded-r-xl box-border"
+        >
+          <div class="text-2xs sm:text-xs">
+            {{ data.state + ", " + data.nationality }}
+          </div>
+          <div class="font-medium text-neutral text-2base line-clamp-1 mt-0.5">
+            {{ data.city }}
+          </div>
+          <div
+            class="text-cs-text-secondary text-2sm sm:text-sm line-clamp-1 mt-0.5"
+          >
+            {{ data.total_interest }} total interest
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
