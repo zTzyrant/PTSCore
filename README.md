@@ -19,4 +19,9 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Contributors?
+
 read at [here](https://github.com/zTzyrant/PTSCore/blob/master/docs/commit.md)
+
+## Styling?
+
+read at [here](https://github.com/zTzyrant/PTSCore/blob/master/docs/styling_guide.md)
