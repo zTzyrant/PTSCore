@@ -1,0 +1,148 @@
+<div class="bg-white min-h-screen">
+  <div
+    class="flex md:py-20 md:px-25 justify-center items-center lg:items-stretch lg:justify-start text-cs-text-primary font-roboto container mx-auto"
+  >
+    <div class="flex-1 hidden lg:flex flex-col lg:pr-8 xl:pr-14 font-manrope">
+      <div>
+        <div class="w-24">
+          <h2 class="font-russoone text-5xl font-bold text-brand">
+            <a routerLink="/">PTS</a>
+          </h2>
+        </div>
+        <div class="font-manrope mt-5 font-black text-4xl">
+          Wellcome Merchant
+        </div>
+      </div>
+      <div class="justify-center hidden xl:flex mt-14 max-w-full">
+        <img
+          src="assets/image/undraw/undraw_fingerprint_login.svg"
+          alt="Illustrations by Undraw"
+          class="h-[500px]"
+          title="Illustrations by Undraw"
+        />
+      </div>
+    </div>
+    <div class="w-full md:w-[600px] md:mt-14">
+      <div class="bg-white rounded-xl overflow-hidden md:border-2">
+        <div class="p-10">
+          <div class="w-24 mb-4 block lg:hidden">
+            <h2 class="font-russoone text-5xl font-bold">PTS</h2>
+          </div>
+          <h1 class="text-2xl mb-5">
+            <span class="font-bold"> Sign In Merchant </span>Form
+          </h1>
+          <h4 class="text-2md mb-6 text-gray-500">
+            Before you get started, please input your login details first.
+          </h4>
+          <form [formGroup]="loginMerchantForm" class="font-inter">
+            <div class="flex flex-col sm:gap-4">
+              <div class="w-full">
+                <div class="form-control w-full">
+                  <label class="label" for="email">
+                    <span>Email</span>
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    class="input input-bordered w-full input-primary"
+                    [class.border-red-500]="
+                      loginMerchantForm.controls['email'].invalid &&
+                      (loginMerchantForm.controls['email'].dirty ||
+                        loginMerchantForm.controls['email'].touched)
+                    "
+                    autocomplete="off"
+                    id="email"
+                    formControlName="email"
+                  />
+                  <label
+                    class="label text-red-500 text-sm"
+                    for="email"
+                    *ngIf="
+                      loginMerchantForm.controls['email'].invalid &&
+                      (loginMerchantForm.controls['email'].dirty ||
+                        loginMerchantForm.controls['email'].touched)
+                    "
+                  >
+                    <span
+                      *ngIf="loginMerchantForm.controls['email'].errors?.['required']"
+                    >
+                      Please Input Email
+                    </span>
+                    <span
+                      *ngIf="loginMerchantForm.controls['email'].errors?.['pattern']"
+                    >
+                      Please Input Valid Email
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="w-full">
+                <div class="form-control w-full">
+                  <label class="label" for="password">
+                    <span>Password</span>
+                  </label>
+                  <div class="relative w-full">
+                    <input
+                      [type]="isPasswordVisible ? 'text' : 'password'"
+                      placeholder="Password"
+                      class="input input-bordered w-full input-primary pr-10"
+                      [class.border-red-500]="
+                        loginMerchantForm.controls['password'].invalid &&
+                        (loginMerchantForm.controls['password'].dirty ||
+                          loginMerchantForm.controls['password'].touched)
+                      "
+                      autocomplete="off"
+                      id="password"
+                      formControlName="password"
+                    />
+                    <span
+                      class="absolute inset-y-0 right-0 flex items-center pr-2"
+                    >
+                      <button
+                        type="button"
+                        class="p-1 focus:outline-none focus:shadow-outline"
+                        (click)="togglePassword()"
+                      >
+                        <i
+                          class="bi bi-eye-slash text-xl"
+                          *ngIf="!isPasswordVisible"
+                        ></i>
+                        <i
+                          class="bi bi-eye text-xl"
+                          *ngIf="isPasswordVisible"
+                        ></i>
+                      </button>
+                    </span>
+                  </div>
+                  <label
+                    class="label text-red-500 text-sm"
+                    for="password"
+                    *ngIf="
+                      loginMerchantForm.controls['password'].invalid &&
+                      (loginMerchantForm.controls['password'].dirty ||
+                        loginMerchantForm.controls['password'].touched)
+                    "
+                  >
+                    <span
+                      *ngIf="loginMerchantForm.controls['password'].errors?.['required']"
+                    >
+                      Please Input Password
+                    </span>
+                  </label>
+                </div>
+                <div class="mt-8">
+                  <button
+                    type="button"
+                    class="inline-flex w-full items-center gap-3 justify-center text-sm p-3.5 btn btn-primary"
+                  >
+                    Sign In
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

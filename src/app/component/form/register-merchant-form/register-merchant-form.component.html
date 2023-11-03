@@ -1,0 +1,744 @@
+<div class="w-full md:w-[600px] font-manrope">
+  <div class="bg-white rounded-xl overflow-hidden md:border-2">
+    <div class="p-10">
+      <div class="w-24 mb-4 block lg:hidden">
+        <h2 class="font-russoone text-5xl font-bold">PTS</h2>
+      </div>
+      <h1 class="text-2xl mb-5">
+        <span class="font-bold"> Sign Up Merchant </span>Form
+      </h1>
+      <h4 class="text-2md mb-6 text-gray-500">
+        Before you get started, enter your merchant details.
+      </h4>
+      <form
+        [formGroup]="formRegisterMerchant"
+        novalidate=""
+        class="font-inter"
+        *ngIf="!isSubmitSuccess"
+      >
+        <!-- Start Merchant Name & Username -->
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <div class="w-full sm:w-1/2 mb-1">
+            <div class="form-control w-full">
+              <label class="label" for="merchantName">
+                <span>Merchant Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Merchant Name"
+                class="input input-bordered w-full input-primary"
+                [class.border-red-500]="
+                  formRegisterMerchant.controls['merchantName'].invalid &&
+                  (formRegisterMerchant.controls['merchantName'].dirty ||
+                    formRegisterMerchant.controls['merchantName'].touched)
+                "
+                autocomplete="off"
+                id="merchantName"
+                formControlName="merchantName"
+              />
+              <label
+                class="label text-red-500 text-sm"
+                for="merchantName"
+                *ngIf="
+                  formRegisterMerchant.controls['merchantName'].invalid &&
+                  (formRegisterMerchant.controls['merchantName'].dirty ||
+                    formRegisterMerchant.controls['merchantName'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['merchantName'].errors?.[
+                      'required'
+                    ]
+                  "
+                >
+                  Please input Merchant Name
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="w-full sm:w-1/2 mb-1">
+            <div class="form-control w-full">
+              <label
+                class="label"
+                for="merchantUsername"
+                title="Used for merchant name and default merchant representative account"
+              >
+                <span>Merchant Username</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Merchant Username"
+                class="input input-bordered w-full input-primary"
+                [class.border-red-500]="
+                  formRegisterMerchant.controls['merchantUsername'].invalid &&
+                  (formRegisterMerchant.controls['merchantUsername'].dirty ||
+                    formRegisterMerchant.controls['merchantUsername'].touched)
+                "
+                autocomplete="off"
+                id="merchantUsername"
+                formControlName="merchantUsername"
+              />
+              <label
+                class="label text-red-500 text-sm grid grid-cols-1"
+                for="merchantUsername"
+                *ngIf="
+                  formRegisterMerchant.controls['merchantUsername'].invalid &&
+                  (formRegisterMerchant.controls['merchantUsername'].dirty ||
+                    formRegisterMerchant.controls['merchantUsername'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['merchantUsername'].errors?.[
+                      'required'
+                    ]
+                  "
+                >
+                  Please Input Merchant Username
+                </span>
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['merchantUsername'].errors?.[
+                      'minlength'
+                    ]
+                  "
+                >
+                  Please Input at least 6 characters
+                </span>
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['merchantUsername'].errors?.[
+                      'pattern'
+                    ]
+                  "
+                >
+                  Please Input Valid Username
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- End Merchant Name & Username -->
+
+        <!-- Start Merchant Contact Number & Email -->
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <div class="w-full sm:w-1/2 mb-1">
+            <div class="form-control w-full">
+              <label
+                class="label"
+                for="contactNumber"
+                title="Used for merchant contact number and default merchant representative account"
+              >
+                <span>Contact Number</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Contact Number"
+                class="input input-bordered w-full input-primary"
+                [class.border-red-500]="
+                  formRegisterMerchant.controls['contactNumber'].invalid &&
+                  (formRegisterMerchant.controls['contactNumber'].dirty ||
+                    formRegisterMerchant.controls['contactNumber'].touched)
+                "
+                autocomplete="off"
+                id="contactNumber"
+                formControlName="contactNumber"
+              />
+              <label
+                class="label text-red-500 text-sm"
+                for="contactNumber"
+                *ngIf="
+                  formRegisterMerchant.controls['contactNumber'].invalid &&
+                  (formRegisterMerchant.controls['contactNumber'].dirty ||
+                    formRegisterMerchant.controls['contactNumber'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['contactNumber'].errors?.[
+                      'required'
+                    ]
+                  "
+                >
+                  Please Input Contact Number
+                </span>
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['contactNumber'].errors?.[
+                      'pattern'
+                    ]
+                  "
+                >
+                  Please Input Valid Number
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="w-full sm:w-1/2 mb-1">
+            <div class="form-control w-full">
+              <label
+                class="label"
+                for="email"
+                title="Used for merchant email and default merchant representative account"
+              >
+                <span>Email</span>
+              </label>
+              <input
+                type="email"
+                placeholder="Email"
+                class="input input-bordered w-full input-primary"
+                [class.border-red-500]="
+                  formRegisterMerchant.controls['email'].invalid &&
+                  (formRegisterMerchant.controls['email'].dirty ||
+                    formRegisterMerchant.controls['email'].touched)
+                "
+                (input)="checkEmailUsed($event)"
+                autocomplete="off"
+                id="email"
+                formControlName="email"
+              />
+              <label
+                class="label text-red-500 text-sm"
+                for="email"
+                *ngIf="
+                  formRegisterMerchant.controls['email'].invalid &&
+                  (formRegisterMerchant.controls['email'].dirty ||
+                    formRegisterMerchant.controls['email'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['email'].errors?.['required']
+                  "
+                >
+                  Please Input Email
+                </span>
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['email'].errors?.['pattern']
+                  "
+                >
+                  Please Input Valid Email
+                </span>
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['email'].errors?.['emailUsed']
+                  "
+                >
+                  Email Already Used
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- End Merchant Contact Number & Email -->
+
+        <!-- Start Merchant Address -->
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <div class="w-full mb-1">
+            <div class="form-control w-full">
+              <label class="label" for="address">
+                <span>Address</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Your Merchant Address"
+                class="input input-bordered w-full input-primary"
+                [class.border-red-500]="
+                  formRegisterMerchant.controls['address'].invalid &&
+                  (formRegisterMerchant.controls['address'].dirty ||
+                    formRegisterMerchant.controls['address'].touched)
+                "
+                autocomplete="off"
+                id="address"
+                formControlName="address"
+              />
+              <label
+                class="label text-red-500 text-sm"
+                for="address"
+                *ngIf="
+                  formRegisterMerchant.controls['address'].invalid &&
+                  (formRegisterMerchant.controls['address'].dirty ||
+                    formRegisterMerchant.controls['address'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['address'].errors?.[
+                      'required'
+                    ]
+                  "
+                >
+                  Please Input Address
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- End Merchant Address -->
+
+        <!-- Start Merchant City, Address, Country -->
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <div class="w-full sm:w-1/3 mb-1">
+            <div class="form-control w-full">
+              <label class="label" for="city">
+                <span>City</span>
+              </label>
+              <input
+                type="text"
+                placeholder="City"
+                class="input input-bordered w-full input-primary"
+                [class.border-red-500]="
+                  formRegisterMerchant.controls['city'].invalid &&
+                  (formRegisterMerchant.controls['city'].dirty ||
+                    formRegisterMerchant.controls['city'].touched)
+                "
+                id="city"
+                formControlName="city"
+              />
+              <label
+                class="label text-red-500 text-sm"
+                for="city"
+                *ngIf="
+                  formRegisterMerchant.controls['city'].invalid &&
+                  (formRegisterMerchant.controls['city'].dirty ||
+                    formRegisterMerchant.controls['city'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['city'].errors?.['required']
+                  "
+                >
+                  Please Input City
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="w-full sm:w-1/3 mb-1">
+            <div class="form-control w-full">
+              <label class="label" for="state">
+                <span>State</span>
+              </label>
+              <input
+                type="text"
+                placeholder="State"
+                class="input input-bordered w-full input-primary"
+                [class.border-red-500]="
+                  formRegisterMerchant.controls['state'].invalid &&
+                  (formRegisterMerchant.controls['state'].dirty ||
+                    formRegisterMerchant.controls['state'].touched)
+                "
+                autocomplete="off"
+                id="state"
+                formControlName="state"
+              />
+              <label
+                class="label text-red-500 text-sm"
+                for="state"
+                *ngIf="
+                  formRegisterMerchant.controls['state'].invalid &&
+                  (formRegisterMerchant.controls['state'].dirty ||
+                    formRegisterMerchant.controls['state'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['state'].errors?.['required']
+                  "
+                >
+                  Please Input State
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="w-full sm:w-1/3 mb-1">
+            <div class="form-control w-full">
+              <label class="label" for="country">
+                <span>Country</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Country"
+                class="input input-bordered w-full input-primary"
+                [class.border-red-500]="
+                  formRegisterMerchant.controls['country'].invalid &&
+                  (formRegisterMerchant.controls['country'].dirty ||
+                    formRegisterMerchant.controls['country'].touched)
+                "
+                autocomplete="off"
+                id="country"
+                formControlName="country"
+              />
+              <label
+                class="label text-red-500 text-sm"
+                for="country"
+                *ngIf="
+                  formRegisterMerchant.controls['country'].invalid &&
+                  (formRegisterMerchant.controls['country'].dirty ||
+                    formRegisterMerchant.controls['country'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['country'].errors?.[
+                      'required'
+                    ]
+                  "
+                >
+                  Please Input Country
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- End Merchant City, Address, Country -->
+
+        <!-- Start Merchant Description -->
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <div class="w-full mb-1">
+            <div class="form-control w-full">
+              <label class="label" for="merchantDescription">
+                <span>Merchant Description</span>
+              </label>
+              <textarea
+                class="textarea textarea-primary"
+                [class.border-red-500]="
+                  formRegisterMerchant.controls['merchantDescription']
+                    .invalid &&
+                  (formRegisterMerchant.controls['merchantDescription'].dirty ||
+                    formRegisterMerchant.controls['merchantDescription']
+                      .touched)
+                "
+                placeholder="Describe your company profile..."
+                id="merchantDescription"
+                formControlName="merchantDescription"
+              ></textarea>
+              <label
+                class="label text-red-500 text-sm"
+                for="merchantDescription"
+                *ngIf="
+                  formRegisterMerchant.controls['merchantDescription']
+                    .invalid &&
+                  (formRegisterMerchant.controls['merchantDescription'].dirty ||
+                    formRegisterMerchant.controls['merchantDescription']
+                      .touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['merchantDescription']
+                      .errors?.['required']
+                  "
+                >
+                  Please Input Your Merchant Description
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- End Merchant Description -->
+
+        <!-- Start Company Doccument -->
+        <!-- <div class="w-full mb-1">
+          <div class="form-control w-full">
+            <label class="label" for="document">
+              <span>Company Document</span>
+            </label>
+            <div
+              class="w-full border rounded-sm border-neutral focus:outline-none bg-white"
+              (dragover)="dragFilesOver($event)"
+              (dragleave)="dragFilesLeave()"
+              (drop)="filesDropped($event)"
+            >
+              <label
+                for="document"
+                class="flex justify-center w-full min-h-[100px] px-4"
+              >
+                <span
+                  class="flex items-center space-x-2"
+                  *ngIf="companyDocument.length < 1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 text-gray-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
+                  </svg>
+                  <span class="font-medium text-gray-600">
+                    Drop files to Attach, or
+                    <span class="text-blue-600 underline">browse</span>
+                  </span>
+                </span>
+                <div
+                  class="text-sm flex flex-col justify-start w-full py-2"
+                  *ngIf="companyDocument.length > 0"
+                >
+                  <div
+                    class="flex flex-row gap-2 text-sm"
+                    *ngFor="let data of companyDocument; index as i"
+                  >
+                    <i
+                      class="bi bi-image"
+                      *ngIf="data.type.includes('image/')"
+                    ></i>
+                    <i
+                      class="bi bi-file-earmark-text"
+                      *ngIf="data.type.includes('application/')"
+                    ></i>
+                    <p class="line-clamp-1">
+                      {{ data.name }}
+                    </p>
+                    <button (click)="removeDocument(i)">
+                      <span
+                        class="text-red-500 font-mono font-bold cursor-pointer"
+                      >
+                        x
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <input
+              type="file"
+              class="hidden"
+              multiple=""
+              id="document"
+              accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/png, image/jpeg, image/jpg"
+              (change)="inputFiles($event)"
+            />
+            <label
+              class="label text-red-500 text-sm"
+              *ngIf="companyDocument.length < 1"
+            >
+              <span> Please select your document or licenses </span>
+            </label>
+          </div>
+        </div> -->
+        <!-- End Company Doccument -->
+        <div class="mt-4">
+          <button
+            type="button"
+            class="inline-flex w-full items-center gap-3 justify-center text-sm p-3.5 btn btn-primary"
+            (click)="submitRegisterMerchant()"
+          >
+            Sign Up
+          </button>
+        </div>
+      </form>
+
+      <form
+        [formGroup]="documentMerchantForm"
+        novalidate=""
+        class="font-inter"
+        *ngIf="isSubmitSuccess"
+      >
+        <!-- Start Document files -->
+        <div class="w-full mb-1">
+          <div class="form-control w-full">
+            <label class="label" for="document">
+              <span>Company Document</span>
+            </label>
+            <div
+              class="w-full border rounded-sm border-neutral focus:outline-none bg-white"
+              (dragover)="dragFilesOver($event)"
+              (dragleave)="dragFilesLeave()"
+              (drop)="filesDropped($event)"
+            >
+              <label
+                for="document"
+                class="flex justify-center w-full min-h-12 px-4"
+              >
+                <span
+                  class="flex items-center space-x-2"
+                  *ngIf="companyDocument.length < 1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 text-gray-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
+                  </svg>
+                  <span class="font-medium text-gray-600">
+                    Drop files to Attach, or
+                    <span class="text-blue-600 underline">browse</span>
+                  </span>
+                </span>
+                <div
+                  class="text-sm flex flex-col justify-start w-full py-2"
+                  *ngIf="companyDocument.length > 0"
+                >
+                  <div
+                    class="flex flex-row gap-2 text-sm"
+                    *ngFor="let data of companyDocument; index as i"
+                  >
+                    <i
+                      class="bi bi-image"
+                      *ngIf="data.type.includes('image/')"
+                    ></i>
+                    <i
+                      class="bi bi-file-earmark-text"
+                      *ngIf="data.type.includes('application/')"
+                    ></i>
+                    <p class="line-clamp-1">
+                      {{ data.name }}
+                    </p>
+                    <button (click)="removeDocument(i)">
+                      <span
+                        class="text-red-500 font-mono font-bold cursor-pointer"
+                      >
+                        x
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <input
+              type="file"
+              class="hidden"
+              multiple=""
+              id="document"
+              accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/png, image/jpeg, image/jpg"
+              (change)="inputFiles($event)"
+            />
+            <label
+              class="label text-red-500 text-sm"
+              *ngIf="companyDocument.length < 1 && isInputDocumentTouch"
+            >
+              <span> Please select your document or licenses </span>
+            </label>
+          </div>
+        </div>
+        <!-- End Document files -->
+
+        <!-- Start Document Filename -->
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <div class="w-full mb-1">
+            <div class="form-control w-full">
+              <label class="label" for="filename">
+                <span>Filename</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Your document filename"
+                class="input input-bordered w-full input-primary"
+                [class.border-red-500]="
+                  documentMerchantForm.controls['filename'].invalid &&
+                  (documentMerchantForm.controls['filename'].dirty ||
+                    documentMerchantForm.controls['filename'].touched)
+                "
+                autocomplete="off"
+                id="filename"
+                formControlName="filename"
+              />
+              <label
+                class="label text-red-500 text-sm"
+                for="filename"
+                *ngIf="
+                  documentMerchantForm.controls['filename'].invalid &&
+                  (documentMerchantForm.controls['filename'].dirty ||
+                    documentMerchantForm.controls['filename'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    documentMerchantForm.controls['filename'].errors?.[
+                      'required'
+                    ]
+                  "
+                >
+                  Filename is required
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- End Document Filename -->
+
+        <!-- Start Document Description -->
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <div class="w-full mb-1">
+            <div class="form-control w-full">
+              <label class="label" for="description">
+                <span>Description</span>
+              </label>
+              <textarea
+                class="textarea textarea-primary"
+                [class.border-red-500]="
+                  documentMerchantForm.controls['description'].invalid &&
+                  (documentMerchantForm.controls['description'].dirty ||
+                    documentMerchantForm.controls['description'].touched)
+                "
+                placeholder="Describe your document as licenses, testimonials, SIUP, TDP, NPWP, etc."
+                id="description"
+                formControlName="description"
+              ></textarea>
+
+              <label
+                class="label text-red-500 text-sm"
+                for="description"
+                *ngIf="
+                  documentMerchantForm.controls['description'].invalid &&
+                  (documentMerchantForm.controls['description'].dirty ||
+                    documentMerchantForm.controls['description'].touched)
+                "
+              >
+                <span
+                  *ngIf="
+                    documentMerchantForm.controls['description'].errors?.[
+                      'required'
+                    ]
+                  "
+                >
+                  Description is required
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- End Document Description -->
+
+        <div class="mt-4">
+          <button
+            type="button"
+            class="inline-flex w-full items-center gap-3 justify-center text-sm p-3.5 btn btn-primary"
+            (click)="submitDocumentMerchant()"
+          >
+            Submit Files
+          </button>
+        </div>
+      </form>
+    </div>
+    <div
+      class="px-10 py-5 md:border-t md:border-[#e6e6e699] text-[0.8125rem] md:bg-gray-50 text-center"
+    >
+      By clicking the button above, you agree to our
+      <a href="/terms-of-service" class="font-semibold underline"
+        >term of use</a
+      >
+      and
+      <a href="/privacy-policy" class="font-semibold underline"
+        >privacy policies</a
+      >
+    </div>
+  </div>
+</div>

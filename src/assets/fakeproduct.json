@@ -1,0 +1,32 @@
+[
+  {
+    "product_name": "Kendal Jannes",
+    "product_star": "4.5",
+    "image": "https://picsum.photos/1000/1000?random=1"
+  },
+  {
+    "product_name": "Kendal Jannes 2",
+    "product_star": "4.5",
+    "image": "https://picsum.photos/1000/1000?random=2"
+  },
+  {
+    "product_name": "Kendal Jannes 3",
+    "product_star": "4.5",
+    "image": "https://picsum.photos/1000/1000?random=3"
+  },
+  {
+    "product_name": "Kendal Jannes 4",
+    "product_star": "4.5",
+    "image": "https://picsum.photos/1000/1000?random=4"
+  },
+  {
+    "product_name": "Kendal Jannes 5",
+    "product_star": "4.5",
+    "image": "https://picsum.photos/1000/1000?random=5"
+  },
+  {
+    "product_name": "Kendal Jannes 6",
+    "product_star": "4.5",
+    "image": "https://picsum.photos/1000/1000?random=6"
+  }
+]

@@ -1,0 +1,38 @@
+<div class="container xl:max-w-[1200px] mx-auto px-4 my-10 block">
+  <div class="flex items-center justify-between">
+    <div
+      class="text-neutral font-inter text-xl sm:text-2xl font-medium mt-1 pr-10"
+    >
+      Recenly Added
+    </div>
+  </div>
+  <div class="mt-2" *ngIf="!products">
+    <app-card></app-card>
+  </div>
+  <swiper-container class="mt-2" *ngIf="products">
+    <swiper-slide *ngFor="let data of products">
+      <div class="border w-full rounded-lg overflow-hidden">
+        <a class="cursor-pointer select-none">
+          <figure class="aspect-video">
+            <img class="w-full h-full object-cover" [src]="data.image" alt="" />
+          </figure>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold line-clamp-1">
+              {{ data.product_name }}
+            </h3>
+            <div class="flex flex-row gap-2 mt-2">
+              <p class="text-sm text-gray-500 line-clamp-2 font-inter">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum,
+                ullam iusto veniam blanditiis fugit voluptatibus asperiores
+              </p>
+              <p class="flex text-base gap-2 font-poppins font-[500] mt-2">
+                <i class="bi bi-star-fill text-yellow-400"></i>
+                {{ data.product_star }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+</div>
