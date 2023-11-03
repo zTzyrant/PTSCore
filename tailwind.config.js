@@ -14,14 +14,20 @@ module.exports = {
         success: "#36d399",
         warning: "#fbbd23",
         error: "#f87272",
+        brand: "#549fe5",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+        manrope: ["Manrope", "sans-serif"],
         raleway: ["Raleway", "sans-serif"],
         russoone: ["Russo One", "sans-serif"],
         quicksand: ["Quicksand", "sans-serif"],
       },
     },
   },
-  plugins: [],
+  daisyui: {
+    themes: ["lofi"],
+  },
+  plugins: [require("daisyui"), require("@tailwindcss/typography")],
 }

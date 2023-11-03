@@ -19,3 +19,6 @@ logs
 # Local env files
 .env.local
 .env.*.local
+
+docs/*
+readme.md
