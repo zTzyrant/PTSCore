@@ -1,19 +1,19 @@
-<div class="bg-white min-h-screen">
+<div class="min-h-screen bg-white">
   <div
-    class="flex md:py-20 md:px-25 justify-center items-center lg:items-stretch lg:justify-start text-cs-text-primary font-roboto container mx-auto"
+    class="md:px-25 text-cs-text-primary font-roboto container mx-auto flex items-center justify-center md:py-20 lg:items-stretch lg:justify-start"
   >
-    <div class="flex-1 hidden lg:flex flex-col lg:pr-8 xl:pr-14 font-manrope">
+    <div class="hidden flex-1 flex-col font-manrope lg:flex lg:pr-8 xl:pr-14">
       <div>
         <div class="w-24">
           <h2 class="font-russoone text-5xl font-bold text-brand">
             <a routerLink="/">PTS</a>
           </h2>
         </div>
-        <div class="font-manrope mt-5 font-black text-4xl">
+        <div class="mt-5 font-manrope text-4xl font-black">
           Wellcome ministry
         </div>
       </div>
-      <div class="justify-center hidden xl:flex mt-14 max-w-full">
+      <div class="mt-14 hidden max-w-full justify-center xl:flex">
         <img
           src="assets/image/undraw/undraw_fingerprint_login.svg"
           alt="Illustrations by Undraw"
@@ -22,13 +22,13 @@
         />
       </div>
     </div>
-    <div class="w-full md:w-[600px] md:mt-14">
-      <div class="bg-white rounded-xl overflow-hidden md:border-2">
+    <div class="w-full md:mt-14 md:w-[600px]">
+      <div class="overflow-hidden rounded-xl bg-white md:border-2">
         <div class="p-10">
-          <div class="w-24 mb-4 block lg:hidden">
+          <div class="mb-4 block w-24 lg:hidden">
             <h2 class="font-russoone text-5xl font-bold">PTS</h2>
           </div>
-          <h1 class="text-2xl mb-5">
+          <h1 class="mb-5 text-2xl">
             <span class="font-bold"> Sign In Ministry </span>Form
           </h1>
           <h4 class="text-2md mb-6 text-gray-500">
@@ -44,7 +44,7 @@
                   <input
                     type="email"
                     placeholder="Email"
-                    class="input input-bordered w-full input-primary"
+                    class="input input-bordered input-primary w-full"
                     [class.border-red-500]="
                       loginMinistryForm.controls['email'].invalid &&
                       (loginMinistryForm.controls['email'].dirty ||
@@ -55,7 +55,7 @@
                     formControlName="email"
                   />
                   <label
-                    class="label text-red-500 text-sm"
+                    class="label text-sm text-red-500"
                     for="email"
                     *ngIf="
                       loginMinistryForm.controls['email'].invalid &&
@@ -89,7 +89,7 @@
                     <input
                       [type]="isPasswordVisible ? 'text' : 'password'"
                       placeholder="Password"
-                      class="input input-bordered w-full input-primary pr-10"
+                      class="input input-bordered input-primary w-full pr-10"
                       [class.border-red-500]="
                         loginMinistryForm.controls['password'].invalid &&
                         (loginMinistryForm.controls['password'].dirty ||
@@ -104,7 +104,7 @@
                     >
                       <button
                         type="button"
-                        class="p-1 focus:outline-none focus:shadow-outline"
+                        class="focus:shadow-outline p-1 focus:outline-none"
                         (click)="togglePassword()"
                       >
                         <i
@@ -119,7 +119,7 @@
                     </span>
                   </div>
                   <label
-                    class="label text-red-500 text-sm"
+                    class="label text-sm text-red-500"
                     for="password"
                     *ngIf="
                       loginMinistryForm.controls['password'].invalid &&
@@ -141,7 +141,7 @@
                 <div class="mt-8">
                   <button
                     type="button"
-                    class="inline-flex w-full items-center gap-3 justify-center text-sm p-3.5 btn btn-primary"
+                    class="btn btn-primary inline-flex w-full items-center justify-center gap-3 p-3.5 text-sm"
                   >
                     Sign In
                   </button>

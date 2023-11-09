@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core"
 
 @Component({
-  selector: 'app-login-merchant',
-  templateUrl: './login-merchant.component.html',
-  styleUrls: ['./login-merchant.component.css']
+  selector: "app-login-merchant",
+  templateUrl: "./login-merchant.component.html",
+  styleUrls: ["./login-merchant.component.css"],
 })
-export class LoginMerchantComponent {
-
-}
+export class LoginMerchantComponent {}

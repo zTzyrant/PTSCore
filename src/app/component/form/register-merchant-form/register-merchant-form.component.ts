@@ -1,8 +1,9 @@
-import { Component, ViewChild } from "@angular/core"
-import { FormBuilder, FormGroup, Validators } from "@angular/forms"
+import { Component } from "@angular/core"
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms"
 import { SwalService } from "../../../shared/service/swal.service"
-import { RegisterMerchantForm } from "src/app/interface/register-merchant-form"
-import { LocalstorageService } from "src/app/shared/service/localstorage.service"
+import { documentMerchantForm } from "src/app/interface/register-merchant-form"
+import { ApiService } from "src/app/shared/service/api.service"
+import { lastValueFrom } from "rxjs"
 
 @Component({
   selector: "app-register-merchant-form",
@@ -10,7 +11,7 @@ import { LocalstorageService } from "src/app/shared/service/localstorage.service
   styleUrls: ["./register-merchant-form.component.css"],
 })
 export class RegisterMerchantFormComponent {
-  registerMerchant: any[] = []
+  registerMerchant: [] = []
 
   // Register merchant form
   formRegisterMerchant: FormGroup = this.fb.group({
@@ -21,7 +22,7 @@ export class RegisterMerchantFormComponent {
         Validators.required,
         Validators.minLength(6),
         Validators.pattern(
-          /^(?=[a-zA-Z0-9._]{6,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/
+          /^(?=[a-zA-Z0-9._]{6,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
         ),
       ],
     ],
@@ -30,7 +31,7 @@ export class RegisterMerchantFormComponent {
       "",
       [
         Validators.required,
-        Validators.pattern(/^[\w-\.\+]+@([\w-]+\.)+[\w-]{2,4}$/),
+        Validators.pattern(/^[\w-\.\+]+@([\w-]+\.)+[\w-]{2,10}$/),
       ],
     ],
     merchantDescription: ["", [Validators.required]],
@@ -45,218 +46,220 @@ export class RegisterMerchantFormComponent {
   constructor(
     private fb: FormBuilder,
     private Swal: SwalService,
-    private lsService: LocalstorageService
-  ) {
-    this.getLocalRegisterdMerchant()
-  }
+    private apiService: ApiService,
+  ) {}
 
   // Submit register merchant form
-  isSubmit: boolean = false
-  isSubmitSuccess: boolean = false
+  isMerchantDataSaved: boolean = false
   async submitRegisterMerchant() {
     if (this.formRegisterMerchant.invalid) {
+      console.log(this.formRegisterMerchant.value)
+      this.formRegisterMerchant.markAllAsTouched()
+      this.formRegisterMerchant.markAsDirty()
       this.Swal.SwalNotif("Error", `Please check your input`)
       return
     }
-    // // if (this.companyDocument.length < 1) {
-    // //   this.Swal.SwalNotif(
-    // //     "Error",
-    // //     `Please upload your company document or license`
-    // //   )
-    // //   return
-    // // }
 
-    // localStorage.setItem(
-    //   "registerMerchant",
-    //   JSON.stringify([
-    //     {
-    //       merchantName: "Merchant Pertama 2",
-    //       merchantUsername: "JanganRusak",
-    //       contactNumber: "08213030429",
-    //       email: "email@ac.ca",
-    //       merchantDescription: "god",
-    //       address: "Kfc  mekdi",
-    //       city: "city",
-    //       state: "of",
-    //       country: "Indonesia",
-    //       companyDocument: [],
-    //     },
-    //     this.formRegisterMerchant.value,
-    //   ])
-    // )
+    this.checkUsernameUsed()
 
-    // const lsRegisterMerchant = localStorage.getItem("registerMerchant")
-    // if (lsRegisterMerchant) {
-    //   const data = JSON.parse(lsRegisterMerchant)
-    //   data.push(this.formRegisterMerchant.value)
-    //   localStorage.setItem("registerMerchant", JSON.stringify(data))
-    // } else {
-    //   localStorage.setItem(
-    //     "registerMerchant",
-    //     JSON.stringify([this.formRegisterMerchant.value])
-    //   )
-    // }
-
-    // this.Swal.SwalNotif("Success", `Register merchant success`)
-    // this.isSubmitSuccess = true
-    // console.log(this.formRegisterMerchant.value)
-    this.isSubmitSuccess = true
+    this.isMerchantDataSaved = true
     this.Swal.SwalNotif(
       "Success",
-      `Register merchant success, please upload your company document or license.`
+      `Register merchant success, please upload your company document or license.`,
     )
   }
 
-  // Get local registerd merchant
-  async getLocalRegisterdMerchant() {
-    this.registerMerchant = await this.lsService.getLocalRegisterdMerchant()
-    console.log(this.registerMerchant)
-  }
-
-  // Check new merchant data with registerd merchant
-  // TODO: checkMerchantData with registerd merchant
-  checkEmailUsed(event: any) {
-    const email = event.target.value
-    const checkEmail = this.registerMerchant.find(
-      (merchant) => merchant.email.toLowerCase() === email.toLowerCase()
-    )
-
-    if (checkEmail) {
-      console.log("email used")
-      this.formRegisterMerchant.controls["email"].setErrors({
-        emailUsed: true,
+  // checkMerchantData with registerd merchant by username
+  async checkUsernameUsed() {
+    if (this.formRegisterMerchant.controls["merchantUsername"].invalid) return
+    try {
+      const res = await lastValueFrom(
+        this.apiService.checkIsUsernameExist(
+          this.formRegisterMerchant.value.merchantUsername,
+        ),
+      )
+      this.formRegisterMerchant.controls["merchantUsername"].setErrors({
+        usernameUsed: null,
       })
+      this.formRegisterMerchant.controls[
+        "merchantUsername"
+      ].updateValueAndValidity()
+    } catch (error: unknown) {
+      if (error instanceof Object) {
+        if ("status" in error && error.status === 409) {
+          this.formRegisterMerchant.controls["merchantUsername"].setErrors({
+            usernameUsed: true,
+          })
+        }
+      } else {
+        this.formRegisterMerchant.controls["merchantUsername"].setErrors({
+          usernameUsed: true,
+        })
+
+        this.Swal.SwalNotif("Error", `Something went wrong, please try again`)
+      }
+      console.log(error)
     }
   }
 
-  // form submit doccument merchant
-  isInputDocumentTouch: boolean = false
-
-  // Document merchant form
-  documentMerchantForm: FormGroup = this.fb.group({
-    filename: ["", Validators.required],
-    description: ["", Validators.required],
-  })
-
-  // check file type and size
-  checkAllowedFile(files: any[]) {
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
-        if (
-          files[i].type === "image/png" ||
-          files[i].type === "image/jpeg" ||
-          files[i].type === "image/jpg" ||
-          files[i].type === "application/pdf" ||
-          files[i].type === "application/msword" ||
-          files[i].type ===
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        ) {
-          if (files[i].size < 5000000) {
-            console.log(`${files[i].name} is allowed`)
-          } else {
-            console.log(`${files[i].name} File size must be less than 5MB`)
-            this.Swal.SwalNotif(
-              "Error",
-              `${files[i].name} File size must be less than 5MB`
-            )
-            return false
-          }
-        } else {
-          console.log(`${files[i].name} File type is not allowed`)
-          this.Swal.SwalNotif(
-            "Error",
-            `${files[i].name} File type is not allowed`
-          )
-          return false
+  // checkMerchantData with registerd merchant
+  async checkEmailUsed() {
+    if (this.formRegisterMerchant.controls["email"].invalid) return
+    try {
+      const res = await lastValueFrom(
+        this.apiService.checkIsEmailExist(
+          this.formRegisterMerchant.value.email,
+        ),
+      )
+      this.formRegisterMerchant.controls["email"].setErrors({
+        emailUsed: null,
+      })
+      this.formRegisterMerchant.controls["email"].updateValueAndValidity()
+    } catch (error: unknown) {
+      if (error instanceof Object) {
+        if ("status" in error && error.status === 409) {
+          this.formRegisterMerchant.controls["email"].setErrors({
+            emailUsed: true,
+          })
         }
+      } else {
+        this.formRegisterMerchant.controls["email"].setErrors({
+          emailUsed: true,
+        })
+
+        this.Swal.SwalNotif("Error", `Something went wrong, please try again`)
+      }
+      console.log(error)
+    }
+  }
+
+  // documents form array
+  documents = new FormArray([this.documentFG])
+  get documentFG(): FormGroup {
+    return this.fb.group({
+      file: [null, Validators.required],
+      filename: ["", Validators.required],
+      description: ["", Validators.required],
+    })
+  }
+
+  get documentsControls(): FormGroup[] {
+    return this.documents.controls as FormGroup[]
+  }
+
+  addDocument() {
+    this.documents.push(this.documentFG)
+  }
+
+  removeDocumentForm(index: number) {
+    this.documents.removeAt(index)
+  }
+
+  removeFileByIndex(index: number) {
+    this.documents.controls[index].patchValue({
+      file: null,
+    })
+  }
+
+  inputFile(event: EventTarget | null, index: number) {
+    this.documents.controls[index].controls["file"].markAllAsTouched()
+    const fileInput = event as HTMLInputElement | null
+    const files = fileInput?.files ? fileInput.files[0] : null
+    if (files) {
+      if (this.checkAllowedFiles(files)) {
+        this.documents.controls[index].patchValue({
+          file: files,
+        })
       }
     }
-    return true
   }
 
-  // Remove document from companyDocument value
-  removeDocument(index: number) {
-    this.companyDocument.splice(index, 1)
-    console.log(this.companyDocument)
-  }
-
-  // Files dropzone on hover prevent redirecting & add border bg color
-  file_dropzone_leave: boolean = true
-  dragFilesOver(event: any) {
-    event.preventDefault()
-    this.file_dropzone_leave = false
-    this.isInputDocumentTouch = true
-  }
-
-  // Files dropzone leave disable class
-  dragFilesLeave() {
-    this.file_dropzone_leave = true
-  }
-
-  // When Files dropped set to form value
-  filesDropped(event: any) {
-    this.file_dropzone_leave = true
-    event.preventDefault()
-    const files = Array.from(event.dataTransfer.files)
-    this.insertDocument(files)
-  }
-
-  // When Files selected set to form value
-  inputFiles(event: any) {
-    const files = Array.from(event.target.files)
-    this.insertDocument(files)
-    event.target.value = ""
-    this.isInputDocumentTouch = true
-  }
-
-  // Insert files to companyDocument value
-  insertDocument(files: any) {
-    if (this.checkAllowedFile(files)) {
-      Array.from(files).forEach((file: any) => {
-        this.companyDocument.push(file)
-      })
+  // check file type and size
+  checkAllowedFiles(files: File) {
+    if (
+      files.type === "image/png" ||
+      files.type === "image/jpeg" ||
+      files.type === "image/jpg" ||
+      files.type === "application/pdf" ||
+      files.type === "application/msword" ||
+      files.type ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      if (files.size < 5000000) {
+        console.log(`${files.name} is allowed`)
+        return true
+      } else {
+        console.log(`${files.name} File size must be less than 5MB`)
+        this.Swal.SwalNotif(
+          "Error",
+          `${files.name} File size must be less than 5MB`,
+        )
+        return false
+      }
+    } else {
+      console.log(`${files.name} File type is not allowed`)
+      this.Swal.SwalNotif("Error", `${files.name} File type is not allowed`)
+      return false
     }
   }
 
-  submitDocumentMerchant() {
-    if (this.documentMerchantForm.invalid) {
+  // submit all form data
+  isSubmit: boolean = false
+  async submitMerchantData() {
+    this.checkEmailUsed()
+    this.checkUsernameUsed()
+    if (this.documents.invalid) {
+      console.log(this.documents.value)
+      this.documents.markAllAsTouched()
+      this.documents.markAsDirty()
       this.Swal.SwalNotif("Error", `Please check your input`)
       return
     }
-    this.isInputDocumentTouch = false
 
-    let documentName: any = []
-    this.companyDocument.forEach((file: any) => {
-      documentName.push({
-        filename: `${this.documentMerchantForm.controls["filename"].value}-${file.name}`,
-        description: this.documentMerchantForm.controls["description"].value,
+    this.isSubmit = true
+    try {
+      // convert form register merchant & documents to FormData
+      // by using FormData() constructor we can send file to backend
+      const formData = new FormData()
+      this.documents.value.forEach((e: documentMerchantForm) => {
+        formData.append("file", e.file)
+        formData.append("filename", e.filename)
+        formData.append("file_description", e.description)
       })
-    })
-    let merchantData: RegisterMerchantForm = {
-      id: this.lsService.generateId(
-        this.formRegisterMerchant.controls["merchantUsername"].value
-      ),
-      merchantName: this.formRegisterMerchant.controls["merchantName"].value,
-      merchantUsername:
-        this.formRegisterMerchant.controls["merchantUsername"].value,
-      contactNumber: this.formRegisterMerchant.controls["contactNumber"].value,
-      email: this.formRegisterMerchant.controls["email"].value,
-      merchantDescription:
-        this.formRegisterMerchant.controls["merchantDescription"].value,
-      address: this.formRegisterMerchant.controls["address"].value,
-      city: this.formRegisterMerchant.controls["city"].value,
-      state: this.formRegisterMerchant.controls["state"].value,
-      country: this.formRegisterMerchant.controls["country"].value,
-      doccument: documentName,
-    }
+      formData.append(
+        "company_name",
+        this.formRegisterMerchant.value.merchantName,
+      )
+      formData.append(
+        "company_username",
+        this.formRegisterMerchant.value.merchantUsername,
+      )
+      formData.append(
+        "contact_number",
+        this.formRegisterMerchant.value.contactNumber,
+      )
+      formData.append("email", this.formRegisterMerchant.value.email)
+      formData.append(
+        "company_description",
+        this.formRegisterMerchant.value.merchantDescription,
+      )
+      formData.append("address", this.formRegisterMerchant.value.address)
+      formData.append("city", this.formRegisterMerchant.value.city)
+      formData.append("state", this.formRegisterMerchant.value.state)
+      formData.append("country", this.formRegisterMerchant.value.country)
+      formData.append("status", "pending")
+      console.log(formData)
 
-    console.log(merchantData)
-    this.lsService.saveLocalRegisteredMerchant(merchantData)
-    this.formRegisterMerchant.reset()
-    this.companyDocument = []
-    this.documentMerchantForm.reset()
-    this.isSubmitSuccess = false
-    this.getLocalRegisterdMerchant()
-    console.log("form has been reset")
+      const res = await lastValueFrom(this.apiService.postMerchant(formData))
+      if (res) {
+        this.Swal.SwalNotif(
+          "Success",
+          `Register merchant success, Please wait for ministry approval.`,
+        )
+      }
+    } catch (error) {
+      console.log(error)
+      this.Swal.SwalNotif("Error", `Register merchant failed, please try again`)
+    }
   }
 }

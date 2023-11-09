@@ -1,11 +1,11 @@
-<header class="w-full z-20 top-0 fixed">
-  <div class="bg-neutral text-white w-full hidden md:flex justify-end">
-    <div class="mx-auto container px-2 sm:px-0 flex justify-end">
-      <ul class="flex items-center text-sm font-semibold p-3">
+<header class="fixed top-0 z-20 w-full">
+  <div class="hidden w-full justify-end bg-neutral text-white md:flex">
+    <div class="container mx-auto flex justify-end px-2 sm:px-0">
+      <ul class="flex items-center p-3 text-sm font-semibold">
         <li>
           <a
             routerLink="/"
-            class="hover:bg-white hover:text-neutral p-4 font-inter"
+            class="p-4 font-inter hover:bg-white hover:text-neutral"
           >
             Home
           </a>
@@ -13,7 +13,7 @@
         <li>
           <a
             routerLink="/"
-            class="hover:bg-white hover:text-neutral p-4 font-inter"
+            class="p-4 font-inter hover:bg-white hover:text-neutral"
           >
             Products
           </a>
@@ -21,7 +21,7 @@
         <li>
           <a
             routerLink="/"
-            class="hover:bg-white hover:text-neutral p-4 font-inter"
+            class="p-4 font-inter hover:bg-white hover:text-neutral"
           >
             About
           </a>
@@ -29,7 +29,7 @@
         <li>
           <a
             routerLink="/contact"
-            class="hover:bg-white hover:text-neutral p-4 font-inter"
+            class="p-4 font-inter hover:bg-white hover:text-neutral"
           >
             Contact
           </a>
@@ -37,7 +37,7 @@
         <li>
           <a
             routerLink="/merchant/register"
-            class="hover:bg-white hover:text-neutral p-4 font-inter"
+            class="p-4 font-inter hover:bg-white hover:text-neutral"
           >
             Join Us
           </a>
@@ -45,25 +45,25 @@
       </ul>
     </div>
   </div>
-  <nav class="md:py-4 border-b-2 border-neutral/10 bg-base-100">
-    <div class="mx-auto container px-2 sm:px-0">
-      <div class="flex h-16 md:h-12 items-center justify-between lg:gap-3">
+  <nav class="border-b-2 border-neutral/10 bg-base-100 md:py-4">
+    <div class="container mx-auto px-2 sm:px-0">
+      <div class="flex h-16 items-center justify-between md:h-12 lg:gap-3">
         <!-- Left -->
-        <div class="justify-center md:flex md:items-center md:w-1/6">
-          <a routerLink="/" class="text-neutral text-center">
-            <h2 class="text-4xl font-russoone font-bold text-center">PTS</h2>
+        <div class="justify-center md:flex md:w-1/6 md:items-center">
+          <a routerLink="/" class="text-center text-neutral">
+            <h2 class="text-center font-russoone text-4xl font-bold">PTS</h2>
           </a>
         </div>
         <!-- Middle -->
-        <div class="justify-center hidden md:flex md:items-center md:w-4/6">
+        <div class="hidden justify-center md:flex md:w-4/6 md:items-center">
           <div class="relative w-full">
             <input
               type="text"
-              class="py-3 px-4 pr-11 block w-full input-pts"
+              class="input-pts block w-full px-4 py-3 pr-11"
               placeholder="Search Destination..."
             />
             <button
-              class="absolute inset-y-0 right-0 flex items-center cursor-pointer z-20 pr-4"
+              class="absolute inset-y-0 right-0 z-20 flex cursor-pointer items-center pr-4"
             >
               <svg
                 class="h-6 w-6 text-gray-400"
@@ -84,14 +84,14 @@
           </div>
         </div>
         <!-- Right -->
-        <div class="justify-center flex md:items-center md:w-1/6">
+        <div class="flex justify-center md:w-1/6 md:items-center">
           <div class="flex items-center justify-center">
             <div class="relative inline-block">
               <div
-                class="flex items-center divide-x-2 border rounded-full shadow-md overflow-hidden bg-white hover:bg-gray-100 transition-colors duration-300"
+                class="flex items-center divide-x-2 overflow-hidden rounded-full border bg-white shadow-md transition-colors duration-300 hover:bg-gray-100"
               >
                 <button
-                  class="flex items-center gap-1 py-2 px-2 rounded-full transition-colors duration-300"
+                  class="flex items-center gap-1 rounded-full px-2 py-2 transition-colors duration-300"
                   [ngClass]="{ 'bg-gray-300': isDropdownOpen }"
                   (click)="toggle_dropdown()"
                 >
@@ -100,15 +100,15 @@
                 </button>
               </div>
               <div
-                class="origin-top-right absolute z-30 right-0 mt-2 w-48 border rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                class="absolute right-0 z-30 mt-2 w-48 origin-top-right rounded-lg border bg-white shadow-lg ring-1 ring-black ring-opacity-5"
                 [ngClass]="{ hidden: !isDropdownOpen }"
               >
-                <ul class="p-2 menu font-inter">
+                <ul class="menu p-2 font-inter">
                   <li><a>Sign In</a></li>
                   <li><a>Sign Up</a></li>
                 </ul>
                 <div class="divider my-0 md:hidden">Menu</div>
-                <ul class="p-2 menu font-inter md:hidden">
+                <ul class="menu p-2 font-inter md:hidden">
                   <li><a routerLink="/">Home</a></li>
                   <li><a routerLink="/">Products</a></li>
                   <li><a routerLink="/">About</a></li>
@@ -117,7 +117,7 @@
                 </ul>
               </div>
               <div
-                class="h-full w-full fixed top-0 right-0 left-0 bottom-0 z-[25]"
+                class="fixed bottom-0 left-0 right-0 top-0 z-[25] h-full w-full"
                 [ngClass]="{ hidden: !isDropdownOpen }"
                 (click)="toggle_dropdown()"
               ></div>

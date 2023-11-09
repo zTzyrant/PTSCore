@@ -1,38 +1,38 @@
-<div class="container xl:max-w-[1200px] mx-auto px-4 my-10 block">
+<div class="container mx-auto my-10 block px-4 xl:max-w-[1200px]">
   <div class="flex items-center justify-between">
     <div
-      class="text-neutral font-inter text-xl sm:text-2xl font-medium mt-1 pr-10"
+      class="mt-1 pr-10 font-inter text-xl font-medium text-neutral sm:text-2xl"
     >
       Top Tourism Activities and Interest
     </div>
   </div>
   <div
-    class="relative mt-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+    class="relative mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
   >
     <a
       routerLink="/"
-      class="rounded-xl w-full overflow-hidden"
+      class="w-full overflow-hidden rounded-xl"
       *ngFor="let data of datas"
     >
-      <div class="flex items-center w-full h-28">
-        <div class="rounded-l-xl overflow-hidden">
+      <div class="flex h-28 w-full items-center">
+        <div class="overflow-hidden rounded-l-xl">
           <img
-            class="w-28 h-28 object-cover object-center"
+            class="h-28 w-28 object-cover object-center"
             [src]="data.image_product[0].url"
             alt=""
           />
         </div>
         <div
-          class="flex-1 flex flex-col justify-center border border-l-0 px-4 h-full rounded-r-xl box-border"
+          class="box-border flex h-full flex-1 flex-col justify-center rounded-r-xl border border-l-0 px-4"
         >
           <div class="text-2xs sm:text-xs">
             {{ data.state + ", " + data.nationality }}
           </div>
-          <div class="font-medium text-neutral text-2base line-clamp-1 mt-0.5">
+          <div class="text-2base mt-0.5 line-clamp-1 font-medium text-neutral">
             {{ data.city }}
           </div>
           <div
-            class="text-cs-text-secondary text-2sm sm:text-sm line-clamp-1 mt-0.5"
+            class="text-cs-text-secondary text-2sm mt-0.5 line-clamp-1 sm:text-sm"
           >
             {{ data.total_interest }} total interest
           </div>

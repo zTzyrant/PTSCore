@@ -1,0 +1,221 @@
+<!-- <div
+  class="flex w-full flex-wrap rounded-2xl border bg-white p-2 py-6 shadow-xl"
+>
+  <div class="w-full">
+    <div
+      class="ml-auto flex flex-wrap items-center gap-2 px-2 sm:justify-end xl:px-10"
+    >
+      <h2 class="text-sm font-bold uppercase sm:mr-auto">Status</h2>
+      <button
+        class="btn"
+        [ngClass]="{
+          'btn-success': merchantData.status === 'Approve',
+          'btn-error': merchantData.status === 'Reject',
+          'btn-warning': merchantData.status === 'Pending'
+        }"
+      >
+        {{ merchantData.status }}
+      </button>
+      <a routerLink="/ministry/manage-merchant">
+        <button class="btn btn-primary btn-outline">Back</button>
+      </a>
+    </div>
+    <div class="flex flex-col gap-4 px-2 pt-4 md:flex-row">
+      <div class="w-full pt-0 md:w-1/2 2xl:px-8">
+        <h2 class="mb-3 text-lg font-bold uppercase">Merchant Information</h2>
+        <div class="flex flex-wrap">
+          <div class="w-full px-4 lg:w-6/12">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                Fullname
+              </label>
+              <input
+                type="text"
+                class="input input-primary w-full"
+                [value]="merchantData.merchantName"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="w-full px-4 lg:w-6/12">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                Username
+              </label>
+              <input
+                type="text"
+                class="input input-primary w-full"
+                [value]="merchantData.merchantUsername"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="w-full px-4 lg:w-6/12">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                Contact Number
+              </label>
+              <input
+                type="text"
+                class="input input-primary w-full"
+                [value]="merchantData.contactNumber"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="w-full px-4 lg:w-6/12">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                Email
+              </label>
+              <input
+                type="text"
+                class="input input-primary w-full"
+                [value]="merchantData.email"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="w-full px-4">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                Address
+              </label>
+              <input
+                type="text"
+                class="input input-primary w-full"
+                [value]="merchantData.address"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="w-full px-4 lg:w-4/12">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                City
+              </label>
+              <input
+                type="text"
+                class="input input-primary w-full"
+                [value]="merchantData.city"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="w-full px-4 lg:w-4/12">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                State
+              </label>
+              <input
+                type="text"
+                class="input input-primary w-full"
+                [value]="merchantData.state"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="w-full px-4 lg:w-4/12">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                Country
+              </label>
+              <input
+                type="text"
+                class="input input-primary w-full"
+                [value]="merchantData.country"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="w-full px-4">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                Description
+              </label>
+              <textarea
+                class="textarea textarea-secondary w-full"
+                placeholder="Bio"
+                [value]="merchantData.merchantDescription"
+                readonly
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 2xl:px-8">
+        <h6 class="mb-3 text-lg font-bold uppercase">Documents Merchant</h6>
+        <div class="flex flex-wrap">
+          <div class="lg:w-12/12 w-full px-4">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                Document
+              </label>
+              <div class="border border-primary p-4">
+                <ul class="list-none">
+                  <li *ngFor="let doc of merchantData.document; let i = index">
+                    <a
+                      class="link-primary link line-clamp-1"
+                      href=""
+                      target="_blank"
+                    >
+                      {{ i + 1 }}. {{ doc.filename }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="w-full px-4">
+            <div class="relative mb-3 w-full">
+              <label class="mb-2 block text-xs font-bold uppercase">
+                Filename
+              </label>
+              <input
+                type="text"
+                class="input input-primary w-full"
+                value="document.pdf"
+                readonly
+                [value]="merchantData.document[0].filename"
+              />
+            </div>
+          </div>
+          <div class="w-full px-4">
+            <div class="relative mb-3 w-full">
+              <label
+                class="mb-2 block text-xs font-bold uppercase"
+                htmlfor="grid-password"
+              >
+                Description
+              </label>
+              <textarea
+                class="textarea textarea-secondary w-full"
+                placeholder="Bio"
+                readonly
+                [value]="merchantData.document[0].description"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="ml-auto flex flex-wrap items-center justify-end gap-2 px-2"
+      *ngIf="merchantData.status === 'Pending'"
+    >
+      <button
+        class="btn btn-primary btn-outline"
+        (click)="setMerchantStatus('Approve')"
+      >
+        Approve
+      </button>
+      <button
+        class="btn btn-primary btn-outline"
+        (click)="setMerchantStatus('Reject')"
+      >
+        Reject
+      </button>
+    </div>
+  </div>
+</div> -->

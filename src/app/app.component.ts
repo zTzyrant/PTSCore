@@ -22,7 +22,7 @@ export class AppComponent {
   constructor(
     private titleService: Title,
     private metaService: Meta,
-    private router: Router
+    private router: Router,
   ) {
     this.router.events.subscribe((e: RouterEvent) => {
       this.navigationInterceptor(e)
@@ -51,22 +51,16 @@ export class AppComponent {
       this.loading = true
     }
     if (event instanceof NavigationEnd) {
-      setTimeout(() => {
-        this.loading = false
-      }, 500)
+      this.loading = false
     }
 
     // Set loading state to false in both of the below events to hide the spinner in case a request fails
     // refer to https://stackoverflow.com/a/58739854/13197639
     if (event instanceof NavigationCancel) {
-      setTimeout(() => {
-        this.loading = false
-      }, 500)
+      this.loading = false
     }
     if (event instanceof NavigationError) {
-      setTimeout(() => {
-        this.loading = false
-      }, 500)
+      this.loading = false
     }
   }
 }

@@ -1,10 +1,10 @@
-<div class="w-full md:w-[600px] font-manrope">
-  <div class="bg-white rounded-xl overflow-hidden md:border-2">
+<div class="w-full font-manrope md:w-[600px]">
+  <div class="overflow-hidden rounded-xl bg-white md:border-2">
     <div class="p-10">
-      <div class="w-24 mb-4 block lg:hidden">
+      <div class="mb-4 block w-24 lg:hidden">
         <h2 class="font-russoone text-5xl font-bold">PTS</h2>
       </div>
-      <h1 class="text-2xl mb-5">
+      <h1 class="mb-5 text-2xl">
         <span class="font-bold"> Sign Up Merchant </span>Form
       </h1>
       <h4 class="text-2md mb-6 text-gray-500">
@@ -14,11 +14,11 @@
         [formGroup]="formRegisterMerchant"
         novalidate=""
         class="font-inter"
-        *ngIf="!isSubmitSuccess"
+        *ngIf="!isMerchantDataSaved"
       >
         <!-- Start Merchant Name & Username -->
         <div class="flex flex-col sm:flex-row sm:gap-4">
-          <div class="w-full sm:w-1/2 mb-1">
+          <div class="mb-1 w-full sm:w-1/2">
             <div class="form-control w-full">
               <label class="label" for="merchantName">
                 <span>Merchant Name</span>
@@ -26,7 +26,7 @@
               <input
                 type="text"
                 placeholder="Merchant Name"
-                class="input input-bordered w-full input-primary"
+                class="input input-bordered input-primary w-full"
                 [class.border-red-500]="
                   formRegisterMerchant.controls['merchantName'].invalid &&
                   (formRegisterMerchant.controls['merchantName'].dirty ||
@@ -37,7 +37,7 @@
                 formControlName="merchantName"
               />
               <label
-                class="label text-red-500 text-sm"
+                class="label text-sm text-red-600"
                 for="merchantName"
                 *ngIf="
                   formRegisterMerchant.controls['merchantName'].invalid &&
@@ -57,7 +57,7 @@
               </label>
             </div>
           </div>
-          <div class="w-full sm:w-1/2 mb-1">
+          <div class="mb-1 w-full sm:w-1/2">
             <div class="form-control w-full">
               <label
                 class="label"
@@ -69,7 +69,7 @@
               <input
                 type="text"
                 placeholder="Merchant Username"
-                class="input input-bordered w-full input-primary"
+                class="input input-bordered input-primary w-full"
                 [class.border-red-500]="
                   formRegisterMerchant.controls['merchantUsername'].invalid &&
                   (formRegisterMerchant.controls['merchantUsername'].dirty ||
@@ -78,9 +78,10 @@
                 autocomplete="off"
                 id="merchantUsername"
                 formControlName="merchantUsername"
+                (focusout)="checkUsernameUsed()"
               />
               <label
-                class="label text-red-500 text-sm grid grid-cols-1"
+                class="label grid grid-cols-1 text-sm text-red-600"
                 for="merchantUsername"
                 *ngIf="
                   formRegisterMerchant.controls['merchantUsername'].invalid &&
@@ -115,6 +116,15 @@
                 >
                   Please Input Valid Username
                 </span>
+                <span
+                  *ngIf="
+                    formRegisterMerchant.controls['merchantUsername'].errors?.[
+                      'usernameUsed'
+                    ]
+                  "
+                >
+                  Username Already Used
+                </span>
               </label>
             </div>
           </div>
@@ -123,7 +133,7 @@
 
         <!-- Start Merchant Contact Number & Email -->
         <div class="flex flex-col sm:flex-row sm:gap-4">
-          <div class="w-full sm:w-1/2 mb-1">
+          <div class="mb-1 w-full sm:w-1/2">
             <div class="form-control w-full">
               <label
                 class="label"
@@ -135,7 +145,7 @@
               <input
                 type="text"
                 placeholder="Contact Number"
-                class="input input-bordered w-full input-primary"
+                class="input input-bordered input-primary w-full"
                 [class.border-red-500]="
                   formRegisterMerchant.controls['contactNumber'].invalid &&
                   (formRegisterMerchant.controls['contactNumber'].dirty ||
@@ -146,7 +156,7 @@
                 formControlName="contactNumber"
               />
               <label
-                class="label text-red-500 text-sm"
+                class="label text-sm text-red-600"
                 for="contactNumber"
                 *ngIf="
                   formRegisterMerchant.controls['contactNumber'].invalid &&
@@ -175,7 +185,7 @@
               </label>
             </div>
           </div>
-          <div class="w-full sm:w-1/2 mb-1">
+          <div class="mb-1 w-full sm:w-1/2">
             <div class="form-control w-full">
               <label
                 class="label"
@@ -187,19 +197,19 @@
               <input
                 type="email"
                 placeholder="Email"
-                class="input input-bordered w-full input-primary"
+                class="input input-bordered input-primary w-full"
                 [class.border-red-500]="
                   formRegisterMerchant.controls['email'].invalid &&
                   (formRegisterMerchant.controls['email'].dirty ||
                     formRegisterMerchant.controls['email'].touched)
                 "
-                (input)="checkEmailUsed($event)"
+                (focusout)="checkEmailUsed()"
                 autocomplete="off"
                 id="email"
                 formControlName="email"
               />
               <label
-                class="label text-red-500 text-sm"
+                class="label text-sm text-red-600"
                 for="email"
                 *ngIf="
                   formRegisterMerchant.controls['email'].invalid &&
@@ -236,7 +246,7 @@
 
         <!-- Start Merchant Address -->
         <div class="flex flex-col sm:flex-row sm:gap-4">
-          <div class="w-full mb-1">
+          <div class="mb-1 w-full">
             <div class="form-control w-full">
               <label class="label" for="address">
                 <span>Address</span>
@@ -244,7 +254,7 @@
               <input
                 type="text"
                 placeholder="Your Merchant Address"
-                class="input input-bordered w-full input-primary"
+                class="input input-bordered input-primary w-full"
                 [class.border-red-500]="
                   formRegisterMerchant.controls['address'].invalid &&
                   (formRegisterMerchant.controls['address'].dirty ||
@@ -255,7 +265,7 @@
                 formControlName="address"
               />
               <label
-                class="label text-red-500 text-sm"
+                class="label text-sm text-red-600"
                 for="address"
                 *ngIf="
                   formRegisterMerchant.controls['address'].invalid &&
@@ -280,7 +290,7 @@
 
         <!-- Start Merchant City, Address, Country -->
         <div class="flex flex-col sm:flex-row sm:gap-4">
-          <div class="w-full sm:w-1/3 mb-1">
+          <div class="mb-1 w-full sm:w-1/3">
             <div class="form-control w-full">
               <label class="label" for="city">
                 <span>City</span>
@@ -288,7 +298,7 @@
               <input
                 type="text"
                 placeholder="City"
-                class="input input-bordered w-full input-primary"
+                class="input input-bordered input-primary w-full"
                 [class.border-red-500]="
                   formRegisterMerchant.controls['city'].invalid &&
                   (formRegisterMerchant.controls['city'].dirty ||
@@ -298,7 +308,7 @@
                 formControlName="city"
               />
               <label
-                class="label text-red-500 text-sm"
+                class="label text-sm text-red-600"
                 for="city"
                 *ngIf="
                   formRegisterMerchant.controls['city'].invalid &&
@@ -316,7 +326,7 @@
               </label>
             </div>
           </div>
-          <div class="w-full sm:w-1/3 mb-1">
+          <div class="mb-1 w-full sm:w-1/3">
             <div class="form-control w-full">
               <label class="label" for="state">
                 <span>State</span>
@@ -324,7 +334,7 @@
               <input
                 type="text"
                 placeholder="State"
-                class="input input-bordered w-full input-primary"
+                class="input input-bordered input-primary w-full"
                 [class.border-red-500]="
                   formRegisterMerchant.controls['state'].invalid &&
                   (formRegisterMerchant.controls['state'].dirty ||
@@ -335,7 +345,7 @@
                 formControlName="state"
               />
               <label
-                class="label text-red-500 text-sm"
+                class="label text-sm text-red-600"
                 for="state"
                 *ngIf="
                   formRegisterMerchant.controls['state'].invalid &&
@@ -353,7 +363,7 @@
               </label>
             </div>
           </div>
-          <div class="w-full sm:w-1/3 mb-1">
+          <div class="mb-1 w-full sm:w-1/3">
             <div class="form-control w-full">
               <label class="label" for="country">
                 <span>Country</span>
@@ -361,7 +371,7 @@
               <input
                 type="text"
                 placeholder="Country"
-                class="input input-bordered w-full input-primary"
+                class="input input-bordered input-primary w-full"
                 [class.border-red-500]="
                   formRegisterMerchant.controls['country'].invalid &&
                   (formRegisterMerchant.controls['country'].dirty ||
@@ -372,7 +382,7 @@
                 formControlName="country"
               />
               <label
-                class="label text-red-500 text-sm"
+                class="label text-sm text-red-600"
                 for="country"
                 *ngIf="
                   formRegisterMerchant.controls['country'].invalid &&
@@ -397,7 +407,7 @@
 
         <!-- Start Merchant Description -->
         <div class="flex flex-col sm:flex-row sm:gap-4">
-          <div class="w-full mb-1">
+          <div class="mb-1 w-full">
             <div class="form-control w-full">
               <label class="label" for="merchantDescription">
                 <span>Merchant Description</span>
@@ -416,7 +426,7 @@
                 formControlName="merchantDescription"
               ></textarea>
               <label
-                class="label text-red-500 text-sm"
+                class="label text-sm text-red-600"
                 for="merchantDescription"
                 *ngIf="
                   formRegisterMerchant.controls['merchantDescription']
@@ -440,96 +450,10 @@
         </div>
         <!-- End Merchant Description -->
 
-        <!-- Start Company Doccument -->
-        <!-- <div class="w-full mb-1">
-          <div class="form-control w-full">
-            <label class="label" for="document">
-              <span>Company Document</span>
-            </label>
-            <div
-              class="w-full border rounded-sm border-neutral focus:outline-none bg-white"
-              (dragover)="dragFilesOver($event)"
-              (dragleave)="dragFilesLeave()"
-              (drop)="filesDropped($event)"
-            >
-              <label
-                for="document"
-                class="flex justify-center w-full min-h-[100px] px-4"
-              >
-                <span
-                  class="flex items-center space-x-2"
-                  *ngIf="companyDocument.length < 1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-6 h-6 text-gray-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
-                  <span class="font-medium text-gray-600">
-                    Drop files to Attach, or
-                    <span class="text-blue-600 underline">browse</span>
-                  </span>
-                </span>
-                <div
-                  class="text-sm flex flex-col justify-start w-full py-2"
-                  *ngIf="companyDocument.length > 0"
-                >
-                  <div
-                    class="flex flex-row gap-2 text-sm"
-                    *ngFor="let data of companyDocument; index as i"
-                  >
-                    <i
-                      class="bi bi-image"
-                      *ngIf="data.type.includes('image/')"
-                    ></i>
-                    <i
-                      class="bi bi-file-earmark-text"
-                      *ngIf="data.type.includes('application/')"
-                    ></i>
-                    <p class="line-clamp-1">
-                      {{ data.name }}
-                    </p>
-                    <button (click)="removeDocument(i)">
-                      <span
-                        class="text-red-500 font-mono font-bold cursor-pointer"
-                      >
-                        x
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </label>
-            </div>
-            <input
-              type="file"
-              class="hidden"
-              multiple=""
-              id="document"
-              accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/png, image/jpeg, image/jpg"
-              (change)="inputFiles($event)"
-            />
-            <label
-              class="label text-red-500 text-sm"
-              *ngIf="companyDocument.length < 1"
-            >
-              <span> Please select your document or licenses </span>
-            </label>
-          </div>
-        </div> -->
-        <!-- End Company Doccument -->
         <div class="mt-4">
           <button
             type="button"
-            class="inline-flex w-full items-center gap-3 justify-center text-sm p-3.5 btn btn-primary"
+            class="btn btn-primary inline-flex w-full items-center justify-center gap-3 p-3.5 text-sm"
             (click)="submitRegisterMerchant()"
           >
             Sign Up
@@ -537,199 +461,161 @@
         </div>
       </form>
 
-      <form
-        [formGroup]="documentMerchantForm"
-        novalidate=""
-        class="font-inter"
-        *ngIf="isSubmitSuccess"
-      >
-        <!-- Start Document files -->
-        <div class="w-full mb-1">
-          <div class="form-control w-full">
-            <label class="label" for="document">
-              <span>Company Document</span>
-            </label>
-            <div
-              class="w-full border rounded-sm border-neutral focus:outline-none bg-white"
-              (dragover)="dragFilesOver($event)"
-              (dragleave)="dragFilesLeave()"
-              (drop)="filesDropped($event)"
-            >
-              <label
-                for="document"
-                class="flex justify-center w-full min-h-12 px-4"
-              >
-                <span
-                  class="flex items-center space-x-2"
-                  *ngIf="companyDocument.length < 1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-6 h-6 text-gray-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
+      <div *ngIf="isMerchantDataSaved">
+        <div *ngFor="let formDocument of documentsControls; let i = index">
+          <form [formGroup]="formDocument" novalidate class="font-inter">
+            <!-- Start Document files -->
+            <div class="mb-1 w-full">
+              <div class="form-control flex w-full">
+                <label class="label" for="file">
+                  <span>Company Document: {{ i + 1 }}</span>
+                  <button class="justify-end">
+                    <i class="bi bi-x text-xl group-hover:text-red-600"></i>
+                  </button>
+                </label>
+                <div class="relative w-full">
+                  <input
+                    type="file"
+                    class="file-input file-input-bordered file-input-primary line-clamp-1 w-full pr-10"
+                    id="file"
+                    accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/png, image/jpeg, image/jpg"
+                    (change)="inputFile($event.target, i)"
+                    #file_input
+                  />
+                  <span
+                    class="absolute inset-y-0 right-0 flex items-center pr-2"
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
-                  <span class="font-medium text-gray-600">
-                    Drop files to Attach, or
-                    <span class="text-blue-600 underline">browse</span>
-                  </span>
-                </span>
-                <div
-                  class="text-sm flex flex-col justify-start w-full py-2"
-                  *ngIf="companyDocument.length > 0"
-                >
-                  <div
-                    class="flex flex-row gap-2 text-sm"
-                    *ngFor="let data of companyDocument; index as i"
-                  >
-                    <i
-                      class="bi bi-image"
-                      *ngIf="data.type.includes('image/')"
-                    ></i>
-                    <i
-                      class="bi bi-file-earmark-text"
-                      *ngIf="data.type.includes('application/')"
-                    ></i>
-                    <p class="line-clamp-1">
-                      {{ data.name }}
-                    </p>
-                    <button (click)="removeDocument(i)">
-                      <span
-                        class="text-red-500 font-mono font-bold cursor-pointer"
-                      >
-                        x
-                      </span>
+                    <button
+                      type="button"
+                      class="focus:shadow-outline group p-1 focus:outline-none"
+                      (click)="removeFileByIndex(i); file_input.value = ''"
+                      *ngIf="formDocument.controls['file'].valid"
+                    >
+                      <i class="bi bi-x text-xl group-hover:text-red-600"></i>
                     </button>
-                  </div>
+                  </span>
                 </div>
-              </label>
-            </div>
-            <input
-              type="file"
-              class="hidden"
-              multiple=""
-              id="document"
-              accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/png, image/jpeg, image/jpg"
-              (change)="inputFiles($event)"
-            />
-            <label
-              class="label text-red-500 text-sm"
-              *ngIf="companyDocument.length < 1 && isInputDocumentTouch"
-            >
-              <span> Please select your document or licenses </span>
-            </label>
-          </div>
-        </div>
-        <!-- End Document files -->
 
-        <!-- Start Document Filename -->
-        <div class="flex flex-col sm:flex-row sm:gap-4">
-          <div class="w-full mb-1">
-            <div class="form-control w-full">
-              <label class="label" for="filename">
-                <span>Filename</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Your document filename"
-                class="input input-bordered w-full input-primary"
-                [class.border-red-500]="
-                  documentMerchantForm.controls['filename'].invalid &&
-                  (documentMerchantForm.controls['filename'].dirty ||
-                    documentMerchantForm.controls['filename'].touched)
-                "
-                autocomplete="off"
-                id="filename"
-                formControlName="filename"
-              />
-              <label
-                class="label text-red-500 text-sm"
-                for="filename"
-                *ngIf="
-                  documentMerchantForm.controls['filename'].invalid &&
-                  (documentMerchantForm.controls['filename'].dirty ||
-                    documentMerchantForm.controls['filename'].touched)
-                "
-              >
-                <span
+                <label
+                  class="label text-sm text-red-600"
+                  for="file"
                   *ngIf="
-                    documentMerchantForm.controls['filename'].errors?.[
-                      'required'
-                    ]
+                    formDocument.controls['file'].value === null &&
+                    formDocument.controls['file'].touched
                   "
                 >
-                  Filename is required
-                </span>
-              </label>
+                  <span> Please select your document or licenses </span>
+                </label>
+              </div>
             </div>
-          </div>
-        </div>
-        <!-- End Document Filename -->
+            <!-- End Document files -->
 
-        <!-- Start Document Description -->
-        <div class="flex flex-col sm:flex-row sm:gap-4">
-          <div class="w-full mb-1">
-            <div class="form-control w-full">
-              <label class="label" for="description">
-                <span>Description</span>
-              </label>
-              <textarea
-                class="textarea textarea-primary"
-                [class.border-red-500]="
-                  documentMerchantForm.controls['description'].invalid &&
-                  (documentMerchantForm.controls['description'].dirty ||
-                    documentMerchantForm.controls['description'].touched)
-                "
-                placeholder="Describe your document as licenses, testimonials, SIUP, TDP, NPWP, etc."
-                id="description"
-                formControlName="description"
-              ></textarea>
-
-              <label
-                class="label text-red-500 text-sm"
-                for="description"
-                *ngIf="
-                  documentMerchantForm.controls['description'].invalid &&
-                  (documentMerchantForm.controls['description'].dirty ||
-                    documentMerchantForm.controls['description'].touched)
-                "
-              >
-                <span
-                  *ngIf="
-                    documentMerchantForm.controls['description'].errors?.[
-                      'required'
-                    ]
-                  "
-                >
-                  Description is required
-                </span>
-              </label>
+            <!-- Start Document Filename -->
+            <div class="flex flex-col sm:flex-row sm:gap-4">
+              <div class="mb-1 w-full">
+                <div class="form-control w-full">
+                  <label class="label" for="filename">
+                    <span>Filename</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Your document filename"
+                    class="input input-bordered input-primary w-full"
+                    [class.border-red-500]="
+                      formDocument.controls['filename'].invalid &&
+                      (formDocument.controls['filename'].dirty ||
+                        formDocument.controls['filename'].touched)
+                    "
+                    autocomplete="off"
+                    id="filename"
+                    formControlName="filename"
+                  />
+                  <label
+                    class="label text-sm text-red-600"
+                    for="filename"
+                    *ngIf="
+                      formDocument.controls['filename'].invalid &&
+                      (formDocument.controls['filename'].dirty ||
+                        formDocument.controls['filename'].touched)
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        formDocument.controls['filename'].errors?.['required']
+                      "
+                    >
+                      Filename is required
+                    </span>
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <!-- End Document Description -->
+            <!-- End Document Filename -->
 
+            <!-- Start Document Description -->
+            <div class="flex flex-col sm:flex-row sm:gap-4">
+              <div class="mb-1 w-full">
+                <div class="form-control w-full">
+                  <label class="label" for="description">
+                    <span>Description</span>
+                  </label>
+                  <textarea
+                    class="textarea textarea-primary"
+                    [class.border-red-500]="
+                      formDocument.controls['description'].invalid &&
+                      (formDocument.controls['description'].dirty ||
+                        formDocument.controls['description'].touched)
+                    "
+                    placeholder="Describe your document as licenses, testimonials, SIUP, TDP, NPWP, etc."
+                    id="description"
+                    formControlName="description"
+                  ></textarea>
+
+                  <label
+                    class="label text-sm text-red-600"
+                    for="description"
+                    *ngIf="
+                      formDocument.controls['description'].invalid &&
+                      (formDocument.controls['description'].dirty ||
+                        formDocument.controls['description'].touched)
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        formDocument.controls['description'].errors?.[
+                          'required'
+                        ]
+                      "
+                    >
+                      Description is required
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- End Document Description -->
+          </form>
+        </div>
         <div class="mt-4">
           <button
             type="button"
-            class="inline-flex w-full items-center gap-3 justify-center text-sm p-3.5 btn btn-primary"
-            (click)="submitDocumentMerchant()"
+            class="btn btn-primary inline-flex w-full items-center justify-center gap-3 p-3.5 text-sm"
+            (click)="submitMerchantData()"
           >
             Submit Files
           </button>
+          <button
+            type="button"
+            class="btn btn-primary btn-outline mt-4 inline-flex w-full items-center justify-center gap-3 p-3.5 text-sm"
+            (click)="addDocument()"
+          >
+            Add More Files
+          </button>
         </div>
-      </form>
+      </div>
     </div>
     <div
-      class="px-10 py-5 md:border-t md:border-[#e6e6e699] text-[0.8125rem] md:bg-gray-50 text-center"
+      class="px-10 py-5 text-center text-[0.8125rem] md:border-t md:border-[#e6e6e699] md:bg-gray-50"
     >
       By clicking the button above, you agree to our
       <a href="/terms-of-service" class="font-semibold underline"

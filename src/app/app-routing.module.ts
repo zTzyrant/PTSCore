@@ -7,6 +7,9 @@ import { NotfoundComponent } from "./pages/error/notfound/notfound.component"
 import { LoginMinistryComponent } from "./pages/ministry/login-ministry/login-ministry.component"
 import { ContactComponent } from "./pages/menu/contact/contact.component"
 import { LoginMerchantComponent } from "./pages/merchant/login-merchant/login-merchant.component"
+import { MinistryIndexComponent } from "./pages/ministry/menu/ministry-index/ministry-index.component"
+import { ManageMerchantComponent } from "./pages/ministry/menu/manage-merchant/manage-merchant.component"
+import { ViewMerchantComponent } from "./pages/ministry/menu/view-merchant/view-merchant.component"
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -14,6 +17,9 @@ const routes: Routes = [
   { path: "merchant/register", component: RegisterMerchantComponent },
   { path: "merchant/login", component: LoginMerchantComponent },
   { path: "ministry/login", component: LoginMinistryComponent },
+  { path: "ministry", component: MinistryIndexComponent },
+  { path: "ministry/manage-merchant", component: ManageMerchantComponent },
+  { path: "ministry/manage-merchant/:id", component: ViewMerchantComponent },
   { path: "contact", component: ContactComponent },
 
   { path: "**", component: NotfoundComponent },
@@ -21,9 +27,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { scrollPositionRestoration: "enabled" }),
-  ],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: "top" })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

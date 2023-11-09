@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core"
 
 @Component({
-  selector: 'app-trip-plan',
-  templateUrl: './trip-plan.component.html',
-  styleUrls: ['./trip-plan.component.css']
+  selector: "app-trip-plan",
+  templateUrl: "./trip-plan.component.html",
+  styleUrls: ["./trip-plan.component.css"],
 })
-export class TripPlanComponent {
-
-}
+export class TripPlanComponent {}

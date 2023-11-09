@@ -19,7 +19,7 @@ export class RecentlyAddedSliderComponent {
   async getRecentProducts() {
     try {
       this.products = await lastValueFrom(
-        this.httpService.get("assets/fakeproduct.json")
+        this.httpService.get("assets/fakeproduct.json"),
       )
       this.registerSwiper()
     } catch (err) {

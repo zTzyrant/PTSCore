@@ -4,5 +4,6 @@
   "printWidth": 80,
   "bracketSpacing": true,
   "bracketSameLine": false,
-  "semi": false
+  "semi": false,
+  "plugins": ["prettier-plugin-tailwindcss"]
 }
