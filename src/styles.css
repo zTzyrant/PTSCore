@@ -4,6 +4,13 @@
 /* components */
 @import "assets/css/components/input.css";
 @import "assets/css/components/dashboard.css";
+@import "assets/css/components/table.css";
+
+/* plugins */
+@import "assets/css/plugins/ng-select.css";
+
+/* icons */
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
 @tailwind base;
 @tailwind components;

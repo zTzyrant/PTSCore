@@ -216,6 +216,15 @@ export class RegisterMerchantFormComponent {
       return
     }
 
+    if (this.formRegisterMerchant.invalid) {
+      console.log(this.formRegisterMerchant.value)
+      this.formRegisterMerchant.markAllAsTouched()
+      this.formRegisterMerchant.markAsDirty()
+      this.isMerchantDataSaved = false
+      this.Swal.SwalNotif("Error", `Please check your merchant data`)
+      return
+    }
+
     this.isSubmit = true
     try {
       // convert form register merchant & documents to FormData
@@ -252,10 +261,15 @@ export class RegisterMerchantFormComponent {
 
       const res = await lastValueFrom(this.apiService.postMerchant(formData))
       if (res) {
-        this.Swal.SwalNotif(
+        this.Swal.SwalNotifWithThen(
           "Success",
           `Register merchant success, Please wait for ministry approval.`,
-        )
+        ).then(() => {
+          this.isSubmit = false
+          this.formRegisterMerchant.reset()
+          this.documents.reset()
+          this.isMerchantDataSaved = false
+        })
       }
     } catch (error) {
       console.log(error)

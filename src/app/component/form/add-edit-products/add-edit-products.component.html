@@ -1,0 +1,872 @@
+<!-- skeleton loading start -->
+@if (categories.length < 1) {
+<div class="mt-7 w-full animate-pulse">
+  <div class="flex items-center gap-4 max-sm:flex-col">
+    <div class="h-[35px] w-full rounded-md bg-gray-200 sm:w-1/2"></div>
+    <div class="h-[35px] w-full rounded-md bg-gray-200 sm:w-1/2"></div>
+  </div>
+  <div class="mt-4 flex items-center gap-4 max-sm:flex-col">
+    <div class="h-[35px] w-full rounded-md bg-gray-200 sm:w-1/2"></div>
+    <div class="h-[35px] w-full rounded-md bg-gray-200 sm:w-1/2"></div>
+  </div>
+  <div class="mt-4 flex items-center gap-4">
+    <div class="h-[35px] w-full rounded-md bg-gray-200"></div>
+  </div>
+  <div class="mt-4 flex items-center gap-4 max-sm:flex-col">
+    <div
+      class="flex h-64 w-full items-center justify-center rounded-md bg-gray-300 sm:w-1/2"
+    >
+      <svg
+        class="h-14 w-14 text-gray-200"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 16 20"
+      >
+        <path
+          d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"
+        />
+        <path
+          d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"
+        />
+      </svg>
+    </div>
+    <div class="h-64 w-full rounded-md bg-gray-200 sm:w-1/2"></div>
+  </div>
+</div>
+}
+<!-- skeleton loading end -->
+
+<!-- Form Add or Edit Product start -->
+@if (categories.length > 0) {
+<form [formGroup]="productsForm">
+  <!-- Product Name,  Product Price start -->
+  <div class="mt-2 flex flex-col space-y-2 sm:flex-row sm:gap-4 sm:space-y-0">
+    <div class="w-full sm:w-1/2">
+      <label for="productName" class="label">Product Name</label>
+      <input
+        type="text"
+        id="productName"
+        class="input input-primary w-full"
+        formControlName="name"
+      />
+      @if (productsForm.controls['name'].invalid &&
+      (productsForm.controls['name'].dirty ||
+      productsForm.controls['name'].touched)) {
+      @if(productsForm.controls["name"].errors?.["required"]){
+      <p class="mt-1 text-xs text-red-500">Product name is required</p>
+      } }
+    </div>
+
+    <div class="w-full sm:w-1/2">
+      <label for="productPrice" class="label items-center justify-start">
+        Product Price (IDR)
+        <span>
+          <i
+            class="bi bi-info-circle ml-1"
+            ngxTippy="The price of the product base on the number of guests"
+            [tippyProps]="{
+              placement: 'top'
+            }"
+          ></i>
+        </span>
+      </label>
+      <input
+        type="number"
+        id="productPrice"
+        class="input input-primary w-full"
+        formControlName="price"
+      />
+      @if (productsForm.controls['price'].invalid &&
+      (productsForm.controls['price'].dirty ||
+      productsForm.controls['price'].touched)) {
+      @if(productsForm.controls["price"].errors?.["required"]){
+      <p class="mt-1 text-xs text-red-500">Product price is required</p>
+      } @if (productsForm.controls["price"].errors?.['min']) {
+      <p class="mt-1 text-xs text-red-500">
+        Product price must be greater than 10.000
+      </p>
+      } }
+    </div>
+  </div>
+  <!-- Product Name, Product Price end -->
+
+  <!-- Num of Guest, Limit Order start -->
+  <div class="mt-2 flex flex-col space-y-2 sm:flex-row sm:gap-4 sm:space-y-0">
+    <div class="w-full sm:w-1/2">
+      <label for="guests" class="label flex w-fit items-center">
+        Num of Guest
+        <span>
+          <i
+            class="bi bi-info-circle ml-2"
+            ngxTippy="The number of guests that can be accommodated per product"
+            [tippyProps]="{
+              placement: 'top'
+            }"
+          ></i>
+        </span>
+      </label>
+      <input
+        type="number"
+        id="guests"
+        class="input input-primary w-full"
+        formControlName="numberOfGuests"
+      />
+      @if(productsForm.controls['numberOfGuests'].invalid &&
+      (productsForm.controls['numberOfGuests'].dirty ||
+      productsForm.controls['numberOfGuests'].touched)) {
+      @if(productsForm.controls["numberOfGuests"].errors?.["required"]){
+      <p class="mt-1 text-xs text-red-500">Number of guests is required</p>
+      } @if(productsForm.controls["numberOfGuests"].errors?.["min"]){
+      <p class="mt-1 text-xs text-red-500">
+        Number of guests must be greater than 0
+      </p>
+      } }
+    </div>
+
+    <div class="w-full sm:w-1/2">
+      <label for="orderLimit" class="label items-center justify-start">
+        Limit Order (Quantity)
+        <span>
+          <i
+            class="bi bi-info-circle ml-1"
+            ngxTippy="Number of products in stock"
+            [tippyProps]="{
+              placement: 'top'
+            }"
+          ></i>
+        </span>
+      </label>
+      <input
+        type="number"
+        id="orderLimit"
+        class="input input-primary w-full"
+        formControlName="limitOrder"
+      />
+      @if (productsForm.controls['limitOrder'].invalid &&
+      (productsForm.controls['limitOrder'].dirty ||
+      productsForm.controls['limitOrder'].touched)) {
+      @if(productsForm.controls["limitOrder"].errors?.["required"]){
+      <p class="mt-1 text-xs text-red-500">Limit order is required</p>
+      } @if(productsForm.controls["limitOrder"].errors?.["min"]){
+      <p class="mt-1 text-xs text-red-500">
+        Limit order must be greater than 0
+      </p>
+      } }
+    </div>
+  </div>
+  <!-- Num of Guest, Limit Order end -->
+
+  <!-- Product Category, Hotel Grade start -->
+  <div class="mt-2 flex flex-col space-y-2 sm:flex-row sm:gap-4 sm:space-y-0">
+    <div class="w-full sm:w-1/2">
+      <label for="productCategory" class="label">Product Category</label>
+      <ng-select
+        [items]="categories"
+        [multiple]="true"
+        placeholder="Choose one..."
+        labelForId="productCategory"
+        formControlName="categories"
+      >
+      </ng-select>
+      @if (productsForm.controls['categories'].invalid &&
+      (productsForm.controls['categories'].dirty ||
+      productsForm.controls['categories'].touched)) {
+      @if(productsForm.controls["categories"].errors?.["required"]){
+      <p class="mt-1 text-xs text-red-500">Product category is required</p>
+      } }
+    </div>
+
+    <div class="w-full sm:w-1/2">
+      <label for="hotelGrade" class="label items-center justify-start">
+        Hotel Grade
+        <span>
+          <i
+            class="bi bi-info-circle ml-1"
+            ngxTippy="The grade of the hotel if included"
+            [tippyProps]="{
+              placement: 'top'
+            }"
+          ></i>
+        </span>
+      </label>
+      <select
+        class="select select-primary w-full"
+        id="hotelGrade"
+        formControlName="hotelGrade"
+        [disabled]="!productsForm.controls['include_hotel'].value"
+      >
+        <option value="-1" disabled selected>Choose one...</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      @if( productsForm.controls['include_hotel'].value ) {
+      @if(productsForm.controls["hotelGrade"].value === '-1'){
+      <p class="mt-1 text-xs text-red-500">Hotel grade is required</p>
+      } }
+    </div>
+  </div>
+  <!-- Product Category, Hotel Grade end -->
+
+  <!-- Facility start -->
+  <div class="mt-2 w-full">
+    <label class="label">Facility</label>
+    <div class="flex flex-wrap items-center gap-4">
+      <label
+        for="wifi"
+        class="flex cursor-pointer select-none items-center border border-neutral px-3.5 py-3"
+      >
+        <input
+          type="checkbox"
+          class="toggle toggle-primary"
+          id="wifi"
+          formControlName="include_wifi"
+        />
+        <span class="ml-2">Wifi</span>
+      </label>
+
+      <label
+        for="foods"
+        class="flex cursor-pointer select-none items-center border border-neutral px-3.5 py-3"
+      >
+        <input
+          type="checkbox"
+          class="toggle toggle-primary"
+          id="foods"
+          formControlName="include_foods"
+        />
+        <span class="ml-2">Foods</span>
+      </label>
+
+      <label
+        for="hotels"
+        class="flex cursor-pointer select-none items-center border border-neutral px-3.5 py-3"
+        (click)="setIncludeHotel()"
+      >
+        <input
+          type="checkbox"
+          class="toggle toggle-primary"
+          id="hotels"
+          formControlName="include_hotel"
+          (click)="setIncludeHotel()"
+        />
+        <span class="ml-2" (click)="setIncludeHotel()">Hotels</span>
+      </label>
+
+      <label
+        for="transportation"
+        class="flex cursor-pointer select-none items-center border border-neutral px-3.5 py-3"
+      >
+        <input
+          type="checkbox"
+          class="toggle toggle-primary"
+          id="transportation"
+          formControlName="include_transportation"
+        />
+        <span class="ml-2">Transportations</span>
+      </label>
+    </div>
+  </div>
+  <!-- Facility end -->
+
+  <!-- Addres start  -->
+  <div class="mt-2 w-full">
+    <label for="address" class="label">Address</label>
+    <input
+      type="text"
+      class="input input-primary w-full"
+      id="address"
+      formControlName="address"
+    />
+    @if(productsForm.controls['address'].invalid &&
+    (productsForm.controls['address'].dirty ||
+    productsForm.controls['address'].touched)) {
+    @if(productsForm.controls["address"].errors?.["required"]){
+    <p class="mt-1 text-xs text-red-500">Address is required</p>
+    } }
+  </div>
+  <!-- Addres end  -->
+
+  <!-- city, state, postcode, country start -->
+  <div class="mt-2 flex flex-col space-y-2 sm:flex-row sm:gap-4 sm:space-y-0">
+    <div class="w-full sm:w-1/2">
+      <label for="city" class="label">City</label>
+      <input
+        type="text"
+        class="input input-primary w-full"
+        id="city"
+        formControlName="city"
+      />
+      @if(productsForm.controls['city'].invalid &&
+      (productsForm.controls['city'].dirty ||
+      productsForm.controls['city'].touched)) {
+      @if(productsForm.controls["city"].errors?.["required"]){
+      <p class="mt-1 text-xs text-red-500">City is required</p>
+      } }
+    </div>
+
+    <div class="w-full sm:w-1/2">
+      <label for="state" class="label">State</label>
+      <input
+        type="text"
+        class="input input-primary w-full"
+        id="state"
+        formControlName="state"
+      />
+      @if(productsForm.controls['state'].invalid &&
+      (productsForm.controls['state'].dirty ||
+      productsForm.controls['state'].touched)) {
+      @if(productsForm.controls["state"].errors?.["required"]){
+      <p class="mt-1 text-xs text-red-500">State is required</p>
+      } }
+    </div>
+
+    <div class="w-full sm:w-1/2">
+      <label for="postcode" class="label">Post Code</label>
+      <input
+        type="text"
+        class="input input-primary w-full"
+        id="postcode"
+        formControlName="post_code"
+      />
+      @if(productsForm.controls['post_code'].invalid &&
+      (productsForm.controls['post_code'].dirty ||
+      productsForm.controls['post_code'].touched)) {
+      @if(productsForm.controls["post_code"].errors?.["required"]){
+      <p class="mt-1 text-xs text-red-500">Post code is required</p>
+      } }
+    </div>
+
+    <div class="w-full sm:w-1/2">
+      <label for="country" class="label">Country</label>
+      <input
+        type="text"
+        class="input input-primary w-full"
+        id="country"
+        formControlName="country"
+      />
+      @if(productsForm.controls['country'].invalid &&
+      (productsForm.controls['country'].dirty ||
+      productsForm.controls['country'].touched)) {
+      @if(productsForm.controls["country"].errors?.["required"]){
+      <p class="mt-1 text-xs text-red-500">Country is required</p>
+      } }
+    </div>
+  </div>
+  <!-- city, state, postcode, country end -->
+
+  <!-- Pictures, Description start -->
+  <!-- <div class="mt-2 flex flex-col space-y-2 sm:flex-row sm:gap-4 sm:space-y-0">
+    <div class="w-full sm:w-1/2">
+      <label for="dropzone_file" class="label">Pictures</label>
+      <div
+        class="flex h-64 flex-col items-center justify-center border-2 border-dashed border-neutral bg-gray-50 p-[30px]"
+        [ngClass]="{ 'border-green-500': pictureGrabbed }"
+        (drop)="onPicDrop($event)"
+        (dragover)="onPicDragOver($event)"
+        (dragleave)="onPicDragLeave()"
+      >
+        @if (false) {
+        <label
+          for="dropzone_file"
+          class="flex h-full w-full cursor-pointer flex-col items-center justify-center pb-6 pt-5"
+        >
+          <svg
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            class="mb-3 h-10 w-10 text-gray-400"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+            ></path>
+          </svg>
+          <p class="mb-2 text-sm text-gray-500">
+            <span class="font-semibold">Click to upload</span>
+            or drag and drop
+          </p>
+          <p class="text-xs text-gray-500">PNG, JPG up to 2MB</p>
+        </label>
+        } @if (false){
+        <div class="relative flex h-full w-full">
+          <button
+            class="btn btn-info btn-xs absolute right-0 top-0 rounded-full"
+            (click)="clearAllPictures()"
+          >
+            Clear All
+          </button>
+          <div
+            class="mt-10 flex items-center justify-start overflow-auto rounded-xl"
+          >
+            <div
+              class="relative m-[5px]"
+              *ngFor="let pic of product_pictures; let i = index"
+            >
+              <div class="relative">
+                <div class="aspect-square h-[120px] w-[120px]">
+                  <img
+                    [src]="pic.url"
+                    class="h-full w-full rounded-xl border-2 border-neutral object-cover object-center"
+                  />
+                </div>
+
+                <button
+                  class="absolute right-0 top-0 rounded-full bg-red-500 p-1 hover:bg-red-600 hover:transition-colors"
+                  (click)="removePicture(i)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    class="block h-5 w-5 text-white"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div
+              class="m-[5px] flex h-[120px] cursor-pointer items-center justify-center"
+            >
+              <label for="dropzone_file" class="cursor-pointer">
+                <div class="relative">
+                  <i class="bi bi-plus-circle-dotted text-4xl"></i>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        }
+
+        <input
+          id="dropzone_file"
+          type="file"
+          accept="image/jpeg, image/png"
+          max="4"
+          multiple=""
+          class="hidden"
+          (change)="onFileChange($event)"
+        />
+      </div>
+    </div>
+
+    <div class="w-full sm:w-1/2">
+      <label for="description" class="label">Description</label>
+      <textarea
+        id="description"
+        class="textarea textarea-primary h-64 w-full"
+        formControlName="description"
+      ></textarea>
+    </div>
+  </div> -->
+  <!-- Pictures, Description end -->
+
+  <!-- description start -->
+  <div class="mt-2 w-full">
+    <label for="description" class="label">Description</label>
+    <textarea
+      id="description"
+      class="textarea textarea-primary w-full"
+      formControlName="description"
+    ></textarea>
+    @if(productsForm.controls['description'].invalid &&
+    (productsForm.controls['description'].dirty ||
+    productsForm.controls['description'].touched)) {
+    @if(productsForm.controls["description"].errors?.["required"]){
+    <p class="mt-1 text-xs text-red-500">Description is required</p>
+    } }
+  </div>
+  <!-- description end -->
+
+  <!-- Pictures start -->
+  @if(pictureProduct.length === 0 ){
+  <div class="mt-2 w-full">
+    <label for="dropzone_file" class="label">Pictures</label>
+    @if(product_pictures.length < 1){
+    <div
+      class="flex h-64 flex-col border-2 border-dashed bg-gray-50 p-[30px]"
+      [ngClass]="{
+        'border-green-500': pictureGrabbed,
+        'border-neutral': !pictureGrabbed,
+        'flex-wrap justify-start overflow-auto': true,
+        'items-center justify-center': false
+      }"
+      (drop)="onPicDrop($event)"
+      (dragover)="onPicDragOver($event)"
+      (dragleave)="onPicDragLeave()"
+    >
+      <label
+        for="dropzone_file"
+        class="flex h-full w-full cursor-pointer flex-col items-center justify-center pb-6 pt-5"
+      >
+        <svg
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="mb-3 h-10 w-10 text-gray-400"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+          ></path>
+        </svg>
+        <p class="mb-2 text-sm text-gray-500">
+          <span class="font-semibold">Click to upload</span>
+          or drag and drop
+        </p>
+        <p class="text-xs text-gray-500">PNG, JPG up to 2MB</p>
+      </label>
+    </div>
+    } @else {
+    <div
+      class="flex h-64 flex-wrap justify-start overflow-auto border-2 border-dashed bg-gray-50 p-[30px]"
+      [ngClass]="{
+        'border-green-500': pictureGrabbed,
+        'border-neutral': !pictureGrabbed,
+        'flex-wrap justify-start overflow-auto': true,
+        'items-center justify-center': false
+      }"
+      (drop)="onPicDrop($event)"
+      (dragover)="onPicDragOver($event)"
+      (dragleave)="onPicDragLeave()"
+    >
+      <!-- This image preview logic styling from https://tailwindcomponents.com/component/file-upload-with-drop-on-and-preview -->
+      <li
+        class="xl:w-1/8 block h-24 w-1/2 p-1 sm:w-1/3 md:w-1/4 lg:w-1/6"
+        *ngFor="let pic of product_pictures; let i = index"
+      >
+        <article
+          class="focus:shadow-outline group relative h-full w-full cursor-pointer rounded-md bg-gray-100 text-transparent shadow-sm hover:text-white focus:outline-none"
+        >
+          <img
+            class="img-preview sticky h-full w-full rounded-md border-2 border-neutral bg-fixed object-cover"
+            [src]="pic.url"
+          />
+
+          <section
+            class="absolute top-0 z-20 flex h-full w-full flex-col break-words rounded-md px-3 py-2 text-xs"
+          >
+            <h1 class="flex-1 truncate">
+              {{ pic.pictures.name }}
+            </h1>
+            <div class="flex">
+              <div class="p-1">
+                <i>
+                  <svg
+                    class="pt- ml-auto h-4 w-4 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z"
+                    ></path>
+                  </svg>
+                </i>
+              </div>
+
+              <p class="size truncate p-1 text-xs">
+                {{ toFileSize(pic.pictures.size) }}
+              </p>
+              <button
+                class="ml-auto rounded-md p-1 hover:bg-red-500 focus:outline-none"
+                (click)="removePicture(i)"
+              >
+                <svg
+                  class="pointer-events-none ml-auto h-4 w-4 fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    class="pointer-events-none"
+                    d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </section>
+        </article>
+      </li>
+      <li class="xl:w-1/8 block h-24 w-1/2 p-1 sm:w-1/3 md:w-1/4 lg:w-1/6">
+        <label for="dropzone_file" class="cursor-pointer">
+          <div
+            class="flex h-full w-full items-center justify-center rounded-md border-2 border-neutral"
+          >
+            <i class="bi bi-plus-circle-dotted text-4xl"></i>
+          </div>
+        </label>
+      </li>
+    </div>
+    }
+    <input
+      id="dropzone_file"
+      type="file"
+      accept="image/jpeg, image/png"
+      max="4"
+      multiple=""
+      class="hidden"
+      (change)="onFileChange($event)"
+    />
+    @if(product_pictures.length < 1 && product_pictures_touched){
+    <p class="mt-1 text-xs text-red-500">Pictures is required</p>
+    }
+  </div>
+  } @else {
+  <div class="mt-2 w-full">
+    <label for="dropzone_file" class="label">Pictures</label>
+    @if(pictureProduct.length < 1){
+    <div
+      class="flex h-64 flex-col border-2 border-dashed bg-gray-50 p-[30px]"
+      [ngClass]="{
+        'border-green-500': pictureGrabbed,
+        'border-neutral': !pictureGrabbed,
+        'flex-wrap justify-start overflow-auto': true,
+        'items-center justify-center': false
+      }"
+      (drop)="onPicDrop($event)"
+      (dragover)="onPicDragOver($event)"
+      (dragleave)="onPicDragLeave()"
+    >
+      <label
+        for="dropzone_file"
+        class="flex h-full w-full cursor-pointer flex-col items-center justify-center pb-6 pt-5"
+      >
+        <svg
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="mb-3 h-10 w-10 text-gray-400"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+          ></path>
+        </svg>
+        <p class="mb-2 text-sm text-gray-500">
+          <span class="font-semibold">Click to upload</span>
+          or drag and drop
+        </p>
+        <p class="text-xs text-gray-500">PNG, JPG up to 2MB</p>
+      </label>
+    </div>
+    } @else {
+    <div
+      class="flex h-64 flex-wrap justify-start overflow-auto border-2 border-dashed bg-gray-50 p-[30px]"
+      [ngClass]="{
+        'border-green-500': pictureGrabbed,
+        'border-neutral': !pictureGrabbed,
+        'flex-wrap justify-start overflow-auto': true,
+        'items-center justify-center': false
+      }"
+      (drop)="onPicDrop($event)"
+      (dragover)="onPicDragOver($event)"
+      (dragleave)="onPicDragLeave()"
+    >
+      <!-- This image preview logic styling from https://tailwindcomponents.com/component/file-upload-with-drop-on-and-preview -->
+      <!-- picture from product start -->
+      <li
+        class="xl:w-1/8 block h-24 w-1/2 p-1 sm:w-1/3 md:w-1/4 lg:w-1/6"
+        *ngFor="let pic of pictureProduct; let i = index"
+      >
+        <article
+          class="focus:shadow-outline group relative h-full w-full cursor-pointer rounded-md bg-gray-100 text-transparent shadow-sm hover:text-white focus:outline-none"
+        >
+          <img
+            class="img-preview sticky h-full w-full rounded-md border-2 border-neutral bg-fixed object-cover"
+            [src]="pic.url"
+          />
+
+          <section
+            class="absolute top-0 z-20 flex h-full w-full flex-col break-words rounded-md px-3 py-2 text-xs"
+          >
+            <h1 class="flex-1 truncate">
+              {{ pic.filename }}
+            </h1>
+            <div class="flex">
+              <div class="p-1">
+                <i>
+                  <svg
+                    class="pt- ml-auto h-4 w-4 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z"
+                    ></path>
+                  </svg>
+                </i>
+              </div>
+
+              <p class="size truncate p-1 text-xs">
+                {{ toFileSize(pic.size) }}
+              </p>
+              <button
+                class="ml-auto rounded-md p-1 hover:bg-red-500 focus:outline-none"
+                (click)="removePictureProduct(i)"
+              >
+                <svg
+                  class="pointer-events-none ml-auto h-4 w-4 fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    class="pointer-events-none"
+                    d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </section>
+        </article>
+      </li>
+      <!-- picture from product end -->
+
+      <!-- picture from dropzone start -->
+      <li
+        class="xl:w-1/8 block h-24 w-1/2 p-1 sm:w-1/3 md:w-1/4 lg:w-1/6"
+        *ngFor="let pic of product_pictures; let i = index"
+      >
+        <article
+          class="focus:shadow-outline group relative h-full w-full cursor-pointer rounded-md bg-gray-100 text-transparent shadow-sm hover:text-white focus:outline-none"
+        >
+          <img
+            class="img-preview sticky h-full w-full rounded-md border-2 border-neutral bg-fixed object-cover"
+            [src]="pic.url"
+          />
+
+          <section
+            class="absolute top-0 z-20 flex h-full w-full flex-col break-words rounded-md px-3 py-2 text-xs"
+          >
+            <h1 class="flex-1 truncate">
+              {{ pic.pictures.name }}
+            </h1>
+            <div class="flex">
+              <div class="p-1">
+                <i>
+                  <svg
+                    class="pt- ml-auto h-4 w-4 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z"
+                    ></path>
+                  </svg>
+                </i>
+              </div>
+
+              <p class="size truncate p-1 text-xs">
+                {{ toFileSize(pic.pictures.size) }}
+              </p>
+              <button
+                class="ml-auto rounded-md p-1 hover:bg-red-500 focus:outline-none"
+                (click)="removePicture(i)"
+              >
+                <svg
+                  class="pointer-events-none ml-auto h-4 w-4 fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    class="pointer-events-none"
+                    d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </section>
+        </article>
+      </li>
+      <!-- picture from dropzone end -->
+
+      <li class="xl:w-1/8 block h-24 w-1/2 p-1 sm:w-1/3 md:w-1/4 lg:w-1/6">
+        <label for="dropzone_file" class="cursor-pointer">
+          <div
+            class="flex h-full w-full items-center justify-center rounded-md border-2 border-neutral"
+          >
+            <i class="bi bi-plus-circle-dotted text-4xl"></i>
+          </div>
+        </label>
+      </li>
+    </div>
+    }
+    <input
+      id="dropzone_file"
+      type="file"
+      accept="image/jpeg, image/png"
+      max="4"
+      multiple=""
+      class="hidden"
+      (change)="onFileChange($event)"
+    />
+    @if(!isUpdateProductWithPictures){
+    <p
+      *ngif="product_pictures.length < 1 && product_pictures_touched"
+      class="mt-1 text-xs text-red-500"
+    >
+      Pictures is required
+    </p>
+    } @else { @if(isEditProductPictureNull()){
+    <p class="mt-1 text-xs text-red-500">Pictures is required</p>
+    } }
+  </div>
+  }
+  <!-- Pictures end -->
+
+  <!-- Button Save & Reset start -->
+  @if (!isEditProduct) {
+  <div class="mt-4 flex justify-end">
+    <button class="btn">Reset</button>
+    <button class="btn btn-primary ml-2" (click)="submitForm()">Save</button>
+  </div>
+
+  } @else {
+  <div class="mt-4 flex justify-end">
+    <button class="btn" (click)="resetEditProduct()">Reset</button>
+    <button class="btn btn-warning ml-2" (click)="deleteProduct()">
+      Delete
+    </button>
+    <button class="btn btn-primary ml-2" (click)="updateProduct()">
+      Update
+    </button>
+  </div>
+  }
+
+  <!-- Button Save & Reset end -->
+</form>
+}
+<!-- Form Add or Edit Product end -->

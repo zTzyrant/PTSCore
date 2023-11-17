@@ -12,9 +12,9 @@ import { TopActivitiesComponent } from "./component/content/top-activities/top-a
 import { TripPlanComponent } from "./component/content/trip-plan/trip-plan.component"
 import { RecentlyAddedSliderComponent } from "./component/content/recently-added-slider/recently-added-slider.component"
 import { FooterComponent } from "./component/footer/footer.component"
-import { HttpClientModule } from "@angular/common/http"
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http"
 import { CardComponent } from "./component/skeleton/card/card.component"
-import { ReactiveFormsModule } from "@angular/forms"
+import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { RegisterMerchantFormComponent } from "./component/form/register-merchant-form/register-merchant-form.component"
 import { LoginMinistryComponent } from "./pages/ministry/login-ministry/login-ministry.component"
 import { LoginMinistryFormComponent } from "./component/form/login-ministry-form/login-ministry-form.component"
@@ -24,13 +24,28 @@ import { LoginMerchantFormComponent } from "./component/form/login-merchant-form
 import { MinistryIndexComponent } from "./pages/ministry/menu/ministry-index/ministry-index.component"
 import { MenuMinistryComponent } from "./component/sidebar/menu-ministry/menu-ministry.component"
 import { MenuMerchantComponent } from "./component/sidebar/menu-merchant/menu-merchant.component"
-import { ManageMerchantComponent } from "./pages/ministry/menu/manage-merchant/manage-merchant.component"
+import { ManageMerchantsComponent } from "./pages/ministry/menu/manage-merchant/manage-merchant.component"
 import { IndexMinistryContentComponent } from "./component/content/ministry/index-ministry-content/index-ministry-content.component"
 import { ManageMerchantMinistryContentComponent } from "./component/content/ministry/manage-merchant-ministry-content/manage-merchant-ministry-content.component"
 import { TopnavMinistryComponent } from "./component/topnav/ministry/topnav-ministry.component"
 import { ViewMerchantComponent } from "./pages/ministry/menu/view-merchant/view-merchant.component"
 import { ViewMerchantMinistryContentComponent } from "./component/content/ministry/view-merchant-ministry-content/view-merchant-ministry-content.component"
 import { DashboardMinistryComponent } from "./layout/dashboard-ministry/dashboard-ministry.component"
+import { authInterceptor } from "./service/auth.interceptor"
+import { DashboardMerchantComponent } from "./layout/dashboard-merchant/dashboard-merchant.component"
+import { NgxTippyModule } from "ngx-tippy-wrapper"
+import { MerchantIndexComponent } from "./pages/merchant/menu/merchant-index/merchant-index.component"
+import { MerchantProductsComponent } from "./pages/merchant/menu/merchant-products/merchant-products.component"
+import { ViewProductsComponent } from "./pages/merchant/menu/view-products/view-products.component"
+import { TopnavMerchantComponent } from "./component/topnav/merchant/topnav-merchant/topnav-merchant.component"
+import { MerchantOrdersComponent } from "./pages/merchant/menu/merchant-orders/merchant-orders.component"
+import { ViewOrdersComponent } from "./pages/merchant/menu/view-orders/view-orders.component"
+import { ManageMerchantComponent } from "./pages/merchant/menu/manage-merchant/manage-merchant.component"
+import { MerchantAccountComponent } from "./component/sidecontent/merchant-account/merchant-account.component"
+import { FirstLoginComponent } from "./pages/merchant/first-login/first-login.component"
+import { CreateProductComponent } from "./pages/merchant/menu/create-product/create-product.component"
+import { NgSelectModule } from "@ng-select/ng-select";
+import { AddEditProductsComponent } from './component/form/add-edit-products/add-edit-products.component'
 
 @NgModule({
   declarations: [
@@ -54,21 +69,42 @@ import { DashboardMinistryComponent } from "./layout/dashboard-ministry/dashboar
     MinistryIndexComponent,
     MenuMinistryComponent,
     MenuMerchantComponent,
-    ManageMerchantComponent,
+    ManageMerchantsComponent,
     IndexMinistryContentComponent,
     ManageMerchantMinistryContentComponent,
     TopnavMinistryComponent,
     ViewMerchantComponent,
     ViewMerchantMinistryContentComponent,
     DashboardMinistryComponent,
+    DashboardMerchantComponent,
+    MerchantIndexComponent,
+    MerchantProductsComponent,
+    ViewProductsComponent,
+    TopnavMerchantComponent,
+    MerchantOrdersComponent,
+    ViewOrdersComponent,
+    ManageMerchantComponent,
+    MerchantAccountComponent,
+    FirstLoginComponent,
+    CreateProductComponent,
+    AddEditProductsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgxTippyModule,
+    NgSelectModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: authInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

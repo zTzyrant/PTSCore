@@ -51,16 +51,22 @@ export class AppComponent {
       this.loading = true
     }
     if (event instanceof NavigationEnd) {
-      this.loading = false
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
     }
 
     // Set loading state to false in both of the below events to hide the spinner in case a request fails
     // refer to https://stackoverflow.com/a/58739854/13197639
     if (event instanceof NavigationCancel) {
-      this.loading = false
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
     }
     if (event instanceof NavigationError) {
-      this.loading = false
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
     }
   }
 }

@@ -20,7 +20,7 @@
     </button>
     <a class="m-0 block px-8 py-6 text-center text-slate-700" target="_blank">
       <h2 class="text-lg font-bold">
-        PTS <span class="text-sm">Ministry</span>
+        <a routerLink="/">PTS <span class="text-sm">Ministry</span></a>
       </h2>
     </a>
   </div>
@@ -109,7 +109,8 @@
       </li>
       <li class="mt-0.5 w-full">
         <a
-          class="mx-2 my-0 flex items-center rounded-lg px-4 py-2.7 text-base hover:bg-slate-100"
+          class="mx-2 my-0 flex cursor-pointer items-center rounded-lg px-4 py-2.7 text-base hover:bg-slate-100"
+          (click)="logout()"
         >
           <div
             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center"

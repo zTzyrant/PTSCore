@@ -1,0 +1,106 @@
+<div
+  class="flex min-h-screen items-center justify-center overflow-hidden bg-[#176b87]"
+>
+  <div class="z-20 rounded-2xl bg-white px-12 py-12 shadow-xl">
+    <div>
+      <h1 class="mb-4 text-center text-3xl font-bold">Reset Password</h1>
+      <p
+        class="mb-8 w-80 text-center text-sm font-semibold tracking-wide text-gray-700"
+      >
+        It's first time your login, please create your own password before you
+        can use this application.
+      </p>
+    </div>
+    <form [formGroup]="formpassword">
+      <div class="space-y-4">
+        <div>
+          <div class="relative w-full">
+            <input
+              type="password"
+              placeholder="Password"
+              class="input input-bordered input-primary block w-full"
+              autocomplete="new-password"
+              formControlName="password"
+              id="password"
+              #password
+            />
+            <span class="absolute inset-y-0 right-0 flex items-center pr-2">
+              <button
+                type="button"
+                class="focus:shadow-outline p-1 text-gray-700 focus:outline-none"
+                (click)="
+                  password.type =
+                    password.type === 'password' ? 'text' : 'password'
+                "
+              >
+                <i
+                  class="bi bi-eye-slash text-lg"
+                  *ngIf="password.type === 'password'"
+                ></i>
+                <i
+                  class="bi bi-eye text-lg"
+                  *ngIf="password.type === 'text'"
+                ></i>
+              </button>
+            </span>
+          </div>
+          @if (formpassword.controls['password'].invalid &&
+          (formpassword.controls['password'].touched ||
+          formpassword.controls['password'].dirty)) {
+          <label for="password" class="text-sm text-red-600">
+            @if (formpassword.controls['password'].errors?.['required']) {
+            <span>Please fill this fields</span>
+            } @if (formpassword.controls['password'].errors?.['minLength']) {
+            <span>Password must be at least 8 characters</span>
+            } @if (formpassword.controls['password'].errors?.['pattern']) {
+            <span>Password must contains upercase and number</span>
+            }
+          </label>
+          }
+        </div>
+
+        <div>
+          <input
+            type="password"
+            placeholder="Re Type Password"
+            class="input input-bordered input-primary block w-full"
+            autocomplete="new-password"
+            formControlName="confirmPassword"
+            (input)="checkPasswordsMatch()"
+          />
+          @if (formpassword.controls['confirmPassword'].invalid &&
+          (formpassword.controls['confirmPassword'].touched ||
+          formpassword.controls['confirmPassword'].dirty)) {
+          <label for="password" class="text-sm text-red-600">
+            <span
+              *ngIf="
+                formpassword.controls['confirmPassword'].errors?.['required']
+              "
+            >
+              Please fill this fields
+            </span>
+
+            <span
+              *ngIf="
+                formpassword.controls['confirmPassword'].errors?.['mismatch']
+              "
+            >
+              Password doesn't match
+            </span>
+          </label>
+          }
+        </div>
+      </div>
+    </form>
+
+    <div class="mt-6 space-y-2 text-center">
+      <button
+        class="btn btn-primary w-full py-3"
+        (click)="submitRestPassword()"
+      >
+        Submit
+      </button>
+      <button class="btn w-full py-3" (click)="signOut()">Sign Out</button>
+    </div>
+  </div>
+</div>

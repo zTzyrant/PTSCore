@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-white">
   <div
-    class="md:px-25 text-cs-text-primary font-roboto container mx-auto flex items-center justify-center md:py-20 lg:items-stretch lg:justify-start"
+    class="text-cs-text-primary container mx-auto flex items-center justify-center font-roboto md:px-25 md:py-20 lg:items-stretch lg:justify-start"
   >
     <div class="hidden flex-1 flex-col font-manrope lg:flex lg:pr-8 xl:pr-14">
       <div>
@@ -142,6 +142,7 @@
                   <button
                     type="button"
                     class="btn btn-primary inline-flex w-full items-center justify-center gap-3 p-3.5 text-sm"
+                    (click)="submitLogin()"
                   >
                     Sign In
                   </button>

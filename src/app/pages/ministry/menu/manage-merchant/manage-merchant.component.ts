@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core"
 
 @Component({
-  selector: 'app-manage-merchant',
-  templateUrl: './manage-merchant.component.html',
-  styleUrls: ['./manage-merchant.component.css']
+  selector: "app-manage-merchant",
+  templateUrl: "./manage-merchant.component.html",
+  styleUrls: ["./manage-merchant.component.css"],
 })
-export class ManageMerchantComponent {
-
-}
+export class ManageMerchantsComponent {}

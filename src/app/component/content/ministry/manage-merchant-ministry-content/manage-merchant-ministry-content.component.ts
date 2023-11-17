@@ -1,5 +1,10 @@
 import { Component } from "@angular/core"
-import { RegisterMerchantForm } from "src/app/interface/register-merchant-form"
+import { lastValueFrom } from "rxjs"
+import {
+  MerchantData,
+  RegisterMerchantForm,
+} from "src/app/interface/register-merchant-form"
+import { ApiService } from "src/app/service/api.service"
 
 @Component({
   selector: "app-manage-merchant-ministry-content",
@@ -7,14 +12,21 @@ import { RegisterMerchantForm } from "src/app/interface/register-merchant-form"
   styleUrls: ["./manage-merchant-ministry-content.component.css"],
 })
 export class ManageMerchantMinistryContentComponent {
-  registerdMerchant: RegisterMerchantForm[] = []
+  registerdMerchant: MerchantData[] = []
+
+  constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    // const response = this.lsService.getLocalRegisterdMerchant()
-    // if (response.length > 0) {
-    //   response.forEach((element: RegisterMerchantForm) => {
-    //     this.registerdMerchant.push(element)
-    //   })
-    // }
+    this.getMerchant()
+  }
+
+  async getMerchant() {
+    try {
+      const response = await lastValueFrom(this.apiService.getAllMerchant())
+      this.registerdMerchant = response
+      console.log(this.registerdMerchant)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
