@@ -1,8 +1,8 @@
 import { Component } from "@angular/core"
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms"
-import { SwalService } from "../../../shared/service/swal.service"
+import { SwalService } from "../../../service/swal.service"
 import { documentMerchantForm } from "src/app/interface/register-merchant-form"
-import { ApiService } from "src/app/shared/service/api.service"
+import { ApiService } from "src/app/service/api.service"
 import { lastValueFrom } from "rxjs"
 
 @Component({

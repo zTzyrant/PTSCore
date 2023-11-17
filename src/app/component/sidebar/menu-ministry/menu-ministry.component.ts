@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { GlobalService } from "src/app/shared/service/global.service"
+import { GlobalService } from "src/app/service/global.service"
 
 @Component({
   selector: "app-menu-ministry",

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core"
 import { Router } from "@angular/router"
-import { GlobalService } from "src/app/shared/service/global.service"
+import { GlobalService } from "src/app/service/global.service"
 
 @Component({
   selector: "app-topnav-ministry",

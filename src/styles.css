@@ -4,8 +4,6 @@
 /* components */
 @import "assets/css/components/input.css";
 @import "assets/css/components/dashboard.css";
-/* icons */
-@import "~bootstrap-icons/font/bootstrap-icons.css";
 
 @tailwind base;
 @tailwind components;
