@@ -8,7 +8,7 @@ import { LoginMinistryComponent } from "./pages/ministry/login-ministry/login-mi
 import { ContactComponent } from "./pages/menu/contact/contact.component"
 import { LoginMerchantComponent } from "./pages/merchant/login-merchant/login-merchant.component"
 import { MinistryIndexComponent } from "./pages/ministry/menu/ministry-index/ministry-index.component"
-import { ManageMerchantsComponent } from "./pages/ministry/menu/manage-merchant/manage-merchant.component"
+import { MinistryManageMerchantComponent } from "./pages/ministry/menu/manage-merchant/manage-merchant.component"
 import { ViewMerchantComponent } from "./pages/ministry/menu/view-merchant/view-merchant.component"
 import { MinistryGuard, MinistryLoginGuard } from "./helpers/ministry.guard"
 import { MerchantIndexComponent } from "./pages/merchant/menu/merchant-index/merchant-index.component"
@@ -24,10 +24,23 @@ import {
 } from "./helpers/merchant.guard"
 import { CreateProductComponent } from "./pages/merchant/menu/create-product/create-product.component"
 import { ViewProductsComponent } from "./pages/merchant/menu/view-products/view-products.component"
+import { ProductsComponent } from "./pages/menu/products/products.component"
+import { ViewProductComponent } from "./pages/menu/view-product/view-product.component"
+import { RegisterCustomerComponent } from "./pages/customer/register-customer/register-customer.component"
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "about", component: AboutComponent },
+  {
+    path: "products",
+    component: ProductsComponent,
+    pathMatch: "full",
+  },
+  {
+    path: "products/:id",
+    component: ViewProductComponent,
+    pathMatch: "full",
+  },
 
   // Merchant routes start
   { path: "merchant/register", component: RegisterMerchantComponent },
@@ -76,7 +89,6 @@ const routes: Routes = [
     component: FirstLoginComponent,
     canActivate: [MerchantFirstLoginGuard],
   },
-
   // Merchant routes end
 
   // Ministry routes start
@@ -92,7 +104,7 @@ const routes: Routes = [
   },
   {
     path: "ministry/manage-merchant",
-    component: ManageMerchantsComponent,
+    component: MinistryManageMerchantComponent,
     canActivate: [MinistryGuard],
   },
   {
@@ -101,6 +113,13 @@ const routes: Routes = [
     canActivate: [MinistryGuard],
   },
   // Ministry routes end
+
+  // Customer routes start
+  {
+    path: "customer/register",
+    component: RegisterCustomerComponent,
+  },
+  // Customer routes end
 
   { path: "contact", component: ContactComponent },
 

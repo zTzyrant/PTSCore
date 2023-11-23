@@ -61,11 +61,14 @@ export class LoginMerchantFormComponent {
           expiresIn: String(response.expiresIn),
         }
         this.authService.setSession(data)
-        this.Swal.SwalNotifWithThen("success", "Login success").then(
-          (result) => {
-            this.router.navigate(["/merchant"])
-          },
-        )
+        const isMerchant = await lastValueFrom(this.authService.getIsMerchant())
+        if (isMerchant) {
+          this.Swal.SwalNotifWithThen("success", "Login success").then(
+            (result) => {
+              this.router.navigate(["/merchant"])
+            },
+          )
+        }
       }
       console.log(response)
     } catch (error) {

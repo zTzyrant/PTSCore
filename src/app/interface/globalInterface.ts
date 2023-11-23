@@ -76,3 +76,12 @@ export interface getProductPicture {
   size: number
   created_at: string
 }
+
+export interface getProducts {
+  products: getMerchantProducts[]
+  totalProducts: number
+  totalPages: number
+  currentPage: number
+  next: string
+  prev: string
+}

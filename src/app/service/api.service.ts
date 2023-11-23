@@ -8,8 +8,10 @@ import {
 import {
   addProduct,
   getMerchantProducts,
+  getProducts,
   productCategories,
 } from "../interface/globalInterface"
+import { User } from "../interface/user"
 
 @Injectable({
   providedIn: "root",
@@ -93,5 +95,48 @@ export class ApiService {
 
   deleteMerchantProductsById(id: string) {
     return this.http.delete(`${this.API_URL}/merchant/products/${id}`)
+  }
+
+  getProducts(filter: {
+    search: string
+    categories: string
+    min_price: number
+    max_price: number
+    page: number
+    page_size: number
+  }) {
+    return this.http.get<getProducts>(`${this.API_URL}/api/products`, {
+      params: {
+        search: filter.search ? filter.search : "",
+        categories: filter.categories ? filter.categories : "",
+        min_price: filter.min_price.toString()
+          ? filter.min_price.toString()
+          : "",
+        max_price: filter.max_price.toString()
+          ? filter.max_price.toString()
+          : "",
+        page: filter.page.toString() ? filter.page.toString() : "1",
+        page_size: filter.page_size.toString()
+          ? filter.page_size.toString()
+          : "10",
+      },
+    })
+  }
+
+  getProductById(id: string) {
+    return this.http.get<getMerchantProducts>(
+      `${this.API_URL}/api/products/${id}`,
+    )
+  }
+
+  putMinistryResetMechantPasswordById(id: string) {
+    return this.http.put(
+      `${this.API_URL}/ministry/reset-password/merchant/${id}`,
+      {},
+    )
+  }
+
+  postCustomer(data: User) {
+    return this.http.post(`${this.API_URL}/auth/customer`, data)
   }
 }

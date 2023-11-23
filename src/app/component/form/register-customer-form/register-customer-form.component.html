@@ -1,0 +1,411 @@
+<div class="min-h-screen bg-white">
+  <div
+    class="text-cs-text-primary container mx-auto flex items-center justify-center font-roboto md:px-25 md:py-20 lg:items-stretch lg:justify-start"
+  >
+    <div class="hidden flex-1 flex-col font-manrope lg:flex lg:pr-8 xl:pr-14">
+      <div>
+        <div class="w-24">
+          <h2 class="font-russoone text-5xl font-bold text-brand">
+            <a routerLink="/">PTS</a>
+          </h2>
+        </div>
+        <div class="mt-5 font-manrope text-4xl font-black">
+          Wellcome customer,
+          <p class="text-xl font-light">
+            Let's get connected with us, and enjoy the best experience.
+          </p>
+        </div>
+      </div>
+      <div class="mt-14 hidden max-w-full justify-center xl:flex">
+        <img
+          src="assets/image/undraw/undraw_online_connection_6778.svg"
+          alt="Illustrations by Undraw"
+          class="h-[500px]"
+          title="Illustrations by Undraw"
+        />
+      </div>
+    </div>
+    <div class="w-full md:mt-14 md:w-[600px]">
+      <div class="overflow-hidden rounded-xl bg-white md:border-2">
+        <div class="p-10">
+          <div class="mb-4 block w-24 lg:hidden">
+            <h2 class="font-russoone text-5xl font-bold">PTS</h2>
+          </div>
+          <h1 class="mb-5 text-2xl">
+            <span class="font-bold"> Sign Up Customer </span>Form
+          </h1>
+          <h4 class="text-2md mb-6 text-gray-500">
+            Before you get started, you must fill your personal information.
+          </h4>
+          <form [formGroup]="addCustomerForm" (submit)="onSubmit()">
+            <div class="flex flex-col sm:flex-row sm:gap-4">
+              <div class="mb-1 w-full sm:w-1/2">
+                <div class="form-control w-full">
+                  <label for="Fullname" class="label">
+                    <span>Fullname</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Fullname"
+                    autocomplete="off"
+                    id="Fullname"
+                    class="input input-bordered input-primary w-full"
+                    formControlName="fullname"
+                  />
+                  <label
+                    for="Fullname"
+                    class="mt-1 text-sm text-red-500"
+                    *ngIf="
+                      addCustomerForm.controls['fullname'].invalid &&
+                      (addCustomerForm.controls['fullname'].touched ||
+                        addCustomerForm.controls['fullname'].dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['fullname'].errors?.[
+                          'required'
+                        ]
+                      "
+                    >
+                      Fullname is required
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-1 w-full sm:w-1/2">
+                <div class="form-control w-full">
+                  <label
+                    for="Username"
+                    title="Used for merchant name and default merchant representative account"
+                    class="label"
+                  >
+                    <span>Username</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    autocomplete="off"
+                    id="Username"
+                    class="input input-bordered input-primary w-full"
+                    formControlName="username"
+                    (input)="checkUsernameUsed()"
+                  />
+                  <label
+                    for="Username"
+                    class="mt-1 text-sm text-red-500"
+                    *ngIf="
+                      addCustomerForm.controls['username'].invalid &&
+                      (addCustomerForm.controls['username'].touched ||
+                        addCustomerForm.controls['username'].dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['username'].errors?.[
+                          'required'
+                        ]
+                      "
+                    >
+                      Username is required
+                    </span>
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['username'].errors?.[
+                          'minlength'
+                        ]
+                      "
+                    >
+                      Username must be at least 6 characters
+                    </span>
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['username'].errors?.['pattern']
+                      "
+                    >
+                      Username must only contain number and letter only.
+                    </span>
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['username'].errors?.[
+                          'usernameUsed'
+                        ]
+                      "
+                    >
+                      Username is already used.
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:gap-4">
+              <div class="mb-1 w-full sm:w-1/2">
+                <div class="form-control w-full">
+                  <label for="email" class="label">
+                    <span>Email</span>
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    autocomplete="off"
+                    id="email"
+                    class="input input-bordered input-primary w-full"
+                    formControlName="email"
+                    (input)="checkEmailUsed()"
+                  />
+                  <label
+                    for="email"
+                    class="mt-1 text-sm text-red-500"
+                    *ngIf="
+                      addCustomerForm.controls['email'].invalid &&
+                      (addCustomerForm.controls['email'].touched ||
+                        addCustomerForm.controls['email'].dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['email'].errors?.['required']
+                      "
+                    >
+                      Email is required
+                    </span>
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['email'].errors?.['pattern']
+                      "
+                    >
+                      Email is invalid
+                    </span>
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['email'].errors?.['emailUsed']
+                      "
+                    >
+                      Email is already used.
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-1 w-full sm:w-1/2">
+                <div class="form-control w-full">
+                  <label
+                    for="password"
+                    title="Used for merchant name and default merchant representative account"
+                    class="label"
+                  >
+                    <span>Password</span>
+                  </label>
+                  <div class="relative w-full">
+                    <input
+                      [type]="isPasswordVisible ? 'text' : 'password'"
+                      placeholder="Password"
+                      autocomplete="off"
+                      id="password"
+                      class="input input-bordered input-primary w-full"
+                      formControlName="password"
+                    />
+                    <button
+                      type="button"
+                      class="absolute inset-y-0 right-0 flex items-center pr-2"
+                      (click)="togglePassword()"
+                    >
+                      <i
+                        class="bi bi-eye-slash text-xl"
+                        *ngIf="!isPasswordVisible"
+                      ></i>
+                      <i
+                        class="bi bi-eye text-xl"
+                        *ngIf="isPasswordVisible"
+                      ></i>
+                    </button>
+                  </div>
+                  <label
+                    for="password"
+                    class="mt-1 text-sm text-red-500"
+                    *ngIf="
+                      addCustomerForm.controls['password'].invalid &&
+                      (addCustomerForm.controls['password'].touched ||
+                        addCustomerForm.controls['password'].dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['password'].errors?.[
+                          'required'
+                        ]
+                      "
+                    >
+                      Password is required
+                    </span>
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['password'].errors?.[
+                          'minlength'
+                        ]
+                      "
+                    >
+                      Password must be at least 6 characters
+                    </span>
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['password'].errors?.['pattern']
+                      "
+                    >
+                      Password must contain at least 1 uppercase, 1 lowercase,
+                      and 1 number
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:gap-4">
+              <div class="mb-1 w-full sm:w-1/2">
+                <div class="form-control w-full">
+                  <label for="Phone" class="label">
+                    <span>Phone</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Phone number"
+                    autocomplete="off"
+                    id="Phone"
+                    class="input input-bordered input-primary w-full"
+                    formControlName="phone_number"
+                  />
+                  <label
+                    for="Phone"
+                    class="mt-1 text-sm text-red-500"
+                    *ngIf="
+                      addCustomerForm.controls['phone_number'].invalid &&
+                      (addCustomerForm.controls['phone_number'].touched ||
+                        addCustomerForm.controls['phone_number'].dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['phone_number'].errors?.[
+                          'required'
+                        ]
+                      "
+                    >
+                      Phone number is required
+                    </span>
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['phone_number'].errors?.[
+                          'pattern'
+                        ]
+                      "
+                    >
+                      Phone number is invalid
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-1 w-full sm:w-1/2">
+                <div class="form-control w-full">
+                  <label
+                    for="date_of_birth"
+                    title="Used for merchant name and default merchant representative account"
+                    class="label"
+                  >
+                    <span>Date of birth</span>
+                  </label>
+                  <input
+                    type="date"
+                    placeholder="Date of birth"
+                    autocomplete="off"
+                    id="date_of_birth"
+                    class="input input-bordered input-primary w-full"
+                    formControlName="date_of_birth"
+                    mwlFlatpickr
+                    [allowInput]="false"
+                    [disableMobile]="true"
+                    [placeholder]="'Date of birth'"
+                    [monthSelectorType]="'dropdown'"
+                    [options]="{
+                      dateFormat: 'Y-m-d',
+                      minDate: '1900-01-01',
+                      maxDate: 'today',
+                      altInput: true,
+                      altFormat: 'F j, Y'
+                    }"
+                  />
+
+                  <label
+                    for="date_of_birth"
+                    class="mt-1 text-sm text-red-500"
+                    *ngIf="
+                      addCustomerForm.controls['date_of_birth'].invalid &&
+                      (addCustomerForm.controls['date_of_birth'].touched ||
+                        addCustomerForm.controls['date_of_birth'].dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        addCustomerForm.controls['date_of_birth'].errors?.[
+                          'required'
+                        ]
+                      "
+                    >
+                      Date of birth is required
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="w-full">
+              <label
+                class="label mt-2 flex cursor-pointer flex-row justify-start gap-2"
+              >
+                <input
+                  type="checkbox"
+                  class="checkbox-primary checkbox checkbox-sm"
+                  formControlName="tos"
+                />
+                <span class="label-text">
+                  I agree with the
+                  <a class="link-primary link">Terms and Conditions</a>.
+                </span>
+              </label>
+              <label
+                for="tos"
+                class="mt-1 text-sm text-red-500"
+                *ngIf="
+                  addCustomerForm.controls['tos'].invalid &&
+                  (addCustomerForm.controls['tos'].touched ||
+                    addCustomerForm.controls['tos'].dirty)
+                "
+              >
+                <span
+                  *ngIf="addCustomerForm.controls['tos'].errors?.['required']"
+                >
+                  You must agree with the Terms and Conditions
+                </span>
+              </label>
+            </div>
+            <div class="mt-4 w-full">
+              @if (!isSubmit) {
+              <button
+                type="submit"
+                class="btn btn-primary inline-flex w-full items-center justify-center gap-3 p-3.5 text-sm"
+              >
+                Submit
+              </button>
+              }@else {
+              <button
+                type="submit"
+                class="btn btn-primary inline-flex w-full items-center justify-center gap-3 p-3.5 text-sm"
+                disabled
+              >
+                <span class="loading loading-spinner"></span>
+                <span>Submitting...</span>
+              </button>
+              }
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

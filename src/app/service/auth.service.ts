@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core"
 import { environment } from "src/environments/environment.development"
 import { LoginToken } from "../interface/login-token"
 import moment from "moment"
-import { loginForm } from "../interface/loginForm"
+import { isCustomerTypes, loginForm } from "../interface/loginForm"
 import { SwalService } from "./swal.service"
 import { Router } from "@angular/router"
 import { Isfirstlogin } from "../interface/isfirstlogin"
@@ -59,6 +59,10 @@ export class AuthService {
 
   getIsMerchant() {
     return this.http.get(`${this.API_URL}/auth/is-merchant`)
+  }
+
+  getIsCustomer() {
+    return this.http.get<isCustomerTypes>(`${this.API_URL}/auth/is-customer`)
   }
 
   getIsFirstLogin() {

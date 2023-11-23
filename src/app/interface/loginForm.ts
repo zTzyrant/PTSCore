@@ -4,3 +4,8 @@ export interface loginForm {
   password: string | null
   isEmailLogin: boolean
 }
+
+export interface isCustomerTypes {
+  is_customer: boolean
+  message: string
+}

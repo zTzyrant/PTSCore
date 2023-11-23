@@ -24,7 +24,7 @@ import { LoginMerchantFormComponent } from "./component/form/login-merchant-form
 import { MinistryIndexComponent } from "./pages/ministry/menu/ministry-index/ministry-index.component"
 import { MenuMinistryComponent } from "./component/sidebar/menu-ministry/menu-ministry.component"
 import { MenuMerchantComponent } from "./component/sidebar/menu-merchant/menu-merchant.component"
-import { ManageMerchantsComponent } from "./pages/ministry/menu/manage-merchant/manage-merchant.component"
+import { MinistryManageMerchantComponent } from "./pages/ministry/menu/manage-merchant/manage-merchant.component"
 import { IndexMinistryContentComponent } from "./component/content/ministry/index-ministry-content/index-ministry-content.component"
 import { ManageMerchantMinistryContentComponent } from "./component/content/ministry/manage-merchant-ministry-content/manage-merchant-ministry-content.component"
 import { TopnavMinistryComponent } from "./component/topnav/ministry/topnav-ministry.component"
@@ -44,8 +44,16 @@ import { ManageMerchantComponent } from "./pages/merchant/menu/manage-merchant/m
 import { MerchantAccountComponent } from "./component/sidecontent/merchant-account/merchant-account.component"
 import { FirstLoginComponent } from "./pages/merchant/first-login/first-login.component"
 import { CreateProductComponent } from "./pages/merchant/menu/create-product/create-product.component"
-import { NgSelectModule } from "@ng-select/ng-select";
-import { AddEditProductsComponent } from './component/form/add-edit-products/add-edit-products.component'
+import { NgSelectModule } from "@ng-select/ng-select"
+import { AddEditProductsComponent } from "./component/form/add-edit-products/add-edit-products.component"
+import { ProductsComponent } from "./pages/menu/products/products.component"
+import { MainComponent } from "./layout/main/main.component"
+import { ViewProductComponent } from "./pages/menu/view-product/view-product.component"
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { RegisterCustomerComponent } from "./pages/customer/register-customer/register-customer.component"
+import { RegisterCustomerFormComponent } from "./component/form/register-customer-form/register-customer-form.component"
+import { LoginCustomerFormComponent } from "./component/form/login-customer-form/login-customer-form.component"
+import { FlatpickrModule } from "angularx-flatpickr"
 
 @NgModule({
   declarations: [
@@ -69,7 +77,7 @@ import { AddEditProductsComponent } from './component/form/add-edit-products/add
     MinistryIndexComponent,
     MenuMinistryComponent,
     MenuMerchantComponent,
-    ManageMerchantsComponent,
+    MinistryManageMerchantComponent,
     IndexMinistryContentComponent,
     ManageMerchantMinistryContentComponent,
     TopnavMinistryComponent,
@@ -88,6 +96,12 @@ import { AddEditProductsComponent } from './component/form/add-edit-products/add
     FirstLoginComponent,
     CreateProductComponent,
     AddEditProductsComponent,
+    ProductsComponent,
+    MainComponent,
+    ViewProductComponent,
+    RegisterCustomerComponent,
+    RegisterCustomerFormComponent,
+    LoginCustomerFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,6 +111,8 @@ import { AddEditProductsComponent } from './component/form/add-edit-products/add
     NgxTippyModule,
     NgSelectModule,
     FormsModule,
+    BrowserAnimationsModule,
+    FlatpickrModule.forRoot(),
   ],
   providers: [
     {

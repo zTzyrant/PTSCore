@@ -1,0 +1,92 @@
+<div class="mt-4 flex w-full flex-col items-center justify-center">
+  <h2 class="font-manrope text-lg font-bold">Login Login to your account</h2>
+  <p class="text-sm">
+    Don't have an account?
+    <a routerLink="/register" class="link-primary link">Register</a>
+  </p>
+</div>
+<form [formGroup]="loginCustomerForm" class="mt-4">
+  <div class="flex flex-col gap-2">
+    <div class="w-full">
+      <label for="email" class="label">Email</label>
+      <input
+        type="email"
+        id="email"
+        class="input input-primary w-full"
+        formControlName="email"
+      />
+      <div
+        *ngIf="
+          loginCustomerForm.controls['email'].invalid &&
+          (loginCustomerForm.controls['email'].dirty ||
+            loginCustomerForm.controls['email'].touched)
+        "
+        class="text-sm text-red-500"
+      >
+        <div *ngIf="loginCustomerForm.controls['email'].errors?.['required']">
+          Email is required
+        </div>
+        <div *ngIf="loginCustomerForm.controls['email'].errors?.['pattern']">
+          Email is invalid
+        </div>
+      </div>
+    </div>
+    <div class="w-full">
+      <label for="password" class="label">Password</label>
+      <div class="relative">
+        <input
+          id="password"
+          class="input input-primary w-full"
+          formControlName="password"
+          [type]="isPasswordVisible ? 'text' : 'password'"
+        />
+        <span class="absolute inset-y-0 right-0 flex items-center pr-2">
+          <button
+            type="button"
+            class="focus:shadow-outline p-1 focus:outline-none"
+            (click)="togglePassword()"
+          >
+            <i class="bi bi-eye-slash text-xl" *ngIf="!isPasswordVisible"></i>
+            <i class="bi bi-eye text-xl" *ngIf="isPasswordVisible"></i>
+          </button>
+        </span>
+      </div>
+      <div
+        *ngIf="
+          loginCustomerForm.controls['password'].invalid &&
+          (loginCustomerForm.controls['password'].dirty ||
+            loginCustomerForm.controls['password'].touched)
+        "
+        class="text-sm text-red-500"
+      >
+        <div
+          *ngIf="loginCustomerForm.controls['password'].errors?.['required']"
+        >
+          Password is required
+        </div>
+      </div>
+      <p>
+        <a routerLink="/forgot-password" class="link-primary link mt-1">
+          Forgot Password?
+        </a>
+      </p>
+    </div>
+    <div class="my-4 w-full">
+      @if(!isSubmit){
+      <button
+        type="submit"
+        class="btn btn-primary w-full"
+        [disabled]="loginCustomerForm.invalid"
+        (click)="submitLogin()"
+      >
+        Login
+      </button>
+      }@else{
+      <button type="submit" class="btn btn-primary w-full" [disabled]="true">
+        <span class="loading loading-spinner"></span>
+        <p class="ml-2">Logging in...</p>
+      </button>
+      }
+    </div>
+  </div>
+</form>

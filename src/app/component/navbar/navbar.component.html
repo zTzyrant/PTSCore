@@ -12,7 +12,7 @@
         </li>
         <li>
           <a
-            routerLink="/"
+            routerLink="/products"
             class="p-4 font-inter hover:bg-white hover:text-neutral"
           >
             Products
@@ -20,7 +20,7 @@
         </li>
         <li>
           <a
-            routerLink="/"
+            routerLink="/about"
             class="p-4 font-inter hover:bg-white hover:text-neutral"
           >
             About
@@ -57,13 +57,44 @@
         <!-- Middle -->
         <div class="hidden justify-center md:flex md:w-4/6 md:items-center">
           <div class="relative w-full">
-            <input
-              type="text"
-              class="input-pts block w-full px-4 py-3 pr-11"
-              placeholder="Search Destination..."
-            />
+            <form (submit)="searchProduct()">
+              <input
+                type="text"
+                class="input-pts block w-full px-4 py-3 pr-11"
+                placeholder="Search Destination..."
+                [value]="search ? search : ''"
+                #searchInput
+                (change)="setSearch(searchInput.value)"
+              />
+              <button
+                class="absolute inset-y-0 right-0 z-20 flex cursor-pointer items-center pr-4"
+                type="submit"
+              >
+                <svg
+                  class="h-6 w-6 text-gray-400"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+        <!-- Right -->
+        <div class="flex justify-center md:w-1/6 md:items-center">
+          <div class="flex items-center justify-center gap-2">
             <button
-              class="absolute inset-y-0 right-0 z-20 flex cursor-pointer items-center pr-4"
+              class="flex items-center justify-center md:hidden"
+              (click)="setIsMobileSearch(true)"
             >
               <svg
                 class="h-6 w-6 text-gray-400"
@@ -81,11 +112,21 @@
                 ></path>
               </svg>
             </button>
-          </div>
-        </div>
-        <!-- Right -->
-        <div class="flex justify-center md:w-1/6 md:items-center">
-          <div class="flex items-center justify-center">
+
+            <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+              <div class="modal-box">
+                <h3 class="text-lg font-bold">Hello!</h3>
+                <p class="py-4">
+                  Press ESC key or click the button below to close
+                </p>
+                <div class="modal-action">
+                  <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
             <div class="relative inline-block">
               <div
                 class="flex items-center divide-x-2 overflow-hidden rounded-full border bg-white shadow-md transition-colors duration-300 hover:bg-gray-100"
@@ -104,14 +145,20 @@
                 [ngClass]="{ hidden: !isDropdownOpen }"
               >
                 <ul class="menu p-2 font-inter">
-                  <li><a>Sign In</a></li>
-                  <li><a>Sign Up</a></li>
+                  @if(!isCustomer){
+                  <li><a (click)="openModal(true)">Sign In</a></li>
+                  <li><a routerLink="/customer/register">Sign Up</a></li>
+                  }@else{
+                  <li><a routerLink="/profile">Profile</a></li>
+                  <li><a routerLink="/orders">Recent Order</a></li>
+                  <li><a (click)="logout()">Logout</a></li>
+                  }
                 </ul>
                 <div class="divider my-0 md:hidden">Menu</div>
                 <ul class="menu p-2 font-inter md:hidden">
                   <li><a routerLink="/">Home</a></li>
-                  <li><a routerLink="/">Products</a></li>
-                  <li><a routerLink="/">About</a></li>
+                  <li><a routerLink="/products">Products</a></li>
+                  <li><a routerLink="/about">About</a></li>
                   <li><a routerLink="/contact">Contact</a></li>
                   <li><a routerLink="/merchant/register">Join Us</a></li>
                 </ul>
@@ -128,3 +175,76 @@
     </div>
   </nav>
 </header>
+
+<div
+  class="fixed z-[999] h-full w-full bg-[#000000a9] transition duration-300 ease-out md:hidden"
+  *ngIf="isMobileSearch"
+>
+  <div class="relative">
+    <div class="mr-8 mt-15/100 flex justify-end">
+      <button (click)="setIsMobileSearch(false)">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8 text-white"
+          fill="currentColor"
+          viewBox="0 0 384 512"
+        >
+          <path
+            d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div class="mt-[5%] flex items-center justify-center">
+      <form (submit)="searchProduct()" class="relative">
+        <input
+          type="text"
+          class="input-pts block w-full px-4 py-3 pr-11"
+          placeholder="Search Destination..."
+          [value]="search ? search : ''"
+          #searchInput
+          (change)="setSearch(searchInput.value)"
+        />
+        <button
+          class="absolute inset-y-0 right-0 z-20 flex cursor-pointer items-center pr-4"
+          type="submit"
+        >
+          <svg
+            class="h-6 w-6 text-gray-400"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- login modal -->
+<input
+  type="checkbox"
+  id="login_modal"
+  class="modal-toggle"
+  [checked]="globalService.isModalLoginOpen"
+/>
+<div class="modal" role="dialog">
+  <div class="modal-box">
+    <button
+      (click)="openModal(false)"
+      class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+    >
+      ✕
+    </button>
+    <app-login-customer-form></app-login-customer-form>
+  </div>
+</div>

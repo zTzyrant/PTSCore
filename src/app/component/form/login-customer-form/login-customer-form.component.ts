@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { FormBuilder, Validators } from "@angular/forms"
+import { Validators, FormBuilder } from "@angular/forms"
 import { Router } from "@angular/router"
 import { lastValueFrom } from "rxjs"
 import { LoginToken } from "src/app/interface/login-token"
@@ -8,14 +8,13 @@ import { AuthService } from "src/app/service/auth.service"
 import { SwalService } from "src/app/service/swal.service"
 
 @Component({
-  selector: "app-login-ministry-form",
-  templateUrl: "./login-ministry-form.component.html",
-  styleUrls: ["./login-ministry-form.component.css"],
+  selector: "app-login-customer-form",
+  templateUrl: "./login-customer-form.component.html",
 })
-export class LoginMinistryFormComponent {
+export class LoginCustomerFormComponent {
   isPasswordVisible = false
 
-  loginMinistryForm = this.fb.group({
+  loginCustomerForm = this.fb.group({
     email: [
       "",
       [
@@ -39,19 +38,21 @@ export class LoginMinistryFormComponent {
   }
 
   // submit form (login)
+  isSubmit = false
   async submitLogin() {
-    if (this.loginMinistryForm.invalid) {
-      this.loginMinistryForm.markAllAsTouched()
-      this.loginMinistryForm.markAsDirty()
+    if (this.loginCustomerForm.invalid) {
+      this.loginCustomerForm.markAllAsTouched()
+      this.loginCustomerForm.markAsDirty()
       this.Swal.SwalNotif("error", "Please fill in the form correctly")
       return
     }
 
+    this.isSubmit = true
     try {
       const data: loginForm = {
-        email: this.loginMinistryForm.controls["email"].value,
+        email: this.loginCustomerForm.controls["email"].value,
         username: null,
-        password: this.loginMinistryForm.controls["password"].value,
+        password: this.loginCustomerForm.controls["password"].value,
         isEmailLogin: true,
       }
       const response = await lastValueFrom(this.authService.login(data))
@@ -61,12 +62,20 @@ export class LoginMinistryFormComponent {
           expiresIn: String(response.expiresIn),
         }
         this.authService.setSession(data)
-        const isMinistry = await lastValueFrom(this.authService.getIsMinistry())
-        if (isMinistry) {
+        const isCustomer = await lastValueFrom(this.authService.getIsCustomer())
+        console.log(isCustomer)
+
+        if (isCustomer.is_customer) {
           this.Swal.SwalNotifWithThen("success", "Login success").then(
             (result) => {
-              this.router.navigate(["/ministry"])
+              location.reload()
             },
+          )
+        } else {
+          this.authService.logout()
+          this.Swal.SwalNotif(
+            "You are not a customer",
+            "Please login with a customer account.",
           )
         }
       }
@@ -76,5 +85,6 @@ export class LoginMinistryFormComponent {
       this.authService.logout()
       this.Swal.SwalNotif("error", "Email or password is incorrect")
     }
+    this.isSubmit = false
   }
 }

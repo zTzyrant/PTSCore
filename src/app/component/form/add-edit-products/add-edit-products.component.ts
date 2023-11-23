@@ -41,7 +41,7 @@ export class AddEditProductsComponent {
     country: ["Indonesia", [Validators.required]],
 
     // description
-    description: ["", [Validators.required]],
+    description: ["", [Validators.required, Validators.maxLength(500)]],
   })
 
   constructor(
@@ -274,7 +274,7 @@ export class AddEditProductsComponent {
             this.pictureProduct.push({
               _id: pic._id,
               product_id: pic.product_id,
-              url: this.apiService.API_URL + pic.url,
+              url: pic.url,
               filename: pic.filename,
               size: pic.size,
               created_at: pic.created_at,

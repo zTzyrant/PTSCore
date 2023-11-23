@@ -14,6 +14,9 @@ import moment from "moment"
 export class ViewMerchantMinistryContentComponent {
   merchantData = {} as MerchantData
   merchant_id = this.route.snapshot.params["id"]
+  isFetchingApprove = false
+  isFetchingReject = false
+  isFetchingResetPassword = false
 
   constructor(
     private route: ActivatedRoute,
@@ -52,12 +55,15 @@ export class ViewMerchantMinistryContentComponent {
 
   async approveMerchant() {
     try {
+      this.isFetchingApprove = true
       const response = await lastValueFrom(
         this.apiService.approveMerchantById(this.merchant_id),
       )
       this.Swal.SwalNotif("Success", "Successfully approve merchant")
+      this.isFetchingApprove = false
       this.getMerchant()
     } catch (error: any) {
+      this.isFetchingApprove = false
       console.log(error)
       this.Swal.SwalNotif(
         "Error",
@@ -68,12 +74,15 @@ export class ViewMerchantMinistryContentComponent {
 
   async rejectMerchant() {
     try {
+      this.isFetchingReject = true
       const response = await lastValueFrom(
         this.apiService.rejectMerchantById(this.merchant_id),
       )
       this.Swal.SwalNotif("Success", "Successfully reject merchant")
+      this.isFetchingReject = false
       this.getMerchant()
     } catch (error: any) {
+      this.isFetchingReject = false
       console.log(error)
       this.Swal.SwalNotif(
         "Error",
@@ -84,5 +93,32 @@ export class ViewMerchantMinistryContentComponent {
 
   backToManage() {
     this.router.navigate(["/ministry/manage-merchant"])
+  }
+
+  resetPassword() {
+    this.Swal.SwalNotifWithConfirm(
+      "Info",
+      "Are you sure to reset password?",
+    ).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          this.isFetchingResetPassword = true
+          const response = await lastValueFrom(
+            this.apiService.putMinistryResetMechantPasswordById(
+              this.merchant_id,
+            ),
+          )
+          this.Swal.SwalNotif("Success", "Successfully reset password")
+          this.isFetchingResetPassword = false
+        } catch (error: any) {
+          this.isFetchingResetPassword = false
+          console.log(error)
+          this.Swal.SwalNotif(
+            "Error",
+            "Something went wrong, please try again later",
+          )
+        }
+      }
+    })
   }
 }
