@@ -8,6 +8,8 @@
 
 /* plugins */
 @import "assets/css/plugins/ng-select.css";
+@import "../node_modules/@angular/cdk/overlay-prebuilt.css";
+@import "assets/css/plugins/flatpickr.css";
 
 /* icons */
 @import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
@@ -16,8 +18,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
+}
+
 * {
   scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
