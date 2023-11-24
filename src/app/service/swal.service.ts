@@ -62,4 +62,23 @@ export class SwalService {
       confirmButtonText: "Ok",
     })
   }
+
+  SwalNotifWithThenHtml(status: string, message: string) {
+    return Swal.fire({
+      title: `${status}`,
+      html: `${message}`,
+      buttonsStyling: false,
+      customClass: {
+        popup: "modal-box",
+        title: "text-lg font-bold font-poppins text-neutral text-left p-0",
+        htmlContainer: "!px-0 !m-0 !py-4 !font-normal !text-left text-sm",
+        actions: "flex justify-end w-full ",
+        confirmButton:
+          "btn btn-primary btn-active w-auto px-6 py-2 text-sm transition-none animation-none mr-2",
+        cancelButton:
+          "btn btn-outline-primary btn-active w-auto px-6 py-2 text-sm transition-none animation-none",
+      },
+      confirmButtonText: "Ok",
+    })
+  }
 }

@@ -5,7 +5,7 @@ import {
   HostListener,
   ViewChild,
 } from "@angular/core"
-import { FormBuilder, Validators } from "@angular/forms"
+import { FormBuilder, FormGroup, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { lastValueFrom } from "rxjs/internal/lastValueFrom"
 import {
@@ -22,6 +22,7 @@ import "photoswipe/style.css"
 import { GlobalService } from "src/app/service/global.service"
 import { AuthService } from "src/app/service/auth.service"
 import { MerchantData } from "src/app/interface/register-merchant-form"
+import { PostOrder } from "src/app/interface/payment"
 
 @Component({
   selector: "app-view-product",
@@ -60,6 +61,8 @@ export class ViewProductComponent {
       this.formOrder.controls["product_id"].setValue(data._id)
       this.formOrder.controls["number_of_guest"].setValidators([
         Validators.max(data.number_of_guests),
+        Validators.min(1),
+        Validators.required,
       ])
       if (data.pictures.length > 0) {
         this.images = data.pictures
@@ -141,10 +144,10 @@ export class ViewProductComponent {
     altFormat: "F j, Y",
   }
 
-  formOrder = this.fb.group({
+  formOrder: FormGroup = this.fb.group({
     product_id: ["", [Validators.required]],
     date_travel: ["", [Validators.required]],
-    number_of_guest: ["", [Validators.required]],
+    number_of_guest: [null, [Validators.required, Validators.min(1)]],
     note: ["", [Validators.required, Validators.maxLength(200)]],
   })
 
@@ -157,6 +160,8 @@ export class ViewProductComponent {
         "Info",
         "Please fill out all required order information.",
       )
+      this.formOrder.markAllAsTouched()
+      this.formOrder.markAsDirty()
       return
     }
 
@@ -165,21 +170,48 @@ export class ViewProductComponent {
       try {
         const res = await lastValueFrom(this.authService.getIsCustomer())
         if (res.is_customer) {
-          this.Swal.SwalNotifWithConfirm(
-            "Info",
-            "Do you want to checkout?",
-          ).then((res) => {
-            if (res.isConfirmed) {
-              console.log("fire", this.formOrder.value)
-            }
-          })
+          this.isCheckout = true
+
+          const order: PostOrder = {
+            product_id: this.formOrder.value.product_id,
+            date_travel: this.formOrder.value.date_travel,
+            number_of_guest: this.formOrder.value.number_of_guest,
+            note: this.formOrder.value.note,
+          }
+          try {
+            const getInvoice = await lastValueFrom(
+              this.apiService.postInvoice(order),
+            )
+
+            const getInvoicePay = await lastValueFrom(
+              this.apiService.postInvoicePay(getInvoice.invoice._id),
+            )
+
+            console.log("Get Invoice Pay: ", getInvoicePay)
+            console.log("Payment URL: ", getInvoicePay.invoice.response_code)
+
+            this.Swal.SwalNotifWithThenHtml(
+              "Success generate invoice",
+              "You will be redirected to the payment page, <br/>If you want to pay later, you can pay from your recent order page.",
+            ).then(() => {
+              // redirect to payment page
+              if (getInvoicePay.payment_url) {
+                window.open(getInvoicePay.payment_url, "_blank")
+              }
+            })
+            this.isCheckout = false
+          } catch (error) {
+            console.log("Error post invoice", error)
+            this.Swal.SwalNotif("Error", "Error cannot post invoice")
+            this.isCheckout = false
+          }
         }
       } catch (error) {
         console.log("Error valide user", error)
         this.Swal.SwalNotif("Info", "Please login first with customer account")
+        this.isCheckout = false
       }
     } else {
-      this.isCheckout = false
       this.Swal.SwalNotifWithThen(
         "Info",
         "Please login first before checkout",

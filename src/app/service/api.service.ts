@@ -12,6 +12,7 @@ import {
   productCategories,
 } from "../interface/globalInterface"
 import { User } from "../interface/user"
+import { PostOrder, getInvoice } from "../interface/payment"
 
 @Injectable({
   providedIn: "root",
@@ -138,5 +139,22 @@ export class ApiService {
 
   postCustomer(data: User) {
     return this.http.post(`${this.API_URL}/auth/customer`, data)
+  }
+
+  /**
+   * create invoice in database first default status is pending
+   */
+  postInvoice(order: PostOrder) {
+    return this.http.post<getInvoice>(`${this.API_URL}/payment/invoice`, order)
+  }
+
+  /**
+   * update invoice status to unpaid (ready to pay)
+   */
+  postInvoicePay(invoice_id: string) {
+    return this.http.post<getInvoice>(
+      `${this.API_URL}/payment/invoice/${invoice_id}/pay`,
+      {},
+    )
   }
 }
