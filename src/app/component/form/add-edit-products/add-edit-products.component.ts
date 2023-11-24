@@ -22,7 +22,7 @@ export class AddEditProductsComponent {
     // product
     name: ["", [Validators.required]],
     numberOfGuests: [1, [Validators.required, Validators.min(1)]],
-    price: [10000, [Validators.required, Validators.min(10000)]],
+    price: [10, [Validators.required, Validators.min(10)]],
     limitOrder: [1, [Validators.required, Validators.min(1)]],
     categories: [[], [Validators.required]],
     hotelGrade: [{ value: "-1", disabled: true }],
