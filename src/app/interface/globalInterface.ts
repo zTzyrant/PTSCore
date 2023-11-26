@@ -1,3 +1,5 @@
+import { Review, ReviewUser } from "./payment"
+
 export interface productCategories {
   categories: string[]
 }
@@ -64,6 +66,12 @@ export interface getMerchantProducts {
 
   // pictures
   pictures: Array<getProductPicture>
+
+  // review
+  reviews: Array<ReviewUser>
+
+  // average rating
+  average_rating: number | null
 
   created_at: string
 }

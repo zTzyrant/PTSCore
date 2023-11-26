@@ -27,6 +27,11 @@ import { ViewProductsComponent } from "./pages/merchant/menu/view-products/view-
 import { ProductsComponent } from "./pages/menu/products/products.component"
 import { ViewProductComponent } from "./pages/menu/view-product/view-product.component"
 import { RegisterCustomerComponent } from "./pages/customer/register-customer/register-customer.component"
+import { ProfileCustomerComponent } from "./pages/customer/profile-customer/profile-customer.component"
+import { RecentOrdersComponent } from "./pages/customer/recent-orders/recent-orders.component"
+import { ViewInvoiceComponent } from "./pages/customer/view-invoice/view-invoice.component"
+import { OrdersReviewComponent } from "./pages/customer/orders-review/orders-review.component"
+import { customerGuard } from "./helpers/customer.guard"
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -118,6 +123,25 @@ const routes: Routes = [
   {
     path: "customer/register",
     component: RegisterCustomerComponent,
+  },
+  {
+    path: "profile",
+    component: ProfileCustomerComponent,
+    canActivate: [customerGuard],
+  },
+  {
+    path: "orders",
+    component: RecentOrdersComponent,
+    canActivate: [customerGuard],
+  },
+  {
+    path: "view-invoice/:id",
+    component: ViewInvoiceComponent,
+  },
+  {
+    path: "review-orders",
+    component: OrdersReviewComponent,
+    canActivate: [customerGuard],
   },
   // Customer routes end
 

@@ -1,0 +1,242 @@
+<app-dashboard-customer>
+  <section *ngIf="invoiceData">
+    <h2 class="px-4 font-manrope text-2xl font-semibold">Recent Orders</h2>
+    <div class="mt-4 rounded-box border p-4 sm:min-h-[400px]">
+      <article
+        class="mb-4 rounded-md border-2 bg-white"
+        *ngFor="let data of invoiceData"
+      >
+        <div
+          class="flex items-start gap-4 p-4 px-4 max-sm:flex-wrap sm:p-6 lg:p-8"
+        >
+          <a href="#" class="block shrink-0">
+            <img
+              src="{{ data.product[0].pictures[0].url }}"
+              alt="{{ data.product[0].pictures[0].filename }}"
+              class="h-14 w-14 rounded-lg object-cover"
+            />
+          </a>
+
+          <div class="w-full">
+            <h3 class="font-medium sm:text-lg">
+              <a
+                routerLink="/products/{{ data.product[0]._id }}"
+                target="_blank"
+                class="hover:underline"
+              >
+                {{ data.product[0].name }}
+              </a>
+            </h3>
+
+            <p class="line-clamp-2 text-sm text-gray-700">
+              {{ data.product[0].description }}
+            </p>
+            <div class="mt-2 sm:flex sm:items-center sm:gap-2">
+              <div class="flex items-center gap-1 text-neutral">
+                <p class="text-sm">Date Order:</p>
+              </div>
+              <span class="text-sm font-semibold capitalize">
+                {{ data.created_at | date: "MMM dd, YYYY" }}
+              </span>
+            </div>
+            <div class="sm:flex sm:items-center sm:gap-2">
+              <div class="flex items-center gap-1 text-neutral">
+                <p class="text-sm">Number of guest:</p>
+              </div>
+              <span class="text-sm font-semibold capitalize">
+                {{
+                  data.number_of_guest > 1
+                    ? data.number_of_guest + " Persons"
+                    : 1 + " Person"
+                }}
+              </span>
+            </div>
+            <div class="sm:flex sm:items-center sm:gap-2">
+              <div class="flex items-center gap-1 text-neutral">
+                <p class="text-sm">Note:</p>
+              </div>
+              <span class="line-clamp-1 text-sm font-semibold capitalize">
+                {{ data.note }}
+              </span>
+            </div>
+            <div class="sm:flex sm:items-center sm:gap-2">
+              <div class="flex items-center gap-1 text-neutral">
+                <p class="text-sm">Status:</p>
+              </div>
+              <span
+                class="badge badge-warning text-sm font-semibold capitalize"
+              >
+                {{ data.status }}
+              </span>
+            </div>
+          </div>
+          <div class="divider divider-horizontal max-sm:hidden"></div>
+          <div
+            class="my-auto flex min-w-full flex-row items-center justify-end gap-2 sm:min-w-25 sm:flex-col sm:justify-center"
+          >
+            <p class="font-manrope">Total</p>
+            <span class="text-sm font-semibold">
+              {{ data.amount_myr | currency: "MYR " }}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-end gap-2 p-4 sm:flex-row">
+          <a
+            routerLink="/view-invoice/{{ data._id }}"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+          >
+            View Inovice
+          </a>
+          <button
+            *ngIf="data.review.length === 0"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+            (click)="setOrderToReview(data._id, data.product[0].name)"
+          >
+            Review
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section *ngIf="!invoiceData">
+    <div class="flex px-4">
+      <span
+        class="h-[32px] w-[100px] animate-pulse rounded-md bg-gray-200"
+      ></span>
+    </div>
+    <article class="mb-4 mt-4 animate-pulse rounded-md border-2 bg-white">
+      <div
+        class="flex items-start gap-4 p-4 px-4 max-sm:flex-wrap sm:p-6 lg:p-8"
+      >
+        <div class="block h-14 w-14 shrink-0 rounded-lg bg-gray-200"></div>
+        <div class="w-full">
+          <div class="h-4 w-1/2 rounded bg-gray-200"></div>
+          <div class="mt-2 h-4 w-full rounded bg-gray-200"></div>
+          <div class="mt-2 h-4 w-1/4 rounded bg-gray-200"></div>
+          <div class="mt-2 h-4 w-1/4 rounded bg-gray-200"></div>
+          <div class="mt-2 h-4 w-1/4 rounded bg-gray-200"></div>
+          <div class="mt-2 h-4 w-1/4 rounded bg-gray-200"></div>
+        </div>
+        <div
+          class="my-auto flex min-w-full flex-row items-center justify-end gap-2 sm:min-w-25 sm:flex-col sm:justify-center"
+        >
+          <div class="h-4 w-[40px] rounded bg-gray-200"></div>
+          <div class="h-4 w-[40px] rounded bg-gray-200 sm:mt-2"></div>
+        </div>
+      </div>
+    </article>
+  </section>
+</app-dashboard-customer>
+
+<input
+  type="checkbox"
+  id="review_modal"
+  class="modal-toggle"
+  [checked]="isModalOpen"
+/>
+<div class="modal" role="dialog">
+  <div class="modal-box">
+    <button
+      class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+      (click)="closeModalReview()"
+    >
+      ✕
+    </button>
+    <h3 class="text-lg font-bold">Review order</h3>
+    <p>Product to review {{ orderToReview.name }}</p>
+    <form [formGroup]="reviewForm">
+      <div class="mt-2 flex w-full flex-col gap-1">
+        <div class="w-full flex-col">
+          <label for="rating" class="label">Rating</label>
+          <div class="rating">
+            <input
+              type="radio"
+              class="mask mask-star-2 bg-orange-400"
+              value="1"
+              formControlName="rating"
+            />
+            <input
+              type="radio"
+              class="mask mask-star-2 bg-orange-400"
+              value="2"
+              formControlName="rating"
+            />
+            <input
+              type="radio"
+              class="mask mask-star-2 bg-orange-400"
+              value="3"
+              formControlName="rating"
+            />
+            <input
+              type="radio"
+              class="mask mask-star-2 bg-orange-400"
+              value="4"
+              formControlName="rating"
+            />
+            <input
+              type="radio"
+              class="mask mask-star-2 bg-orange-400"
+              value="5"
+              formControlName="rating"
+            />
+          </div>
+          <span
+            class="text-sm text-red-500"
+            *ngIf="
+              reviewForm.controls['rating'].errors?.['required'] &&
+              (reviewForm.controls['rating'].touched ||
+                reviewForm.controls['rating'].dirty)
+            "
+          >
+            Rating is required
+          </span>
+        </div>
+        <div class="w-full flex-col">
+          <label for="comment" class="label">Review</label>
+          <textarea
+            class="input input-primary h-[80px] w-full"
+            placeholder="comment"
+            formControlName="comment"
+          ></textarea>
+          <span
+            class="text-sm text-red-500"
+            *ngIf="
+              reviewForm.controls['comment'].errors?.['required'] &&
+              (reviewForm.controls['comment'].touched ||
+                reviewForm.controls['comment'].dirty)
+            "
+          >
+            Comment is required
+          </span>
+        </div>
+        <div class="w-full">
+          <div class="flex items-center gap-2">
+            <label class="label cursor-pointer">
+              <span class="label-text">You recommend this product? </span>
+              <input
+                type="checkbox"
+                class="toggle ml-2"
+                formControlName="is_recommend"
+              />
+            </label>
+          </div>
+        </div>
+        <div class="w-full">
+          <button
+            class="btn btn-primary w-full"
+            [disabled]="reviewForm.invalid || isSubmitReview"
+            (click)="submitReview()"
+          >
+            <span
+              *ngIf="isSubmitReview"
+              class="loading loading-spinner loading-sm"
+            ></span>
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

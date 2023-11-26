@@ -20,8 +20,17 @@
                   disabled
                 />
               </div>
-              <span class="ml-1 text-gray-600">3.7</span>
-              <span class="ml-2 text-gray-600"> | 4 Reviews</span>
+              <span class="ml-1 text-gray-600">
+                {{ product.average_rating ? product.average_rating : 0 }}
+              </span>
+              <span class="ml-2 text-gray-600">
+                |
+                {{
+                  product.reviews.length > 0
+                    ? product.reviews.length + " Reviews"
+                    : "0 Review"
+                }}</span
+              >
             </span>
           </div>
           <div class="relative">
@@ -421,7 +430,10 @@
           Recent Reviews
         </h2>
         <div class="-mx-4 mt-2 flex flex-wrap">
-          <div class="w-full px-4 lg:w-1/2" *ngFor="let a of [1, 3, 4, 5]">
+          <div
+            class="w-full px-4 lg:w-1/2"
+            *ngFor="let data of product.reviews"
+          >
             <div class="mb-9 overflow-hidden rounded-lg border bg-white">
               <div
                 class="items-center justify-between border-b px-6 pt-[18px] sm:flex md:px-8"
@@ -485,25 +497,20 @@
                     class="text-body-color dark:text-dark-6 text-base font-medium"
                   >
                     <span class="pr-0.5"> Rating: </span>
-                    <span class="text-dark"> 5.0 </span>
+                    <span class="text-dark"> {{ data.rating }} </span>
                   </p>
                 </div>
 
                 <p
                   class="text-body-color dark:text-dark-6 mb-[18px] text-base font-medium"
                 >
-                  12, Nov 2025
+                  {{ data.created_at | date: "MMMM dd, YYYY" }}
                 </p>
               </div>
               <div class="px-6 py-8 md:px-8">
                 <h4 class="mb-4 text-lg font-semibold sm:text-xl">
-                  This is one of the best product.
+                  {{ data.comment }}
                 </h4>
-                <p class="text-body-color text-base">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Maecenas ac risus a risus elementum vehicula. Class aptent
-                  taciti sociosqu ad litora torquent per.
-                </p>
               </div>
               <div
                 class="border-stroke dark:border-dark-3 flex flex-wrap items-center justify-between border-t px-6 pt-[18px] md:px-8"
@@ -534,7 +541,7 @@
                         </clipPath>
                       </defs>
                     </svg>
-                    <span>Willium Smith</span>
+                    <span>{{ data.user[0].fullname }}</span>
                   </h3>
                 </div>
               </div>

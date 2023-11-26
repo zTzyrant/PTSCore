@@ -1,0 +1,343 @@
+<app-main>
+  <section *ngIf="invoiceData && invoiceData.merchant && invoiceData.user">
+    <!-- Invoice -->
+    <div class="mx-auto my-4 max-w-[85rem] px-4 sm:my-10 sm:px-6 lg:px-8">
+      <div class="mx-auto sm:w-11/12 lg:w-3/4">
+        <!-- Card -->
+        <div
+          id="invoice"
+          class="flex flex-col rounded-lg border bg-white p-4 shadow-md sm:p-10"
+        >
+          <!-- Grid -->
+          <div class="flex justify-between">
+            <div>
+              <h1
+                class="mt-2 font-russoone text-xl font-semibold tracking-wider text-neutral md:text-4xl"
+              >
+                PTS
+              </h1>
+            </div>
+            <!-- Col -->
+
+            <div class="text-end">
+              <h2 class="text-xl font-semibold text-gray-800 md:text-3xl">
+                Invoice #
+              </h2>
+              <span class="mt-1 block text-xs text-gray-500">
+                {{ invoiceData._id }}
+              </span>
+
+              <address class="mt-4 not-italic text-gray-800">
+                <h4 class="text-lg font-semibold">
+                  {{ invoiceData.merchant[0].company_name }}
+                </h4>
+                <p class="text-sm">
+                  {{ invoiceData.merchant[0].address }}<br />
+                  {{ invoiceData.merchant[0].city }},
+                  {{ invoiceData.merchant[0].state }} <br />
+                  {{ invoiceData.merchant[0].country }}
+                </p>
+              </address>
+            </div>
+            <!-- Col -->
+          </div>
+          <!-- End Grid -->
+
+          <!-- Grid -->
+          <div class="mt-8 grid gap-3 sm:grid-cols-2">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800">Bill to:</h3>
+              <h3 class="text-lg font-semibold text-gray-800">
+                {{ invoiceData.user[0].fullname }}
+              </h3>
+              <div class="mt-2 text-sm not-italic text-gray-500">
+                {{ invoiceData.user[0].email }}<br />
+                {{ invoiceData.user[0].phone_number }}<br />
+              </div>
+            </div>
+            <!-- Col -->
+
+            <div class="space-y-2 sm:text-end">
+              <!-- Grid -->
+              <div class="grid grid-cols-2 gap-3 sm:grid-cols-1 sm:gap-2">
+                <dl class="grid gap-x-3 sm:grid-cols-5">
+                  <dt class="col-span-3 font-semibold text-gray-800">
+                    Invoice date:
+                  </dt>
+                  <dd class="col-span-2 text-gray-500">
+                    {{ invoiceData.created_at | date: "MMMM dd, YYYY" }}
+                  </dd>
+                </dl>
+              </div>
+              <!-- End Grid -->
+            </div>
+            <!-- Col -->
+          </div>
+          <!-- End Grid -->
+
+          <!-- Table -->
+          <div class="mt-6">
+            <div class="space-y-4 rounded-lg border border-gray-200 p-4">
+              <div class="hidden sm:grid sm:grid-cols-5">
+                <div
+                  class="text-xs font-medium uppercase text-gray-500 sm:col-span-2"
+                >
+                  Item
+                </div>
+                <div
+                  class="text-start text-xs font-medium uppercase text-gray-500"
+                >
+                  Qty
+                </div>
+                <div
+                  class="text-start text-xs font-medium uppercase text-gray-500"
+                >
+                  Date
+                </div>
+                <div
+                  class="text-end text-xs font-medium uppercase text-gray-500"
+                >
+                  Amount
+                </div>
+              </div>
+
+              <div class="hidden border-b border-gray-200 sm:block"></div>
+
+              <div class="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                <div class="col-span-full sm:col-span-2">
+                  <h5
+                    class="text-xs font-medium uppercase text-gray-500 sm:hidden"
+                  >
+                    Item
+                  </h5>
+                  <p class="font-medium text-gray-800">
+                    {{ invoiceData.product[0].name }}
+                  </p>
+                </div>
+                <div>
+                  <h5
+                    class="text-xs font-medium uppercase text-gray-500 sm:hidden"
+                  >
+                    Qty
+                  </h5>
+                  <p class="text-gray-800">1</p>
+                </div>
+                <div>
+                  <h5
+                    class="text-xs font-medium uppercase text-gray-500 sm:hidden"
+                  >
+                    Date
+                  </h5>
+                  <p class="text-gray-800">
+                    {{ invoiceData.date_travel | date: "MMM dd, YYYY" }}
+                  </p>
+                </div>
+                <div>
+                  <h5
+                    class="text-xs font-medium uppercase text-gray-500 sm:hidden"
+                  >
+                    Amount
+                  </h5>
+                  <p class="text-gray-800 sm:text-end">
+                    {{ invoiceData.amount_myr | currency: "MYR " }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="border-b border-gray-200 sm:hidden"></div>
+            </div>
+          </div>
+          <!-- End Table -->
+
+          <!-- Flex -->
+          <div class="mt-8 flex sm:justify-end">
+            <div class="w-full max-w-2xl space-y-2 sm:text-end">
+              <!-- Grid -->
+              <div class="grid grid-cols-2 gap-3 sm:grid-cols-1 sm:gap-2">
+                <dl class="grid gap-x-3 sm:grid-cols-5">
+                  <dt class="col-span-3 font-semibold text-gray-800">
+                    Subtotal:
+                  </dt>
+                  <dd class="col-span-2 text-gray-500">
+                    {{ invoiceData.amount_myr | currency: "MYR " }}
+                  </dd>
+                </dl>
+
+                <dl class="grid gap-x-3 sm:grid-cols-5">
+                  <dt class="col-span-3 font-semibold text-gray-800">Total:</dt>
+                  <dd class="col-span-2 text-gray-500">
+                    {{ invoiceData.amount_myr | currency: "MYR " }}
+                  </dd>
+                </dl>
+
+                <dl class="grid gap-x-3 sm:grid-cols-5">
+                  <dt class="col-span-3 font-semibold text-gray-800">
+                    Amount paid:
+                  </dt>
+                  <dd class="col-span-2 text-gray-500">
+                    @if (invoiceData.status === 'paid') {
+                    {{ invoiceData.amount_myr | currency: "MYR " }}
+                    } @else {
+                    {{ 0 | currency: "MYR " }}
+                    }
+                  </dd>
+                </dl>
+                <dl class="grid gap-x-3 sm:grid-cols-5">
+                  <dt class="col-span-3 font-semibold text-gray-800">
+                    Status:
+                  </dt>
+                  <dd class="col-span-2 capitalize text-gray-500">
+                    <span class="badge badge-warning">
+                      {{ invoiceData.status }}
+                    </span>
+                  </dd>
+                </dl>
+              </div>
+              <!-- End Grid -->
+            </div>
+          </div>
+          <!-- End Flex -->
+
+          <div class="mt-8 sm:mt-12">
+            <h4 class="text-lg font-semibold text-gray-800">Thank you!</h4>
+            <p class="text-gray-500">
+              If you have any questions concerning this invoice, use the
+              following contact information:
+            </p>
+            <div class="mt-2">
+              <p class="block text-sm font-medium text-gray-800">
+                ptscore.my.id
+              </p>
+              <p class="block text-sm font-medium text-gray-800">
+                ptscore.team&#64;gmail.com
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-5 text-sm text-gray-500">© 2022 PTS Team.</p>
+        </div>
+        <!-- End Card -->
+
+        <!-- Buttons -->
+        <div class="mt-6 flex flex-col justify-end gap-3 sm:flex-row">
+          <button
+            class="inline-flex items-center justify-center gap-2 rounded-md border bg-white px-3 py-2 align-middle text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white"
+            (click)="generatePNG(invoiceData._id)"
+            [disabled]="isGeneratePNG"
+            ngxTippy="Generate Invoice PNG (recommended)"
+            [tippyProps]="{
+              arrow: true,
+              placement: 'top'
+            }"
+          >
+            <svg
+              class="h-4 w-4 flex-shrink-0"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              *ngIf="!isGeneratePNG"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" x2="12" y1="15" y2="3" />
+            </svg>
+            <span
+              class="loading loading-spinner loading-xs"
+              *ngIf="isGeneratePNG"
+            ></span>
+            Invoice PNG
+          </button>
+          <button
+            class="inline-flex items-center justify-center gap-2 rounded-md border bg-white px-3 py-2 align-middle text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white"
+            (click)="generatePDF(invoiceData._id)"
+            [disabled]="isGeneratePDF"
+            ngxTippy="Generate Invoice PDF (unrecommended) poor quality images"
+            [tippyProps]="{
+              arrow: true,
+              placement: 'top'
+            }"
+          >
+            <svg
+              class="h-4 w-4 flex-shrink-0"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              *ngIf="!isGeneratePDF"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" x2="12" y1="15" y2="3" />
+            </svg>
+            <span
+              class="loading loading-spinner loading-xs"
+              *ngIf="isGeneratePDF"
+            ></span>
+            Invoice PDF
+          </button>
+          <button
+            class="inline-flex items-center justify-center gap-x-2 rounded-md border border-transparent bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:pointer-events-none disabled:opacity-50"
+            (click)="print()"
+          >
+            <svg
+              class="h-4 w-4 flex-shrink-0"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="6 9 6 2 18 2 18 9" />
+              <path
+                d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"
+              />
+              <rect width="12" height="8" x="6" y="14" />
+            </svg>
+            Print
+          </button>
+          <button
+            *ngIf="
+              invoiceData.status !== 'paid' && invoiceData.status !== 'expired'
+            "
+            ngxTippy="Validate is payment link was expired"
+            [tippyProps]="{
+              arrow: true,
+              placement: 'top'
+            }"
+            (click)="validatePayment(invoiceData._id)"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+          >
+            Validate Expired
+          </button>
+          <a
+            *ngIf="
+              invoiceData.status !== 'paid' && invoiceData.status !== 'expired'
+            "
+            href="{{ invoiceData.payment_url }}"
+            target="_blank"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+          >
+            Pay Now with Paypal
+          </a>
+        </div>
+        <!-- End Buttons -->
+      </div>
+    </div>
+    <!-- End Invoice -->
+  </section>
+</app-main>

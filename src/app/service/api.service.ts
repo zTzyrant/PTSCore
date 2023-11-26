@@ -12,7 +12,14 @@ import {
   productCategories,
 } from "../interface/globalInterface"
 import { User } from "../interface/user"
-import { PostOrder, getInvoice } from "../interface/payment"
+import {
+  PostOrder,
+  getInvoice,
+  getInvoiceOrders,
+  getInvoiceOrdersReview,
+  getMerchantOrders,
+  postReview,
+} from "../interface/payment"
 
 @Injectable({
   providedIn: "root",
@@ -155,6 +162,43 @@ export class ApiService {
     return this.http.post<getInvoice>(
       `${this.API_URL}/payment/invoice/${invoice_id}/pay`,
       {},
+    )
+  }
+
+  getMerchantOrders() {
+    return this.http.get<getMerchantOrders[]>(`${this.API_URL}/merchant/orders`)
+  }
+
+  getMyProfile() {
+    return this.http.get<User>(`${this.API_URL}/auth/user/profile`)
+  }
+
+  getMyOrders() {
+    return this.http.get<getInvoiceOrders[]>(
+      `${this.API_URL}/customer/my_order`,
+    )
+  }
+
+  getPaymentStatus(invoice_id: string) {
+    return this.http.get(`${this.API_URL}/payment/invoice/${invoice_id}`)
+  }
+
+  getInvoiceById(invoice_id: string) {
+    return this.http.get<getInvoiceOrders>(
+      `${this.API_URL}/api/invoice/${invoice_id}`,
+    )
+  }
+
+  getMyOrdersToReview() {
+    return this.http.get<getInvoiceOrdersReview[]>(
+      `${this.API_URL}/customer/my_order/review`,
+    )
+  }
+
+  postReview(invoice_id: string, data: postReview) {
+    return this.http.post(
+      `${this.API_URL}/customer/my_order/review/${invoice_id}`,
+      data,
     )
   }
 }

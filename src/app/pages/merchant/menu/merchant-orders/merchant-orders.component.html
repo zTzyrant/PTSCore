@@ -1,1 +1,97 @@
-<app-dashboard-merchant> Manage Orders </app-dashboard-merchant>
+<app-dashboard-merchant>
+  <div class="ds-merchant">
+    <div class="card-9">
+      <div class="card-content">
+        <div
+          class="flex w-full flex-col items-start justify-between space-y-2 px-2 pb-0 pt-2 sm:flex-row sm:items-center"
+        >
+          <h2 class="text-lg font-semibold">Manage Orders</h2>
+        </div>
+        <div class="mt-4">
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Pay</th>
+                  <th>Date</th>
+                  <th>User</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if(orders_data.length > 0){
+
+                <tr *ngFor="let data of orders_data; let i = index">
+                  <th class="w-20 min-w-20 break-all">
+                    <span>{{ i + 1 }}</span>
+                  </th>
+                  <td class="w-54 min-w-54">
+                    <span class="line-clamp-2">
+                      <a
+                        routerLink="/merchant/products/{{
+                          data.product[0]._id
+                        }}"
+                        class="link-primary link"
+                      >
+                        {{ data.product[0].name }}
+                      </a>
+                    </span>
+                  </td>
+                  <td class="w-40 min-w-40 break-all">
+                    <span class="line-clamp-2">
+                      {{ data.product[0].price | currency: "MYR " }}</span
+                    >
+                  </td>
+                  <td class="w-40 min-w-40">
+                    <span class="line-clamp-2">
+                      {{ data.amount_myr | currency: "MYR " }}
+                    </span>
+                  </td>
+                  <td class="w-35">
+                    <span class="line-clamp-2">
+                      {{ data.created_at | date: "MMMM dd, yyyy" }}
+                    </span>
+                  </td>
+                  <td class="w-40 min-w-40">
+                    <span class="line-clamp-2">
+                      {{ data.user[0].fullname }}
+                    </span>
+                  </td>
+                  <td class="w-35">
+                    <span
+                      class="badge-info line-clamp-2 rounded-2xl px-2 py-1 text-center text-xs capitalize"
+                    >
+                      {{ data.status }}
+                    </span>
+                  </td>
+                  <td class="w-30 min-w-30">
+                    <a [routerLink]="data._id">
+                      <button class="btn btn-outline btn-info btn-sm">
+                        View
+                      </button>
+                    </a>
+                  </td>
+                </tr>
+
+                } @else{
+                <tr>
+                  <td colspan="7" class="text-center">
+                    There are no recorded products.
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-3">
+      <app-merchant-account></app-merchant-account>
+    </div>
+  </div>
+</app-dashboard-merchant>
