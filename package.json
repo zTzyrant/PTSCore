@@ -26,6 +26,8 @@
     "angularx-flatpickr": "^7.3.0",
     "bootstrap-icons": "^1.11.1",
     "flatpickr": "^4.6.13",
+    "html-to-image": "^1.11.11",
+    "jspdf": "^2.5.1",
     "moment": "^2.29.4",
     "ngx-tippy-wrapper": "^6.2.2",
     "photoswipe": "^5.4.2",
