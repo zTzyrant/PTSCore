@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
 import { FormBuilder } from "@angular/forms"
+import { Title, Meta } from "@angular/platform-browser"
 import { ActivatedRoute, Router } from "@angular/router"
 import { lastValueFrom } from "rxjs"
 import {
@@ -34,7 +35,10 @@ export class ProductsComponent {
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("Products | Promo Tourism System")
+  }
 
   async ngOnInit() {
     this.getCategories()

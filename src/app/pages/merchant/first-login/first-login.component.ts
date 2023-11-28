@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
+import { Title } from "@angular/platform-browser"
 import { Router } from "@angular/router"
 import { lastValueFrom } from "rxjs"
 import { AuthService } from "src/app/service/auth.service"
@@ -27,7 +28,10 @@ export class FirstLoginComponent {
     private authService: AuthService,
     private Swal: SwalService,
     private router: Router,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("First Login | Promo Tourism System")
+  }
 
   checkPasswordsMatch() {
     const password = this.formpassword.controls["password"].value

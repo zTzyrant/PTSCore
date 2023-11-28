@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { Title } from "@angular/platform-browser"
 import { Router } from "@angular/router"
 import { lastValueFrom } from "rxjs"
 import { getMerchantProducts } from "src/app/interface/globalInterface"
@@ -15,7 +16,10 @@ export class RecentOrdersComponent {
     private apiService: ApiService,
     private router: Router,
     private Swal: SwalService,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("Recent Orders | Promo Tourism System")
+  }
 
   ngOnInit() {
     this.getOrders()

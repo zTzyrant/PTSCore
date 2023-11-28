@@ -23,6 +23,7 @@ import { GlobalService } from "src/app/service/global.service"
 import { AuthService } from "src/app/service/auth.service"
 import { MerchantData } from "src/app/interface/register-merchant-form"
 import { PostOrder } from "src/app/interface/payment"
+import { Title } from "@angular/platform-browser"
 
 @Component({
   selector: "app-view-product",
@@ -44,7 +45,10 @@ export class ViewProductComponent {
     private authService: AuthService,
     public globalService: GlobalService,
     private chageDetectorRef: ChangeDetectorRef,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("View Products | Promo Tourism System")
+  }
 
   ngOnInit() {
     if (this.route.snapshot.params["id"]) {

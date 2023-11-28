@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { Title } from "@angular/platform-browser"
 import { Router } from "@angular/router"
 import { lastValueFrom } from "rxjs"
 import { User } from "src/app/interface/user"
@@ -16,7 +17,10 @@ export class ProfileCustomerComponent {
     private router: Router,
     private Swal: SwalService,
     private apiService: ApiService,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("Profile Customer | Promo Tourism System")
+  }
 
   ngOnInit() {
     this.getUserData()

@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
 import { FormBuilder, FormGroup, Validators } from "@angular/forms"
+import { Title } from "@angular/platform-browser"
 import { Router } from "@angular/router"
 import { lastValueFrom } from "rxjs"
 import {
@@ -21,7 +22,10 @@ export class OrdersReviewComponent {
     private router: Router,
     private Swal: SwalService,
     private fb: FormBuilder,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("Orders Review | Promo Tourism System")
+  }
 
   ngOnInit() {
     this.getOrders()

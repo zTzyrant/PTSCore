@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
 import { FormBuilder, FormGroup, Validators } from "@angular/forms"
+import { Title } from "@angular/platform-browser"
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -41,7 +42,10 @@ export class MerchantIndexComponent {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("Merchant Dashboard | Promo Tourism System")
+  }
 
   ngOnInit() {
     this.fetchMerchantStatistic()

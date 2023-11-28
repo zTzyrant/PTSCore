@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
 import { FormBuilder, FormGroup, Validators } from "@angular/forms"
+import { Title } from "@angular/platform-browser"
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -43,7 +44,10 @@ export class AnalyticsReportsMerchantComponent {
     private fb: FormBuilder,
     private apiService: ApiService,
     private Swal: SwalService,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("Analytics Reports | Promo Tourism System")
+  }
 
   ngOnInit() {
     this.fetchTopProducts()

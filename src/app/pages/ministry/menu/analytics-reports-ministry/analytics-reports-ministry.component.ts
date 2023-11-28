@@ -19,6 +19,7 @@ import {
   ApexTooltip,
   ChartComponent,
 } from "ng-apexcharts"
+import { Title } from "@angular/platform-browser"
 
 export type ChartOptions = {
   series: ApexAxisChartSeries
@@ -42,7 +43,10 @@ export class AnalyticsReportsMinstryComponent {
     private fb: FormBuilder,
     private apiService: ApiService,
     private Swal: SwalService,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("Analytics Reports | Promo Tourism System")
+  }
 
   ngOnInit() {
     this.fetchApprovedMerchant()

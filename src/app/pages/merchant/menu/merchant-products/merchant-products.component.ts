@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { Title } from "@angular/platform-browser"
 import { Router } from "@angular/router"
 import { lastValueFrom } from "rxjs"
 import { getMerchantProducts } from "src/app/interface/globalInterface"
@@ -17,7 +18,10 @@ export class MerchantProductsComponent {
     private router: Router,
     private Swal: SwalService,
     private apiService: ApiService,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("Merchant Products | Promo Tourism System")
+  }
 
   ngOnInit() {
     this.getMerchantProducts()

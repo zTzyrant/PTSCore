@@ -8,6 +8,7 @@ import { SwalService } from "src/app/service/swal.service"
 import jsPDF from "jspdf"
 import html2canvas from "html2canvas"
 import * as htmlToImage from "html-to-image"
+import { Title } from "@angular/platform-browser"
 
 @Component({
   selector: "app-view-invoice",
@@ -20,7 +21,10 @@ export class ViewInvoiceComponent {
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle("View Invoice | Promo Tourism System")
+  }
 
   ngOnInit() {
     if (this.route.snapshot.params["id"]) {
