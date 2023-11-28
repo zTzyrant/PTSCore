@@ -6,9 +6,13 @@ import {
   RegisterMerchantForm,
 } from "../interface/register-merchant-form"
 import {
+  MerchantApprovedName,
+  MerchantStatusStatistic,
+  MyMerchantStatistic,
   addProduct,
   getMerchantProducts,
   getProducts,
+  getTopProduct,
   productCategories,
 } from "../interface/globalInterface"
 import { User } from "../interface/user"
@@ -200,5 +204,46 @@ export class ApiService {
       `${this.API_URL}/customer/my_order/review/${invoice_id}`,
       data,
     )
+  }
+
+  getMerchantStatusStatistic() {
+    return this.http.get<MerchantStatusStatistic>(
+      `${this.API_URL}/ministry/merchant/analytics`,
+    )
+  }
+
+  getTop5MerchantProduct() {
+    return this.http.get<getTopProduct[]>(
+      `${this.API_URL}/ministry/merchant/top_product?limit=5`,
+    )
+  }
+
+  getTopMerchantProducts(id: string | null) {
+    return this.http.get<getTopProduct[]>(
+      `${this.API_URL}/ministry/merchant/top_product?merchant_id=${
+        id ? id : ""
+      }`,
+    )
+  }
+  getApprovedMerchants() {
+    return this.http.get<MerchantApprovedName[]>(
+      `${this.API_URL}/ministry/merchant/approved`,
+    )
+  }
+
+  getTop5Product() {
+    return this.http.get<getTopProduct[]>(
+      `${this.API_URL}/merchant/top_product?limit=5`,
+    )
+  }
+
+  getProductAnalytics() {
+    return this.http.get<getTopProduct[]>(`
+    ${this.API_URL}/merchant/top_product`)
+  }
+
+  getMyMerchantStatistic() {
+    return this.http.get<MyMerchantStatistic>(`
+    ${this.API_URL}/merchant/product/statistic`)
   }
 }

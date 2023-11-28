@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core"
+import { Component } from "@angular/core"
 import { FormBuilder, FormGroup, Validators } from "@angular/forms"
 import {
   ApexAxisChartSeries,
@@ -10,14 +10,15 @@ import {
   ApexDataLabels,
   ApexYAxis,
   ApexTooltip,
+  ChartComponent,
 } from "ng-apexcharts"
-
 import { lastValueFrom } from "rxjs"
 import {
-  MerchantStatusStatistic,
+  MerchantApprovedName,
   getTopProduct,
 } from "src/app/interface/globalInterface"
 import { ApiService } from "src/app/service/api.service"
+import { SwalService } from "src/app/service/swal.service"
 
 export type ChartOptions = {
   series: ApexAxisChartSeries
@@ -34,131 +35,54 @@ export type ChartOptions = {
 }
 
 @Component({
-  selector: "app-index-ministry-content",
-  templateUrl: "./index-ministry-content.component.html",
-  styleUrls: ["./index-ministry-content.component.css"],
+  selector: "app-analytics-reports-merchant",
+  templateUrl: "./analytics-reports-merchant.component.html",
 })
-export class IndexMinistryContentComponent {
-  public chartOptions: Partial<ChartOptions> = {
-    series: [
-      {
-        data: [],
-      },
-    ],
-    chart: {
-      type: "bar",
-      height: 380,
-    },
-    plotOptions: {
-      bar: {
-        barHeight: "100%",
-        distributed: true,
-        horizontal: true,
-        dataLabels: {
-          position: "bottom",
-        },
-      },
-    },
-    dataLabels: {
-      enabled: true,
-      textAnchor: "start",
-      style: {
-        colors: ["#000"],
-      },
-      formatter: function (val, opt) {
-        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
-      },
-      offsetX: 0,
-    },
-    stroke: {
-      width: 1,
-      colors: ["#fff"],
-    },
-    xaxis: {
-      categories: [],
-    },
-    yaxis: {
-      labels: {
-        show: false,
-      },
-    },
-    title: {
-      text: "Top 5 Products",
-      align: "center",
-      floating: true,
-    },
-    subtitle: {
-      text: "Top 5 Products Sold by Merchant and Product Name",
-      align: "center",
-    },
-    tooltip: {
-      theme: "dark",
-      x: {
-        show: false,
-      },
-      y: {
-        title: {
-          formatter: function () {
-            return ""
-          },
-        },
-      },
-    },
-  }
-
+export class AnalyticsReportsMerchantComponent {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
+    private Swal: SwalService,
   ) {}
 
+  ngOnInit() {
+    this.fetchTopProducts()
+  }
+
+  topProducts: getTopProduct[] | undefined
+  isFetching = false
+  async fetchTopProducts() {
+    this.isFetching = true
+    try {
+      const res = await lastValueFrom(this.apiService.getProductAnalytics())
+      console.log("Top Products", res)
+      this.topProducts = res
+
+      // update chart
+      this.chartOptions.series = [
+        {
+          name: "Amount Sold",
+          data: res.map((product) => product.amount_sold),
+        },
+      ]
+      this.chartOptions.xaxis = {
+        categories: this.topProducts.map((product) => product.name),
+      }
+    } catch (error) {
+      console.log(error)
+      this.Swal.SwalNotif("Error", "Failed to fetch data")
+    }
+    this.isFetching = false
+  }
+
+  // sorting start
   sortByForm: FormGroup = this.fb.group({
     ascending: ["asc", [Validators.required]],
     sort_by: ["-1", [Validators.required]],
   })
-
-  topFiveProducts: getTopProduct[] | undefined
-  ngOnInit() {
-    this.fetchTopFiveProducts()
-    this.fetchMerchantStatusStat()
-  }
-
-  merchantStatistic: MerchantStatusStatistic | undefined
-  async fetchMerchantStatusStat() {
-    try {
-      const res = await lastValueFrom(
-        this.apiService.getMerchantStatusStatistic(),
-      )
-      this.merchantStatistic = res
-      console.log("Merchant statistic", res)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  async fetchTopFiveProducts() {
-    try {
-      const res = await lastValueFrom(this.apiService.getTop5MerchantProduct())
-      this.topFiveProducts = res
-      console.log("Top 5 Products", res)
-      this.chartOptions.series = [
-        {
-          data: res.map((product) => product.product_sold),
-        },
-      ]
-      this.chartOptions.xaxis = {
-        categories: res.map((product) => product.name),
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  // sorting start
-  sortTop5Products() {
+  sortTopProducts() {
     const sortingFunction = this.getSortingFunction()
-    return this.topFiveProducts
-      ? this.topFiveProducts.sort(sortingFunction)
-      : false
+    return this.topProducts ? this.topProducts.sort(sortingFunction) : false
   }
 
   // Function to generate sorting function based on option
@@ -204,5 +128,71 @@ export class IndexMinistryContentComponent {
       // if product is not sold, then buying power is price
       return 0
     }
+  }
+
+  public chartOptions: Partial<ChartOptions> = {
+    series: [
+      {
+        data: [],
+      },
+    ],
+    chart: {
+      type: "bar",
+    },
+    plotOptions: {
+      bar: {
+        barHeight: "100%",
+        distributed: true,
+        horizontal: true,
+        dataLabels: {
+          position: "bottom",
+        },
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      textAnchor: "start",
+      style: {
+        colors: ["#000"],
+      },
+      formatter: function (val, opt) {
+        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+      },
+      offsetX: 0,
+    },
+    stroke: {
+      width: 1,
+      colors: ["#fff"],
+    },
+    xaxis: {
+      categories: [],
+    },
+    yaxis: {
+      labels: {
+        show: false,
+      },
+    },
+    title: {
+      text: "Top Selling",
+      align: "center",
+      floating: true,
+    },
+    subtitle: {
+      text: "Top Products Sold by Merchant and Product Name",
+      align: "center",
+    },
+    tooltip: {
+      theme: "dark",
+      x: {
+        show: false,
+      },
+      y: {
+        title: {
+          formatter: function () {
+            return ""
+          },
+        },
+      },
+    },
   }
 }

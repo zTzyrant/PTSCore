@@ -53,13 +53,16 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { RegisterCustomerComponent } from "./pages/customer/register-customer/register-customer.component"
 import { RegisterCustomerFormComponent } from "./component/form/register-customer-form/register-customer-form.component"
 import { LoginCustomerFormComponent } from "./component/form/login-customer-form/login-customer-form.component"
-import { FlatpickrModule } from "angularx-flatpickr";
-import { ProfileCustomerComponent } from './pages/customer/profile-customer/profile-customer.component';
-import { RecentOrdersComponent } from './pages/customer/recent-orders/recent-orders.component';
-import { MenuCustomerComponent } from './component/sidebar/menu-customer/menu-customer.component';
-import { DashboardCustomerComponent } from './layout/dashboard-customer/dashboard-customer.component';
-import { ViewInvoiceComponent } from './pages/customer/view-invoice/view-invoice.component';
-import { OrdersReviewComponent } from './pages/customer/orders-review/orders-review.component'
+import { FlatpickrModule } from "angularx-flatpickr"
+import { ProfileCustomerComponent } from "./pages/customer/profile-customer/profile-customer.component"
+import { RecentOrdersComponent } from "./pages/customer/recent-orders/recent-orders.component"
+import { MenuCustomerComponent } from "./component/sidebar/menu-customer/menu-customer.component"
+import { DashboardCustomerComponent } from "./layout/dashboard-customer/dashboard-customer.component"
+import { ViewInvoiceComponent } from "./pages/customer/view-invoice/view-invoice.component"
+import { OrdersReviewComponent } from "./pages/customer/orders-review/orders-review.component"
+import { NgApexchartsModule } from "ng-apexcharts"
+import { AnalyticsReportsMinstryComponent } from "./pages/ministry/menu/analytics-reports-ministry/analytics-reports-ministry.component"
+import { AnalyticsReportsMerchantComponent } from "./pages/merchant/menu/analytics-reports-merchant/analytics-reports-merchant.component"
 
 @NgModule({
   declarations: [
@@ -114,6 +117,8 @@ import { OrdersReviewComponent } from './pages/customer/orders-review/orders-rev
     DashboardCustomerComponent,
     ViewInvoiceComponent,
     OrdersReviewComponent,
+    AnalyticsReportsMinstryComponent,
+    AnalyticsReportsMerchantComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,6 +130,7 @@ import { OrdersReviewComponent } from './pages/customer/orders-review/orders-rev
     FormsModule,
     BrowserAnimationsModule,
     FlatpickrModule.forRoot(),
+    NgApexchartsModule,
   ],
   providers: [
     {

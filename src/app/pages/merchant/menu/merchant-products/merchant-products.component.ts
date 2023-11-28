@@ -32,6 +32,7 @@ export class MerchantProductsComponent {
       const res = await lastValueFrom(this.apiService.getMerchantProducts())
       this.products = res
     } catch (error) {
+      console.log("Get Merchant Products", error)
       this.Swal.SwalNotif("Error", "Failed to get merchant products")
     }
   }

@@ -22,12 +22,24 @@
 }
 
 .ds-merchant > .card-3 {
-  @apply my-2 w-full px-4 max-md:order-last  md:w-3/12;
+  @apply my-2 w-full px-4 max-md:order-last md:w-3/12;
+}
+
+.ds-merchant > .card-w-8 {
+  @apply my-2 w-full px-4 lg:w-8/12;
+}
+
+.ds-merchant > .card-auto {
+  @apply my-2 w-full flex-1 px-4;
+}
+
+.ds-merchant > .card-w-4 {
+  @apply my-2 w-full px-4 lg:w-4/12;
 }
 
 .ds-merchant > .card-4 {
-  @apply my-2 w-full px-3 sm:w-1/2 md:w-3/12;
+  @apply my-2 w-full px-3 sm:w-1/2 lg:w-3/12;
 }
 .card-content {
-  @apply w-full flex-auto rounded-2xl bg-white p-4 shadow-xl;
+  @apply h-full w-full flex-1 rounded-2xl bg-white p-4 shadow-xl;
 }

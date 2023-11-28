@@ -93,3 +93,30 @@ export interface getProducts {
   next: string
   prev: string
 }
+
+export interface getTopProduct {
+  _id: string
+  name: string
+  price: number
+  product_sold: number
+  amount_sold: number
+}
+
+export interface MerchantApprovedName {
+  _id: string
+  company_name: string
+}
+
+export interface MyMerchantStatistic {
+  total_sold: number
+  total_amount: number
+  total_product: number
+  top_product: string
+}
+
+export interface MerchantStatusStatistic {
+  merchantCount: number
+  pendingMerchant: number
+  approvedMerchant: number
+  rejectedMerchant: number
+}

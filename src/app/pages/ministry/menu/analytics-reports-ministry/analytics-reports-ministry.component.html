@@ -1,0 +1,137 @@
+<app-dashboard-ministry>
+  <div class="ds-merchant">
+    <div class="card-auto">
+      <div class="card-content">
+        <div
+          class="flex w-full flex-col items-start justify-between space-y-2 border-b-2 px-2 pb-4 pt-2 sm:flex-row sm:items-center"
+        >
+          <h2 class="text-lg font-semibold">Analytics Reports</h2>
+        </div>
+        <div class="mt-4 min-h-[400px]">
+          <div class="flex flex-col gap-2 sm:flex-row">
+            <select
+              class="select select-accent select-sm justify-end"
+              (change)="onMerchantChange($event)"
+            >
+              <option disabled value="-1" selected>Select Merchant</option>
+              <option value="all">All</option>
+              <option
+                value="{{ data._id }}"
+                *ngFor="let data of approvedMerchant"
+              >
+                {{ data.company_name }}
+              </option>
+            </select>
+            <form
+              [formGroup]="sortByForm"
+              (change)="sortTopProducts()"
+              class="sm:ml-auto"
+            >
+              <div class="flex flex-col gap-2 sm:ml-auto sm:flex-row">
+                <select
+                  class="select select-accent select-sm w-full sm:max-w-[130px]"
+                  formControlName="ascending"
+                >
+                  <option value="asc">Ascending</option>
+                  <option value="dsc">Descending</option>
+                </select>
+                <select
+                  class="select select-accent select-sm w-full sm:min-w-[140px] sm:max-w-[140px]"
+                  formControlName="sort_by"
+                >
+                  <option disabled value="-1">Sort by</option>
+                  <option value="name">Name</option>
+                  <option value="sales">Sales</option>
+                  <option value="price">Buying Power</option>
+                  <option value="amount_sold">Total Sales</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="mt-4 overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Name</th>
+                  <th>Sales</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if (!isFetching) { @if(topProducts && topProducts.length > 0) {
+                <tr *ngFor="let data of topProducts; let i = index">
+                  <th class="w-14 min-w-14 max-w-14 break-all">
+                    <span>{{ i + 1 }}</span>
+                  </th>
+                  <td class="w-50 min-w-50">
+                    <span class="line-clamp-2">
+                      {{ data.name }}
+                    </span>
+                  </td>
+                  <td class="w-24 min-w-24 break-all">
+                    <span class="line-clamp-2">
+                      {{ data.product_sold }}
+                    </span>
+                  </td>
+                  <td class="w-34 min-w-34 break-all">
+                    <span class="line-clamp-2">
+                      {{ data.price | currency: "MYR " }}
+                    </span>
+                  </td>
+                  <td class="w-34 min-w-34 break-all">
+                    <span class="line-clamp-2">
+                      {{ data.amount_sold | currency: "MYR " }}
+                    </span>
+                  </td>
+                </tr>
+                } @else {
+                <td colspan="5">
+                  <div class="flex items-center justify-center">
+                    <span class="ml-2"> No data found </span>
+                  </div>
+                </td>
+                } } @else {
+                <tr>
+                  <td colspan="5">
+                    <div class="flex items-center justify-center">
+                      <div class="loading loading-bars loading-sm"></div>
+                      <span class="ml-2">Loading...</span>
+                    </div>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-auto">
+      <div class="card-content">
+        <div
+          class="flex w-full flex-col items-start justify-between space-y-2 border-b-2 px-2 pb-4 pt-2 sm:flex-row sm:items-center"
+        >
+          <h2 class="text-lg font-semibold">Analytics Reports</h2>
+        </div>
+        <div class="mt-4 min-h-[400px] overflow-x-auto">
+          <apx-chart
+            [series]="chartOptions.series!"
+            [chart]="chartOptions.chart!"
+            [dataLabels]="chartOptions.dataLabels!"
+            [stroke]="chartOptions.stroke!"
+            [colors]="chartOptions.colors!"
+            [title]="chartOptions.title!"
+            [subtitle]="chartOptions.subtitle!"
+            [plotOptions]="chartOptions.plotOptions!"
+            [yaxis]="chartOptions.yaxis!"
+            [xaxis]="chartOptions.xaxis!"
+            [tooltip]="chartOptions.tooltip!"
+            class="block w-full min-w-[400px]"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-dashboard-ministry>

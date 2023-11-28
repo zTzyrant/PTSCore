@@ -25,7 +25,7 @@
     </a>
   </div>
   <hr
-    class="mt-0 h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:to-transparent"
+    class="dark:bg-gradient-to-r dark:from-transparent dark:to-transparent mt-0 h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent"
   />
   <div
     class="block max-h-screen w-auto grow basis-full items-center overflow-auto"
@@ -77,7 +77,6 @@
           <span> Manage Merchant </span>
         </a>
       </li>
-
       <li class="mt-0.5 w-full">
         <a
           class="mx-2 my-0 flex items-center rounded-lg px-4 py-2.7 text-base hover:bg-slate-100"
@@ -101,7 +100,6 @@
           <span> Products </span>
         </a>
       </li>
-
       <li class="mt-0.5 w-full">
         <a
           class="mx-2 my-0 flex items-center rounded-lg px-4 py-2.7 text-base hover:bg-slate-100"
@@ -125,10 +123,32 @@
           <span> Orders </span>
         </a>
       </li>
-
+      <li class="mt-0.5 w-full">
+        <a
+          class="mx-2 my-0 flex items-center rounded-lg px-4 py-2.7 text-base hover:bg-slate-100"
+          routerLink="/merchant/analytics-reports"
+          routerLinkActive="!bg-slate-200 text-slate-800"
+        >
+          <div
+            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 448 512"
+            >
+              <path
+                d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 96h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H368c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48z"
+              />
+            </svg>
+          </div>
+          <span> Analytics Reports </span>
+        </a>
+      </li>
       <li class="mt-4 w-full">
         <h6
-          class="ml-2 pl-6 text-xs font-bold uppercase leading-tight opacity-60 dark:text-white"
+          class="dark:text-white ml-2 pl-6 text-xs font-bold uppercase leading-tight opacity-60"
         >
           Account pages
         </h6>
