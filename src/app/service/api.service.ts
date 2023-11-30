@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core"
 import { HttpClient } from "@angular/common/http"
-import { environment } from "src/environments/environment.development"
+import { environment } from "src/environments/environment"
 import {
   MerchantData,
   RegisterMerchantForm,
@@ -185,6 +185,10 @@ export class ApiService {
 
   getPaymentStatus(invoice_id: string) {
     return this.http.get(`${this.API_URL}/payment/invoice/${invoice_id}`)
+  }
+
+  getPaymentCapture(invoice_id: string) {
+    return `${this.API_URL}/payment/invoice/${invoice_id}/capture`
   }
 
   getInvoiceById(invoice_id: string) {

@@ -39,11 +39,21 @@ export class RecentOrdersComponent {
   async validatePayment(id: string) {
     try {
       const res = await lastValueFrom(this.apiService.getPaymentStatus(id))
-      this.Swal.SwalNotifWithThen("Success", "You avilable to do payment").then(
-        () => {
+      if ("status" in res && res.status === "approved") {
+        this.Swal.SwalNotifWithThen(
+          "Success",
+          "Your payment was approved, you will redirect to the capture payment page.",
+        ).then(() => {
+          window.open(this.apiService.getPaymentCapture(id), "_blank")
+        })
+      } else {
+        this.Swal.SwalNotifWithThen(
+          "Success",
+          "You avilable to do payment",
+        ).then(() => {
           this.getOrders()
-        },
-      )
+        })
+      }
     } catch (error: unknown) {
       console.log(error)
       this.Swal.SwalNotifWithThen(

@@ -12,7 +12,7 @@
   <swiper-container class="mt-2" *ngIf="products">
     <swiper-slide *ngFor="let data of products">
       <div class="w-full overflow-hidden rounded-lg border">
-        <a class="cursor-pointer select-none">
+        <a class="cursor-pointer select-none" routerLink="/products">
           <figure class="aspect-video">
             <img class="h-full w-full object-cover" [src]="data.image" alt="" />
           </figure>
