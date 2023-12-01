@@ -399,6 +399,7 @@ export class AddEditProductsComponent {
           )
         }
 
+        this.resetEditProduct()
         // if no error notify success
         this.Swal.SwalNotif("Success", "Product updated successfully")
       }
