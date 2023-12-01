@@ -72,7 +72,7 @@ export class NavbarComponent {
   }
 
   searchProduct() {
-    console.log(this.search)
+    console.log("Search:", this.search)
     this.router.navigate(["/products"], {
       queryParams: {
         search: this.search ? this.search : "",
@@ -91,7 +91,7 @@ export class NavbarComponent {
       const res = await lastValueFrom(this.authService.getIsCustomer())
       this.isCustomer = res.is_customer
     } catch (error) {
-      console.log(error)
+      console.info("Is Customer (error):", error)
     }
   }
 

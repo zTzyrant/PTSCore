@@ -42,7 +42,7 @@ export class ProductsComponent {
 
   async ngOnInit() {
     this.getCategories()
-    console.log(this.route.snapshot.queryParams)
+    console.log("Query:", this.route.snapshot.queryParams)
 
     this.checkQueryParams()
     this.getProducts()
@@ -83,11 +83,11 @@ export class ProductsComponent {
     try {
       const res = await lastValueFrom(this.apiService.getProductCategories())
       if (res.categories.length > 0) {
-        console.log(res)
+        console.log("Categories:", res.categories)
         this.categories = res.categories
       }
     } catch (error) {
-      console.log(error)
+      console.info("Categories (error):", error)
       this.Swal.SwalNotif("Error", "Failed to get categories")
     }
   }
@@ -112,11 +112,11 @@ export class ProductsComponent {
       if (res.products.length > 0) {
         this.products = res.products
         this.isFetching = false
-        console.log(this.products)
+        console.log("Products:", this.products)
       }
       this.isFetching = false
     } catch (error) {
-      console.info(error)
+      console.info("Products (error):", error)
       this.isFetching = false
       this.Swal.SwalNotif("Error", "Failed to get products")
     }
@@ -143,11 +143,11 @@ export class ProductsComponent {
       if (res.products.length > 0) {
         this.isFetchingMore = false
         this.products = this.products.concat(res.products)
-        console.log(this.products)
+        console.log("Load Products:", this.products)
       }
       this.isFetchingMore = false
     } catch (error) {
-      console.info(error)
+      console.info("Load Products (error):", error)
       this.isFetching = false
       this.Swal.SwalNotif("Error", "Failed to get products")
     }
