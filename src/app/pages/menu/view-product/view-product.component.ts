@@ -192,7 +192,7 @@ export class ViewProductComponent {
             )
 
             console.log("Get Invoice Pay: ", getInvoicePay)
-            console.log("Payment URL: ", getInvoicePay.invoice.response_code)
+            console.log("Payment URL: ", getInvoicePay.payment_url)
 
             this.Swal.SwalNotifWithThenHtml(
               "Success generate invoice",
