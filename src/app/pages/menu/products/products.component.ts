@@ -22,6 +22,7 @@ export class ProductsComponent {
   max_price: number = 0
   page: number = 1
   page_size: number = 10
+  sort: string = ""
 
   // total pages
   total_pages: number = 1
@@ -68,6 +69,9 @@ export class ProductsComponent {
       if (params["page_size"]) {
         this.page_size = parseInt(params["page_size"])
       }
+      if (params["sort"]) {
+        this.sort = params["sort"]
+      }
     })
   }
 
@@ -106,6 +110,7 @@ export class ProductsComponent {
           max_price: this.max_price ? this.max_price : 0,
           page: this.page ? this.page : 1,
           page_size: this.page_size ? this.page_size : 10,
+          sort: this.sort ? this.sort : "",
         }),
       )
       this.total_pages = res.totalPages ? res.totalPages : 1
@@ -137,6 +142,7 @@ export class ProductsComponent {
           max_price: this.max_price ? this.max_price : 0,
           page: this.page ? this.page : 1,
           page_size: this.page_size ? this.page_size : 10,
+          sort: this.sort ? this.sort : "",
         }),
       )
       this.total_pages = res.totalPages ? res.totalPages : 1

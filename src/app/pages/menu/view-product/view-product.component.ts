@@ -41,7 +41,6 @@ export class ViewProductComponent {
     private Swal: SwalService,
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private router: Router,
     private authService: AuthService,
     public globalService: GlobalService,
     private chageDetectorRef: ChangeDetectorRef,

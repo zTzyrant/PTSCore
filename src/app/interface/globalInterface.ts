@@ -72,6 +72,7 @@ export interface getMerchantProducts {
 
   // average rating
   average_rating: number | null
+  count_rating: number | null
 
   created_at: string
 }

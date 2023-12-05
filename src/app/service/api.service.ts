@@ -116,6 +116,7 @@ export class ApiService {
     max_price: number
     page: number
     page_size: number
+    sort: string
   }) {
     return this.http.get<getProducts>(`${this.API_URL}/api/products`, {
       params: {
@@ -131,6 +132,7 @@ export class ApiService {
         page_size: filter.page_size.toString()
           ? filter.page_size.toString()
           : "10",
+        sort: filter.sort ? filter.sort : "",
       },
     })
   }

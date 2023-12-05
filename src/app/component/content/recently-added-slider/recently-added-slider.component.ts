@@ -1,26 +1,52 @@
-import { Component, ViewChild } from "@angular/core"
+import { ChangeDetectorRef, Component } from "@angular/core"
 import { register } from "swiper/element/bundle"
-import { HttpClient } from "@angular/common/http"
 import { lastValueFrom } from "rxjs"
+import { ApiService } from "src/app/service/api.service"
+import { getMerchantProducts } from "src/app/interface/globalInterface"
+import { BreakpointObserver } from "@angular/cdk/layout"
 @Component({
   selector: "app-recently-added-slider",
   templateUrl: "./recently-added-slider.component.html",
   styleUrls: ["./recently-added-slider.component.css"],
 })
 export class RecentlyAddedSliderComponent {
-  products: any = []
+  products: getMerchantProducts[] = []
 
-  constructor(private httpService: HttpClient) {}
+  constructor(
+    private apiService: ApiService,
+    private breakpointObserver: BreakpointObserver,
+    private chageDetectorRef: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     this.getRecentProducts()
+    /**
+     * @see: https://material.angular.io/cdk/layout/api#BreakpointObserver
+     */
+    this.breakpointObserver.observe(["(min-width: 640px)"]).subscribe((res) => {
+      if (res.matches) {
+        this.registerSwiper()
+      }
+    })
   }
 
+  isFetching = false
   async getRecentProducts() {
+    this.isFetching = true
     try {
-      this.products = await lastValueFrom(
-        this.httpService.get("assets/fakeproduct.json"),
+      const res = await lastValueFrom(
+        this.apiService.getProducts({
+          search: "",
+          categories: "",
+          min_price: 0,
+          max_price: 0,
+          page: 1,
+          page_size: 10,
+          sort: "new",
+        }),
       )
+      this.products = res.products
+      this.isFetching = false
       this.registerSwiper()
     } catch (err) {
       console.log(err)
@@ -28,8 +54,9 @@ export class RecentlyAddedSliderComponent {
   }
 
   async registerSwiper() {
+    this.chageDetectorRef.detectChanges()
     register()
-    const swiperEl = document.querySelector("swiper-container")
+    const swiperEl = document.getElementById("swiper-2")
     if (swiperEl) {
       Object.assign(swiperEl, {
         breakpoints: {
@@ -38,7 +65,11 @@ export class RecentlyAddedSliderComponent {
             spaceBetween: 10,
           },
           640: {
-            slidesPerView: 3,
+            slidesPerView: 1.2,
+            spaceBetween: 10,
+          },
+          1280: {
+            slidesPerView: 2.5,
             spaceBetween: 10,
           },
         },

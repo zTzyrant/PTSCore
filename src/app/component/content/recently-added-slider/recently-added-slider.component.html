@@ -1,38 +1,133 @@
-<div class="container mx-auto my-10 block px-4 xl:max-w-[1200px]">
-  <div class="flex items-center justify-between">
+<div class="container mx-auto my-10 px-4 xl:max-w-[1200px]">
+  <div
+    class="flex flex-col items-start justify-start sm:flex-row sm:items-center sm:justify-between"
+  >
     <div
       class="mt-1 pr-10 font-inter text-xl font-medium text-neutral sm:text-2xl"
     >
       Recenly Added
     </div>
+    <a
+      routerLink="/products"
+      class="link-primary link flex items-center justify-center underline"
+    >
+      View products
+      <svg
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        class="ml-1 h-5 w-5 text-neutral"
+      >
+        <path
+          d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+      </svg>
+    </a>
   </div>
-  <div class="mt-2" *ngIf="!products">
-    <app-card></app-card>
-  </div>
-  <swiper-container class="mt-2" *ngIf="products">
-    <swiper-slide *ngFor="let data of products">
-      <div class="w-full overflow-hidden rounded-lg border">
-        <a class="cursor-pointer select-none" routerLink="/products">
-          <figure class="aspect-video">
-            <img class="h-full w-full object-cover" [src]="data.image" alt="" />
-          </figure>
-          <div class="p-4">
-            <h3 class="line-clamp-1 text-lg font-semibold">
-              {{ data.product_name }}
-            </h3>
-            <div class="mt-2 flex flex-row gap-2">
-              <p class="line-clamp-2 font-inter text-sm text-gray-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum,
-                ullam iusto veniam blanditiis fugit voluptatibus asperiores
-              </p>
-              <p class="mt-2 flex gap-2 font-poppins text-base font-[500]">
-                <i class="bi bi-star-fill text-yellow-400"></i>
-                {{ data.product_star }}
-              </p>
+  <div class="mt-2">
+    <div *ngIf="isFetching">
+      <app-card></app-card>
+    </div>
+    <swiper-container *ngIf="!isFetching" id="swiper-2">
+      <swiper-slide *ngFor="let data of products">
+        <div class="m-2 flex flex-col">
+          <div class="group rounded-xl border bg-white p-4 shadow">
+            <div class="flex-none lg:flex">
+              <div class="mb-3 h-full w-full lg:mb-0 lg:w-fit">
+                <button
+                  class="h-50 w-full overflow-hidden rounded-2xl lg:h-48 lg:max-h-48 lg:min-h-48 lg:w-40 lg:min-w-40 lg:max-w-40"
+                  routerLink="/products/{{ data._id }}"
+                >
+                  <img
+                    src="{{ data.pictures[0].url }}"
+                    alt="{{ data.name }} Image"
+                    class="h-full w-full object-cover transition-all duration-500 ease-in-out group-hover:scale-125 lg:object-cover"
+                  />
+                </button>
+              </div>
+              <div class="ml-3 flex-auto justify-evenly py-2">
+                <div class="flex flex-wrap">
+                  <div
+                    class="w-full flex-none text-xs font-medium text-blue-700"
+                  >
+                    {{ data.categories[0] }}
+                  </div>
+                  <h2
+                    class="line-clamp-1 flex-auto text-lg font-medium"
+                    ngxTippy="{{ data.name }}"
+                  >
+                    {{ data.name }}
+                  </h2>
+                </div>
+                <p class="mt-3"></p>
+                <div class="flex flex-col space-y-2 py-4 text-sm text-gray-500">
+                  <div class="inline-flex flex-1 items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="mr-2 h-5 max-h-5 min-h-5 w-5 min-w-5 max-w-5 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      ngxTippy="{{ data.state }}"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      ></path>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      ></path>
+                    </svg>
+                    <p class="line-clamp-1">{{ data.state }}</p>
+                  </div>
+                  <div class="inline-flex flex-1 items-center">
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="mr-2 h-5 max-h-5 min-h-5 w-5 min-w-5 max-w-5 text-gray-400"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                        fill-rule="evenodd"
+                      ></path>
+                    </svg>
+                    {{ data.average_rating ? data.average_rating : "UnReview" }}
+                    @if (data.count_rating) { From
+                    {{
+                      data.count_rating && data.count_rating >= 1
+                        ? data.count_rating + " users"
+                        : " user"
+                    }}
+                    }
+                  </div>
+                </div>
+                <div class="flex space-x-2 text-sm font-medium">
+                  <button
+                    class="mb-2 w-full rounded-full bg-gray-900 px-5 py-2 tracking-wider text-white shadow-sm hover:bg-gray-800 md:mb-0"
+                    type="button"
+                    routerLink="/products/{{ data._id }}"
+                  >
+                    View Products
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </a>
-      </div>
-    </swiper-slide>
-  </swiper-container>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
 </div>

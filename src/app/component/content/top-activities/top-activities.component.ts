@@ -1,147 +1,79 @@
-import { Component } from "@angular/core"
-
+import { ChangeDetectorRef, Component } from "@angular/core"
+import { register } from "swiper/element/bundle"
+import { lastValueFrom } from "rxjs"
+import { ApiService } from "src/app/service/api.service"
+import { getMerchantProducts } from "src/app/interface/globalInterface"
+import { BreakpointObserver } from "@angular/cdk/layout"
 @Component({
   selector: "app-top-activities",
   templateUrl: "./top-activities.component.html",
   styleUrls: ["./top-activities.component.css"],
 })
 export class TopActivitiesComponent {
-  datas = [
-    {
-      product_name: "Product 1",
-      city: "Ubud",
-      state: "Bali",
-      nationality: "Indonesia",
-      category: ["Adventure", "Nature"],
-      price: 100000,
-      package: "Day Trip",
-      total_interest: 100,
-      image_product: [
-        {
-          filename: "product-1-1.jpg",
-          deskripsi: "Product 1",
-          url: "https://images.unsplash.com/photo-1559628233-eb1b1a45564b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=435&amp;q=80",
+  products: getMerchantProducts[] = []
+
+  constructor(
+    private apiService: ApiService,
+    private breakpointObserver: BreakpointObserver,
+    private chageDetectorRef: ChangeDetectorRef,
+  ) {}
+
+  ngOnInit() {
+    this.getRecentProducts()
+    /**
+     * @see: https://material.angular.io/cdk/layout/api#BreakpointObserver
+     */
+    this.breakpointObserver.observe(["(min-width: 640px)"]).subscribe((res) => {
+      if (res.matches) {
+        this.registerSwiper()
+      }
+    })
+  }
+
+  isFetching = false
+  async getRecentProducts() {
+    this.isFetching = true
+    try {
+      const res = await lastValueFrom(
+        this.apiService.getProducts({
+          search: "",
+          categories: "",
+          min_price: 0,
+          max_price: 0,
+          page: 1,
+          page_size: 10,
+          sort: "popular",
+        }),
+      )
+      this.products = res.products
+      this.isFetching = false
+      this.registerSwiper()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async registerSwiper() {
+    this.chageDetectorRef.detectChanges()
+    register()
+    const swiperEl = document.getElementById("swiper-1")
+    if (swiperEl) {
+      Object.assign(swiperEl, {
+        breakpoints: {
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          640: {
+            slidesPerView: 1.2,
+            spaceBetween: 10,
+          },
+          1280: {
+            slidesPerView: 2.5,
+            spaceBetween: 10,
+          },
         },
-      ],
-    },
-    {
-      product_name: "Product 1",
-      city: "Ubud",
-      state: "Bali",
-      nationality: "Indonesia",
-      category: ["Adventure", "Nature"],
-      price: 100000,
-      package: "Day Trip",
-      total_interest: 100,
-      image_product: [
-        {
-          filename: "product-1-1.jpg",
-          deskripsi: "Product 1",
-          url: "https://images.unsplash.com/photo-1559628233-eb1b1a45564b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=435&amp;q=80",
-        },
-      ],
-    },
-    {
-      product_name: "Product 1",
-      city: "Ubud",
-      state: "Bali",
-      nationality: "Indonesia",
-      category: ["Adventure", "Nature"],
-      price: 100000,
-      package: "Day Trip",
-      total_interest: 100,
-      image_product: [
-        {
-          filename: "product-1-1.jpg",
-          deskripsi: "Product 1",
-          url: "https://images.unsplash.com/photo-1559628233-eb1b1a45564b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=435&amp;q=80",
-        },
-      ],
-    },
-    {
-      product_name: "Product 1",
-      city: "Ubud",
-      state: "Bali",
-      nationality: "Indonesia",
-      category: ["Adventure", "Nature"],
-      price: 100000,
-      package: "Day Trip",
-      total_interest: 100,
-      image_product: [
-        {
-          filename: "product-1-1.jpg",
-          deskripsi: "Product 1",
-          url: "https://images.unsplash.com/photo-1559628233-eb1b1a45564b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=435&amp;q=80",
-        },
-      ],
-    },
-    {
-      product_name: "Product 1",
-      city: "Ubud",
-      state: "Bali",
-      nationality: "Indonesia",
-      category: ["Adventure", "Nature"],
-      price: 100000,
-      package: "Day Trip",
-      total_interest: 100,
-      image_product: [
-        {
-          filename: "product-1-1.jpg",
-          deskripsi: "Product 1",
-          url: "https://images.unsplash.com/photo-1559628233-eb1b1a45564b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=435&amp;q=80",
-        },
-      ],
-    },
-    {
-      product_name: "Product 1",
-      city: "Ubud",
-      state: "Bali",
-      nationality: "Indonesia",
-      category: ["Adventure", "Nature"],
-      price: 100000,
-      package: "Day Trip",
-      total_interest: 100,
-      image_product: [
-        {
-          filename: "product-1-1.jpg",
-          deskripsi: "Product 1",
-          url: "https://images.unsplash.com/photo-1559628233-eb1b1a45564b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=435&amp;q=80",
-        },
-      ],
-    },
-    {
-      product_name: "Product 1",
-      city: "Ubud",
-      state: "Bali",
-      nationality: "Indonesia",
-      category: ["Adventure", "Nature"],
-      price: 100000,
-      package: "Day Trip",
-      total_interest: 100,
-      image_product: [
-        {
-          filename: "product-1-1.jpg",
-          deskripsi: "Product 1",
-          url: "https://images.unsplash.com/photo-1559628233-eb1b1a45564b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=435&amp;q=80",
-        },
-      ],
-    },
-    {
-      product_name: "Product 1",
-      city: "Ubud",
-      state: "Bali",
-      nationality: "Indonesia",
-      category: ["Adventure", "Nature"],
-      price: 100000,
-      package: "Day Trip",
-      total_interest: 100,
-      image_product: [
-        {
-          filename: "product-1-1.jpg",
-          deskripsi: "Product 1",
-          url: "https://images.unsplash.com/photo-1559628233-eb1b1a45564b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=435&amp;q=80",
-        },
-      ],
-    },
-  ]
+      })
+    }
+  }
 }
