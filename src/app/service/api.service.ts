@@ -252,4 +252,8 @@ export class ApiService {
     return this.http.get<MyMerchantStatistic>(`
     ${this.API_URL}/merchant/product/statistic`)
   }
+
+  postContact(data: { fullname: string; email: string; message: string }) {
+    return this.http.post(`${this.API_URL}/api/contact_us`, data)
+  }
 }

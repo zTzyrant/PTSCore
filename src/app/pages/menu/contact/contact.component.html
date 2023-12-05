@@ -34,7 +34,7 @@
                 />
               </svg>
 
-              <span class="mx-2 w-72 truncate text-gray-700 dark:text-gray-400">
+              <span class="mx-2 w-72 truncate text-gray-700">
                 Bali, Indonesia
               </span>
             </p>
@@ -55,7 +55,7 @@
                 />
               </svg>
 
-              <span class="mx-2 w-72 truncate text-gray-700 dark:text-gray-400">
+              <span class="mx-2 w-72 truncate text-gray-700">
                 (62) 821-3030-6677
               </span>
             </p>
@@ -76,14 +76,14 @@
                 />
               </svg>
 
-              <span class="mx-2 w-72 truncate text-gray-700 dark:text-gray-400">
+              <span class="mx-2 w-72 truncate text-gray-700">
                 angularkiddie&#64;gmail.com
               </span>
             </p>
           </div>
 
           <div class="mt-6 w-80 md:mt-8">
-            <h3 class="text-gray-600 dark:text-gray-300">Follow us</h3>
+            <h3 class="text-gray-600">Follow us</h3>
 
             <div class="-mx-1.5 mt-4 flex">
               <a
@@ -156,48 +156,100 @@
               What do you want to ask?
             </h1>
 
-            <form class="mt-6">
+            <form class="mt-6" [formGroup]="contactForm" (submit)="submit()">
               <div class="flex-1">
-                <label
-                  class="mb-2 block text-sm text-gray-600 dark:text-gray-200"
+                <label class="mb-2 block text-sm text-gray-600"
                   >Full Name</label
                 >
                 <input
                   type="text"
                   placeholder="John Doe"
                   class="input input-bordered input-primary w-full"
+                  formControlName="fullname"
                 />
+                <label
+                  class="m-1 text-sm text-red-500"
+                  *ngIf="
+                    contactForm.controls['fullname'].invalid &&
+                    (contactForm.controls['fullname'].touched ||
+                      contactForm.controls['fullname'].dirty)
+                  "
+                >
+                  <span
+                    *ngIf="
+                      contactForm.controls['fullname'].hasError('required')
+                    "
+                    >Fullname is required</span
+                  >
+                  <span
+                    *ngIf="
+                      contactForm.controls['fullname'].hasError('minlength')
+                    "
+                  >
+                    Fullname must be at least 3 characters long</span
+                  >
+                </label>
               </div>
 
               <div class="mt-6 flex-1">
-                <label
-                  class="mb-2 block text-sm text-gray-600 dark:text-gray-200"
+                <label class="mb-2 block text-sm text-gray-600"
                   >Email address</label
                 >
                 <input
                   type="email"
                   placeholder="johndoe@example.com"
                   class="input input-bordered input-primary w-full"
+                  formControlName="email"
                 />
+                <label
+                  class="m-1 text-sm text-red-500"
+                  *ngIf="
+                    contactForm.controls['email'].invalid &&
+                    (contactForm.controls['email'].touched ||
+                      contactForm.controls['email'].dirty)
+                  "
+                >
+                  <span
+                    *ngIf="contactForm.controls['email'].hasError('required')"
+                    >Email is required</span
+                  >
+                  <span *ngIf="contactForm.controls['email'].hasError('email')"
+                    >Email is invalid</span
+                  >
+                </label>
               </div>
 
               <div class="mt-6 w-full">
-                <label
-                  class="mb-2 block text-sm text-gray-600 dark:text-gray-200"
-                  >Message</label
-                >
+                <label class="mb-2 block text-sm text-gray-600">Message</label>
                 <textarea
                   class="textarea textarea-bordered textarea-primary w-full"
                   placeholder="Message"
+                  formControlName="message"
                 ></textarea>
+                <label
+                  class="m-1 text-sm text-red-500"
+                  *ngIf="
+                    contactForm.controls['message'].invalid &&
+                    (contactForm.controls['message'].touched ||
+                      contactForm.controls['message'].dirty)
+                  "
+                >
+                  <span
+                    *ngIf="contactForm.controls['message'].hasError('required')"
+                    >Message is required</span
+                  >
+                </label>
               </div>
 
               <div class="mt-8">
                 <button
-                  type="button"
+                  type="submit"
                   class="btn btn-primary inline-flex w-full items-center justify-center gap-3 p-3.5 text-sm"
+                  [disabled]="contactForm.invalid || isFetching"
                 >
-                  Sign In
+                  @if (isFetching) {
+                  <span class="loading loading-spinner loading-sm mr-2"></span>
+                  loading... } @else { Submit}
                 </button>
               </div>
             </form>
