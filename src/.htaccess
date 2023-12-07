@@ -1,0 +1,10 @@
+Header set Access-Control-Allow-Origin: *
+Header set Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+Header set Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept
+Header set Access-Control-Allow-Credentials: true
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_METHOD} !OPTIONS
+RewriteRule ^(.*)$ index.html [L]

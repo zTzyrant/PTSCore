@@ -104,7 +104,11 @@
                         fill-rule="evenodd"
                       ></path>
                     </svg>
-                    {{ data.average_rating ? data.average_rating : "UnReview" }}
+                    {{
+                      data.average_rating
+                        ? data.average_rating.toFixed(2)
+                        : "UnReview"
+                    }}
                     @if (data.count_rating) { From
                     {{
                       data.count_rating && data.count_rating >= 1
