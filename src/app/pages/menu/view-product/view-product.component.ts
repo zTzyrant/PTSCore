@@ -18,7 +18,6 @@ import { register } from "swiper/element/bundle"
 
 // photoswipe
 import PhotoSwipe from "photoswipe"
-import "photoswipe/style.css"
 import { GlobalService } from "src/app/service/global.service"
 import { AuthService } from "src/app/service/auth.service"
 import { MerchantData } from "src/app/interface/register-merchant-form"

@@ -10,6 +10,7 @@
 @import "assets/css/plugins/ng-select.css";
 @import "../node_modules/@angular/cdk/overlay-prebuilt.css";
 @import "assets/css/plugins/flatpickr.css";
+@import "assets/css/plugins/photoswipe.css";
 
 /* icons */
 @import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
