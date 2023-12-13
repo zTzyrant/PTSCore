@@ -42,7 +42,7 @@ PTS123
 ### Ministry Account
 ```
 angularkiddie+ministry@gmail.com
-PTS123
+123456
 ```
 
 ### PAYPAL PAYMENT Account
