@@ -34,12 +34,14 @@ PTS123
 ```
 
 ### Merchant Account
+[login merchant](https://pts.takidev.my.id/merchant/login)
 ```
 angularkiddie+merchantno1@gmail.com
 PTS123
 ```
 
 ### Ministry Account
+[login ministry](https://pts.takidev.my.id/ministry/login)
 ```
 angularkiddie+ministry@gmail.com
 123456
