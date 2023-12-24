@@ -8,5 +8,6 @@ export interface User {
   is_ministry: boolean
   is_merchant: boolean
   is_customer: boolean
+  merchant_id: string | null
   date_of_birth: string | null
 }
