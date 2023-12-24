@@ -1,14 +1,13 @@
 import { Component } from "@angular/core"
-import { FormBuilder } from "@angular/forms"
-import { ActivatedRoute, Router } from "@angular/router"
+import { ActivatedRoute } from "@angular/router"
 import { lastValueFrom } from "rxjs"
 import { getInvoiceOrders } from "src/app/interface/payment"
 import { ApiService } from "src/app/service/api.service"
 import { SwalService } from "src/app/service/swal.service"
 import jsPDF from "jspdf"
-import html2canvas from "html2canvas"
 import * as htmlToImage from "html-to-image"
 import { Title } from "@angular/platform-browser"
+import download from "downloadjs"
 
 @Component({
   selector: "app-view-invoice",
@@ -16,11 +15,9 @@ import { Title } from "@angular/platform-browser"
 })
 export class ViewInvoiceComponent {
   constructor(
-    private fb: FormBuilder,
     private Swal: SwalService,
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private router: Router,
     private titleService: Title,
   ) {
     this.titleService.setTitle("View Invoice | Promo Tourism System")
@@ -65,6 +62,10 @@ export class ViewInvoiceComponent {
     }
   }
 
+  // this is used for handeling generated file, cause there is a bug
+  // when i generate file, i cannot generate file again, so i need to reload page
+  // to generate file again (in this case is pdf and png) so i use this variable
+
   /**
    * generate png image
    * @param id invoice id
@@ -77,16 +78,25 @@ export class ViewInvoiceComponent {
     this.isGeneratePDF = true
     const element = document.getElementById("invoice")
     if (element) {
-      await htmlToImage.toCanvas(element).then(function (dataUrl) {
-        let fileWidth = 208
-        let fileHeight = (dataUrl.height * fileWidth) / dataUrl.width
-        const FILEURI = dataUrl.toDataURL("image/png")
-        let PDF = new jsPDF("p", "mm", "a4")
-        let position = 0
-        PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight)
-        PDF.save(`invoice-${id}-${Date.now()}.pdf`)
-      })
+      await htmlToImage
+        .toCanvas(element)
+        .then(function (dataUrl) {
+          let fileWidth = 208
+          let fileHeight = (dataUrl.height * fileWidth) / dataUrl.width
+          const FILEURI = dataUrl.toDataURL("image/png")
+          let PDF = new jsPDF("p", "mm", "a4")
+          let position = 0
+          PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight)
+          PDF.save(`invoice-${id}-${Date.now()}.pdf`)
+        })
+        .catch((err) => {
+          console.log("Failed to generate PDF", err)
+        })
       this.isGeneratePDF = false
+      this.Swal.SwalNotif(
+        "Success generate file",
+        "If cannot generate new file, please reload page!",
+      )
     }
   }
 
@@ -102,13 +112,19 @@ export class ViewInvoiceComponent {
     const element = document.getElementById("invoice")
     if (element) {
       this.isGeneratePNG = true
-      await htmlToImage.toPng(element).then(function (dataUrl) {
-        const virtualElement = document.createElement("a")
-        virtualElement.href = dataUrl
-        virtualElement.download = `invoice-${id}-${Date.now()}.pdf`
-        virtualElement.click()
-      })
+      await htmlToImage
+        .toPng(element)
+        .then((dataUrl) => {
+          download(dataUrl, `invoice-${id}-${Date.now()}.png`)
+        })
+        .catch((err) => {
+          console.log("Failed to generate PNG", err)
+        })
       this.isGeneratePNG = false
+      this.Swal.SwalNotif(
+        "Success generate file",
+        "Please reload page to generate new file!",
+      )
     }
   }
 
