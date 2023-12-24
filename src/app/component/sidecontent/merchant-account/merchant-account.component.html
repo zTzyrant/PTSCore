@@ -1,1 +1,23 @@
-<div class="card-content">Account Information</div>
+<div class="card-content">
+  <h2 class="text-xl font-bold">Account Information</h2>
+  <div class="mt-4 grid gap-2" *ngIf="account">
+    <div class="grid gap-0 border-b-2">
+      <h6 class="text-sm font-bold capitalize">fullname</h6>
+      <p class="break-all text-sm">
+        {{ account.fullname }}
+      </p>
+    </div>
+    <div class="grid gap-0 border-b-2">
+      <h6 class="text-sm font-bold capitalize">email</h6>
+      <p class="break-all text-sm">
+        {{ account.email }}
+      </p>
+    </div>
+    <div class="grid gap-0 border-b-2">
+      <h6 class="text-sm font-bold capitalize">phone</h6>
+      <p class="break-all text-sm">
+        {{ account.phone_number }}
+      </p>
+    </div>
+  </div>
+</div>

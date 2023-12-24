@@ -1,0 +1,90 @@
+<app-dashboard-merchant>
+  <h2 class="px-4 font-manrope text-2xl font-semibold text-white">Profile</h2>
+  <div
+    class="mt-4 rounded-box border bg-white p-4 sm:min-h-[400px]"
+    *ngIf="userdata"
+  >
+    <div class="flow-root">
+      <dl class="-my-3 divide-y divide-gray-100 p-4 text-sm">
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <dt class="font-medium text-gray-900">Name</dt>
+          <dd class="text-gray-700 sm:col-span-2">
+            {{ userdata.fullname }}
+          </dd>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <dt class="font-medium text-gray-900">Username</dt>
+          <dd class="text-gray-700 sm:col-span-2">
+            {{ userdata.username }}
+          </dd>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <dt class="font-medium text-gray-900">Email</dt>
+          <dd class="text-gray-700 sm:col-span-2">
+            {{ userdata.email }}
+          </dd>
+        </div>
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <dt class="font-medium text-gray-900">Phone</dt>
+          <dd class="text-gray-700 sm:col-span-2">
+            {{ userdata.phone_number }}
+          </dd>
+        </div>
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <dt class="font-medium text-gray-900">Date of birth</dt>
+          <dd class="text-gray-700 sm:col-span-2">
+            {{
+              userdata.date_of_birth ?? userdata.date_of_birth
+                | date: "MMMM dd, YYYY"
+            }}
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+  <div
+    class="mt-4 rounded-box border bg-white p-4 sm:min-h-[400px]"
+    *ngIf="!userdata"
+  >
+    <div class="flow-root animate-pulse">
+      <dl class="-my-3 divide-y divide-gray-100 text-sm">
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <div class="h-4 w-1/4 rounded bg-gray-200"></div>
+          <div
+            class="h-4 w-1/2 rounded bg-gray-200 text-gray-700 sm:col-span-2"
+          ></div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <div class="h-4 w-1/4 rounded bg-gray-200"></div>
+          <div
+            class="h-4 w-1/2 rounded bg-gray-200 text-gray-700 sm:col-span-2"
+          ></div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <div class="h-4 w-1/4 rounded bg-gray-200"></div>
+          <div
+            class="h-4 w-1/2 rounded bg-gray-200 text-gray-700 sm:col-span-2"
+          ></div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <div class="h-4 w-1/4 rounded bg-gray-200"></div>
+          <div
+            class="h-4 w-1/2 rounded bg-gray-200 text-gray-700 sm:col-span-2"
+          ></div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+          <div class="h-4 w-1/4 rounded bg-gray-200"></div>
+          <div
+            class="h-4 w-1/2 rounded bg-gray-200 text-gray-700 sm:col-span-2"
+          ></div>
+        </div>
+      </dl>
+    </div>
+  </div>
+</app-dashboard-merchant>

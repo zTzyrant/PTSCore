@@ -63,7 +63,9 @@ import { OrdersReviewComponent } from "./pages/customer/orders-review/orders-rev
 import { NgApexchartsModule } from "ng-apexcharts"
 import { AnalyticsReportsMinstryComponent } from "./pages/ministry/menu/analytics-reports-ministry/analytics-reports-ministry.component"
 import { AnalyticsReportsMerchantComponent } from "./pages/merchant/menu/analytics-reports-merchant/analytics-reports-merchant.component";
-import { ViewProductsSkeletonComponent } from './component/skeleton/view-products-skeleton/view-products-skeleton.component'
+import { ViewProductsSkeletonComponent } from './component/skeleton/view-products-skeleton/view-products-skeleton.component';
+import { MerchantProfileComponent } from './pages/merchant/menu/merchant-profile/merchant-profile.component';
+import { MinistryProfileComponent } from './pages/ministry/menu/ministry-profile/ministry-profile.component'
 
 @NgModule({
   declarations: [
@@ -121,6 +123,8 @@ import { ViewProductsSkeletonComponent } from './component/skeleton/view-product
     AnalyticsReportsMinstryComponent,
     AnalyticsReportsMerchantComponent,
     ViewProductsSkeletonComponent,
+    MerchantProfileComponent,
+    MinistryProfileComponent,
   ],
   imports: [
     BrowserModule,

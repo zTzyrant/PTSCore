@@ -34,6 +34,8 @@ import { OrdersReviewComponent } from "./pages/customer/orders-review/orders-rev
 import { customerGuard } from "./helpers/customer.guard"
 import { AnalyticsReportsMinstryComponent } from "./pages/ministry/menu/analytics-reports-ministry/analytics-reports-ministry.component"
 import { AnalyticsReportsMerchantComponent } from "./pages/merchant/menu/analytics-reports-merchant/analytics-reports-merchant.component"
+import { MerchantProfileComponent } from "./pages/merchant/menu/merchant-profile/merchant-profile.component"
+import { MinistryProfileComponent } from "./pages/ministry/menu/ministry-profile/ministry-profile.component"
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -101,6 +103,11 @@ const routes: Routes = [
     component: AnalyticsReportsMerchantComponent,
     canActivate: [MerchantGuard],
   },
+  {
+    path: "merchant/profile",
+    component: MerchantProfileComponent,
+    canActivate: [MerchantGuard],
+  },
   // Merchant routes end
 
   // Ministry routes start
@@ -127,6 +134,11 @@ const routes: Routes = [
   {
     path: "ministry/analytics-reports",
     component: AnalyticsReportsMinstryComponent,
+    canActivate: [MinistryGuard],
+  },
+  {
+    path: "ministry/profile",
+    component: MinistryProfileComponent,
     canActivate: [MinistryGuard],
   },
   // Ministry routes end

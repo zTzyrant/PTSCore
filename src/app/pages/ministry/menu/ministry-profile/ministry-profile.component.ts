@@ -6,10 +6,10 @@ import { ApiService } from "src/app/service/api.service"
 import { SwalService } from "src/app/service/swal.service"
 
 @Component({
-  selector: "app-profile-customer",
-  templateUrl: "./profile-customer.component.html",
+  selector: "app-ministry-profile",
+  templateUrl: "./ministry-profile.component.html",
 })
-export class ProfileCustomerComponent {
+export class MinistryProfileComponent {
   userdata: User | undefined
 
   constructor(

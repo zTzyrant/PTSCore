@@ -6,10 +6,10 @@ import { ApiService } from "src/app/service/api.service"
 import { SwalService } from "src/app/service/swal.service"
 
 @Component({
-  selector: "app-profile-customer",
-  templateUrl: "./profile-customer.component.html",
+  selector: "app-merchant-profile",
+  templateUrl: "./merchant-profile.component.html",
 })
-export class ProfileCustomerComponent {
+export class MerchantProfileComponent {
   userdata: User | undefined
 
   constructor(
